@@ -15,6 +15,8 @@ pub mod source {
     pub use shellglass::source::*;
 }
 
+#[cfg(feature = "accessibility")]
+pub mod accessibility;
 pub mod native_broker;
 pub mod native_protocol;
 #[cfg(windows)]

@@ -4,6 +4,8 @@ use anyhow::Result;
 #[cfg(any(feature = "push", not(windows)))]
 use anyhow::bail;
 use clap::{Parser, Subcommand};
+#[cfg(feature = "accessibility")]
+use shellglass_wt_tap::accessibility::AccessibilityOptions;
 #[cfg(any(feature = "serve", feature = "push"))]
 use std::path::PathBuf;
 
@@ -11,24 +13,35 @@ use std::path::PathBuf;
 #[command(
     name = "shellglass-wt-tap",
     version,
-    about = "Private-ABI Windows Terminal source for shellglass"
+    about = "Native terminal and accessibility sources for shellglass"
 )]
 struct Cli {
     #[command(subcommand)]
     command: Command,
 }
 
+#[cfg(any(feature = "serve", feature = "push"))]
+struct SourceOptions {
+    keep_last_terminal: bool,
+    #[cfg(feature = "accessibility")]
+    accessibility: Option<AccessibilityOptions>,
+}
+
 #[derive(Subcommand)]
 enum Command {
+    /// Serve the active-window stream through the local shellglass viewer.
     #[cfg(feature = "serve")]
     Serve {
         #[arg(short, long, default_value = "127.0.0.1:8080")]
         bind: String,
         #[arg(short, long, env = "SHELLGLASS_CONFIG")]
         config: Option<PathBuf>,
-        /// Stop capture when focus leaves every known terminal window.
+        /// Disable accessibility reconstruction and stop outside known terminals.
         #[arg(long)]
         foreground_only: bool,
+        #[cfg(feature = "accessibility")]
+        #[command(flatten)]
+        accessibility: AccessibilityOptions,
         #[arg(long = "cors-origin")]
         cors_origin: Vec<String>,
         #[arg(long)]
@@ -42,6 +55,7 @@ enum Command {
         #[arg(long)]
         record_dir: Option<PathBuf>,
     },
+    /// Push the active-window stream to a shellglass hub.
     #[cfg(feature = "push")]
     Push {
         url: String,
@@ -54,16 +68,26 @@ enum Command {
         key: String,
         #[arg(short, long, env = "SHELLGLASS_CONFIG")]
         config: Option<PathBuf>,
-        /// Stop capture when focus leaves every known terminal window.
+        /// Disable accessibility reconstruction and stop outside known terminals.
         #[arg(long)]
         foreground_only: bool,
+        #[cfg(feature = "accessibility")]
+        #[command(flatten)]
+        accessibility: AccessibilityOptions,
         #[arg(long)]
         no_record: bool,
     },
+    /// Control a detached hub stream worker.
     #[cfg(feature = "push")]
     Stream {
         #[command(subcommand)]
         command: StreamCommand,
+    },
+    /// Reconstruct the active accessibility window in this terminal.
+    #[cfg(feature = "accessibility")]
+    Preview {
+        #[command(flatten)]
+        accessibility: AccessibilityOptions,
     },
 }
 
@@ -82,9 +106,12 @@ enum StreamCommand {
         key: String,
         #[arg(short, long, env = "SHELLGLASS_CONFIG")]
         config: Option<PathBuf>,
-        /// Stop capture when focus leaves every known terminal window.
+        /// Disable accessibility reconstruction and stop outside known terminals.
         #[arg(long)]
         foreground_only: bool,
+        #[cfg(feature = "accessibility")]
+        #[command(flatten)]
+        accessibility: AccessibilityOptions,
         #[arg(long)]
         no_record: bool,
     },
@@ -102,6 +129,8 @@ async fn main() -> Result<()> {
             bind,
             config,
             foreground_only,
+            #[cfg(feature = "accessibility")]
+            accessibility,
             cors_origin,
             ssh_bind,
             ssh_host_key,
@@ -117,13 +146,19 @@ async fn main() -> Result<()> {
             options.ssh_motd_file = ssh_motd_file;
             options.ssh_motd_delay = ssh_motd_delay;
             options.record_dir = record_dir;
-            options.source_label = "the active Windows terminal".into();
-            shellglass::api::serve(
-                move || start_source(!foreground_only),
-                presentation,
-                options,
-            )
-            .await
+            options.source_label = if foreground_only {
+                "the active native terminal"
+            } else {
+                "the active window (native terminal or accessibility reconstruction)"
+            }
+            .into();
+            let source_options = SourceOptions {
+                keep_last_terminal: !foreground_only,
+                #[cfg(feature = "accessibility")]
+                accessibility: (!foreground_only).then_some(accessibility),
+            };
+            shellglass::api::serve(move || start_source(source_options), presentation, options)
+                .await
         }
         #[cfg(feature = "push")]
         Command::Push {
@@ -131,6 +166,8 @@ async fn main() -> Result<()> {
             key,
             config,
             foreground_only,
+            #[cfg(feature = "accessibility")]
+            accessibility,
             no_record,
         } => {
             #[cfg(windows)]
@@ -144,27 +181,46 @@ async fn main() -> Result<()> {
             let presentation = shellglass::api::Presentation::load(config.as_deref())?;
             let mut options = shellglass::api::PushOptions::new(url, key);
             options.no_record = no_record;
-            shellglass::api::push(
-                move || start_source(!foreground_only),
-                presentation,
-                options,
-            )
-            .await
+            let source_options = SourceOptions {
+                keep_last_terminal: !foreground_only,
+                #[cfg(feature = "accessibility")]
+                accessibility: (!foreground_only).then_some(accessibility),
+            };
+            shellglass::api::push(move || start_source(source_options), presentation, options).await
         }
         #[cfg(feature = "push")]
         Command::Stream { command } => run_stream(command).await,
+        #[cfg(feature = "accessibility")]
+        Command::Preview { accessibility } => {
+            shellglass_wt_tap::accessibility::preview(accessibility).await
+        }
     }
 }
 
 #[cfg(any(feature = "serve", feature = "push"))]
-fn start_source(keep_last_terminal: bool) -> Result<shellglass::source::SourceSession> {
-    #[cfg(windows)]
+fn start_source(options: SourceOptions) -> Result<shellglass::source::SourceSession> {
+    #[cfg(all(windows, feature = "accessibility"))]
     {
-        shellglass_wt_tap::windows_native::start(keep_last_terminal)
+        if let Some(accessibility) = options.accessibility {
+            return shellglass_wt_tap::windows_native::start_hybrid(accessibility);
+        }
+        shellglass_wt_tap::windows_native::start(options.keep_last_terminal)
     }
-    #[cfg(not(windows))]
+    #[cfg(all(windows, not(feature = "accessibility")))]
     {
-        let _ = keep_last_terminal;
+        shellglass_wt_tap::windows_native::start(options.keep_last_terminal)
+    }
+    #[cfg(all(not(windows), feature = "accessibility"))]
+    {
+        if let Some(accessibility) = options.accessibility {
+            return shellglass_wt_tap::accessibility::start(accessibility);
+        }
+        let _ = options.keep_last_terminal;
+        bail!("native terminal capture is available only on Windows")
+    }
+    #[cfg(all(not(windows), not(feature = "accessibility")))]
+    {
+        let _ = options.keep_last_terminal;
         bail!("Windows Terminal capture is available only on Windows")
     }
 }
@@ -180,6 +236,8 @@ async fn run_stream(command: StreamCommand) -> Result<()> {
             key,
             config,
             foreground_only,
+            #[cfg(feature = "accessibility")]
+            accessibility,
             no_record,
         } => {
             if shellglass_wt_tap::windows_native::control("status")
@@ -206,6 +264,26 @@ async fn run_stream(command: StreamCommand) -> Result<()> {
             }
             if foreground_only {
                 child.arg("--foreground-only");
+            }
+            #[cfg(feature = "accessibility")]
+            if !foreground_only {
+                child
+                    .arg("--a11y-interval-ms")
+                    .arg(accessibility.interval_ms.to_string())
+                    .arg("--a11y-cols")
+                    .arg(accessibility.cols.to_string())
+                    .arg("--a11y-rows")
+                    .arg(accessibility.rows.to_string())
+                    .arg("--a11y-depth")
+                    .arg(accessibility.max_depth.to_string())
+                    .arg("--a11y-max-nodes")
+                    .arg(accessibility.max_nodes.to_string());
+                if let Some(config) = &accessibility.policy_config {
+                    child.arg("--a11y-config").arg(config);
+                }
+                for app in &accessibility.denied_apps {
+                    child.arg("--a11y-deny-app").arg(app);
+                }
             }
             if no_record {
                 child.arg("--no-record");

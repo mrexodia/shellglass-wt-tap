@@ -11,16 +11,30 @@ publish = false
 [workspace]
 
 [features]
-default = ["serve", "push"]
+default = ["serve", "push", "accessibility"]
 serve = ["shellglass/serve-api"]
 push = ["shellglass/push-api"]
+accessibility = [
+    "dep:crossterm",
+    "dep:serde",
+    "dep:toml",
+    "dep:unicode-segmentation",
+    "dep:unicode-width",
+    "dep:xa11y",
+]
 
 [dependencies]
 anyhow = "1.0.103"
 bytes = "1"
 clap = { version = "4.6.1", features = ["derive", "env"] }
+crossterm = { version = "0.29", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
 shellglass = { path = "../shellglass", default-features = false }
+toml = { version = "1", optional = true }
 tokio = { version = "1.52.3", features = ["full"] }
+unicode-segmentation = { version = "1", optional = true }
+unicode-width = { version = "0.2", optional = true }
+xa11y = { path = "../xa11y/xa11y", optional = true }
 
 [target.'cfg(windows)'.dependencies]
 windows-sys = { version = "0.61", features = [

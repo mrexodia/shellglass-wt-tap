@@ -5,6 +5,7 @@ param(
     [Parameter(ParameterSetName='Local')][string]$Bind='127.0.0.1:8080',
     [string]$Pdb='',
     [string]$PreparedProfile='',
+    [string]$A11yConfig='',
     [switch]$NewTab,
     [switch]$PrepareOnly
 )
@@ -64,6 +65,11 @@ if($PreparedProfile){
     if(-not$matched){throw "none of the candidate PDBs matched WT $($package.Version); pass its exact Microsoft.Terminal.Control.pdb"}
 }
 Write-Host "Verified WT $($package.Version) as $family using $matched"
+$a11yArgs=@()
+if($A11yConfig){
+    $resolvedA11yConfig=(Resolve-Path $A11yConfig -ErrorAction Stop).Path
+    $a11yArgs=@('--a11y-config',$resolvedA11yConfig)
+}
 if($PrepareOnly){
     Write-Host "Prepared fail-closed profile: $profile"
     return
@@ -82,7 +88,7 @@ if($PSCmdlet.ParameterSetName-eq'Push'){
         $priorKey=[Environment]::GetEnvironmentVariable('SHELLGLASS_KEY','Process')
         try{
             [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$Key,'Process')
-            & $tap stream start --hub $Hub
+            & $tap stream start --hub $Hub @a11yArgs
             if($LASTEXITCODE){throw 'detached stream worker did not start'}
         }finally{
             [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$priorKey,'Process')
@@ -91,7 +97,7 @@ if($PSCmdlet.ParameterSetName-eq'Push'){
     }else{Write-Host 'A detached stream worker is already running; reusing it.'}
 }else{
     $server=Start-Process -PassThru -WindowStyle Hidden $tap `
-        -ArgumentList @('serve','--bind',$Bind) `
+        -ArgumentList (@('serve','--bind',$Bind)+$a11yArgs) `
         -RedirectStandardOutput (Join-Path $env:TEMP 'shellglass-wt-serve.out') `
         -RedirectStandardError (Join-Path $env:TEMP 'shellglass-wt-serve.err')
     Start-Sleep 1

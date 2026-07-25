@@ -91,13 +91,19 @@ impl ImageStore {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum PublishedSource {
+    Terminal(SourceKey, u64),
+    Accessibility(String),
+}
+
 #[derive(Default)]
 struct State {
     connections: HashMap<u64, Hello>,
     sources: HashMap<SourceKey, Source>,
     foreground_hwnd: Option<u64>,
     selected: Option<SourceKey>,
-    published: Option<(SourceKey, u64)>,
+    published: Option<PublishedSource>,
     focus_clock: u64,
     paused: bool,
 }
@@ -221,6 +227,32 @@ impl NativeBroker {
         self.state.lock().unwrap().selected
     }
 
+    /// Whether the current foreground HWND has no native terminal source and
+    /// may therefore be reconstructed through the accessibility API.
+    pub fn wants_accessibility(&self) -> bool {
+        let state = self.state.lock().unwrap();
+        !state.paused && state.selected.is_none()
+    }
+
+    /// Publish an accessibility reconstruction only while no native terminal
+    /// source is selected. The selection check and publication are serialized
+    /// under the broker lock so a capture that races a terminal focus change
+    /// can never overwrite the native terminal frame.
+    pub fn publish_accessibility(&self, identity: String, frame: Frame) -> bool {
+        let mut state = self.state.lock().unwrap();
+        if state.paused || state.selected.is_some() {
+            return false;
+        }
+        let source = PublishedSource::Accessibility(identity);
+        if state.published.as_ref() == Some(&source) {
+            self.frames.publish(frame);
+        } else {
+            self.frames.switch_source(frame);
+            state.published = Some(source);
+        }
+        true
+    }
+
     /// Global privacy pause: unsubscribe immediately and freeze the published
     /// frame; resume reselects the foreground source and requests its fresh full.
     pub fn set_paused(&self, paused: bool) -> Vec<BrokerCommand> {
@@ -232,9 +264,15 @@ impl NativeBroker {
         self.reselect(&mut state)
     }
 
-    pub fn status(&self) -> (bool, usize, Option<SourceKey>) {
+    pub fn status(&self) -> (bool, usize, Option<SourceKey>, bool) {
         let state = self.state.lock().unwrap();
-        (state.paused, state.sources.len(), state.selected)
+        (
+            state.paused,
+            state.sources.len(),
+            state.selected,
+            state.selected.is_none()
+                && matches!(state.published, Some(PublishedSource::Accessibility(_))),
+        )
     }
 
     fn source_added(
@@ -347,9 +385,9 @@ impl NativeBroker {
             grid.image_data.insert(placement.hash.clone(), blob.clone());
         }
         if state.selected == Some(key) {
-            let identity = (key, frame.generation);
+            let identity = PublishedSource::Terminal(key, frame.generation);
             let frame = Arc::unwrap_or_clone(frame.frame);
-            if state.published == Some(identity) {
+            if state.published.as_ref() == Some(&identity) {
                 self.frames.publish(frame);
             } else {
                 self.frames.switch_source(frame);
@@ -586,6 +624,64 @@ mod tests {
             [BrokerCommand::Unsubscribe { .. }]
         ));
         assert_eq!(broker.selected(), None);
+    }
+
+    #[test]
+    fn accessibility_publishes_only_without_a_selected_native_terminal() {
+        let (broker, mut source) = NativeBroker::new_with_policy(false);
+        assert!(broker.wants_accessibility());
+        let mut accessibility = blank_frame();
+        let Frame::Screen(grid) = &mut accessibility;
+        grid.rows[0][0].text = "a11y".into();
+        assert!(broker.publish_accessibility("window-1".into(), accessibility));
+        {
+            let current = source.frames.borrow_and_update();
+            let Frame::Screen(grid) = &**current;
+            assert_eq!(grid.rows[0][0].text, "a11y");
+        }
+
+        broker.foreground_changed(Some(77));
+        let mut wt = Adapter::new(&broker, 2, Provider::WindowsTerminal);
+        wt.send(
+            &broker,
+            MessageType::SourceAdded,
+            &testwire::source_added(20, 1, 77),
+        );
+        let mut update = Vec::new();
+        update.extend_from_slice(&20u64.to_le_bytes());
+        update.extend_from_slice(&1u64.to_le_bytes());
+        update.push(12); // focused + visible
+        update.push(1);
+        update.push(1);
+        wt.send(&broker, MessageType::SourceUpdated, &update);
+        assert!(!broker.wants_accessibility());
+        assert!(!broker.publish_accessibility("window-2".into(), blank_frame()));
+        {
+            let current = source.frames.borrow_and_update();
+            let Frame::Screen(grid) = &**current;
+            assert_eq!(grid.rows[0][0].text, "a11y");
+        }
+
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 1, "native"),
+        );
+        {
+            let current = source.frames.borrow_and_update();
+            let Frame::Screen(grid) = &**current;
+            assert_eq!(grid.rows[0][0].text, "native");
+        }
+
+        broker.foreground_changed(Some(999));
+        assert!(broker.wants_accessibility());
+        let mut next_accessibility = blank_frame();
+        let Frame::Screen(grid) = &mut next_accessibility;
+        grid.rows[0][0].text = "next-a11y".into();
+        assert!(broker.publish_accessibility("window-2".into(), next_accessibility));
+        let current = source.frames.borrow_and_update();
+        let Frame::Screen(grid) = &**current;
+        assert_eq!(grid.rows[0][0].text, "next-a11y");
     }
 
     #[test]

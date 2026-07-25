@@ -1,9 +1,11 @@
 # shellglass-wt-tap
 
-Private-ABI Windows Terminal capture provider for the sibling
-[`shellglass`](../shellglass/) library. All injector, DIA/PDB, named-pipe, source-selection,
-and detached-control behavior lives here; shellglass receives only ordinary
-`Frame`s through `SourceSession`.
+Hybrid foreground-window capture provider for the sibling
+[`shellglass`](../shellglass/) library. Supported terminal windows use the
+private-ABI Windows Terminal/conhost render taps; every other foreground window
+is reconstructed from its [`xa11y`](../xa11y/) accessibility tree. All capture,
+source-selection, and detached-control behavior lives here; shellglass receives
+only ordinary `Frame`s through `SourceSession`.
 
 Supported x64 Windows Terminal families currently include exact releases
 `1.24.11911.0` and `1.24.11321.0`. Unknown hashes, RSDS identities, prologues, or
@@ -34,10 +36,72 @@ cmake --build target\native-windows --config Release
 ```
 
 Existing tabs recover when they next gain or lose focus; pass `-NewTab` only to
-force an immediate transition. Switching to a non-terminal application keeps the
-last active terminal live; direct `serve`, `push`, and `stream start` commands can
-opt into strict foreground-only capture with `--foreground-only`. The adapter remains loaded for the lifetime of
-`WindowsTerminal.exe`; rebuilding or retesting a new DLL requires fully exiting
-that process. See
+force an immediate transition. Native terminal frames always take precedence.
+When the foreground HWND has no matching native source, a bounded xa11y worker
+renders roles, names, values, hierarchy, focus, selection, and control state as a
+terminal grid. A capture that races a terminal focus change is rejected under the
+broker lock, so it cannot overwrite the native frame. `--foreground-only`
+disables accessibility reconstruction and stops outside known terminals.
+
+Accessibility data can contain document text, messages, and form values. Keep the
+default loopback bind or put authenticated transport in front of a public bind.
+
+### Accessibility privacy blacklist
+
+Discord, Discord Canary, and Discord PTB are denied by default. Keep persistent
+additions in a TOML file:
+
+```toml
+# privacy.toml
+[privacy]
+deny_apps = ["Slack", "Signal.exe"]
+```
+
+A `privacy.toml` in the process working directory is loaded automatically, so the
+normal commands need no additional option:
+
+```powershell
+cargo run -- serve
+.\native\windows\start-wt-stream.ps1
+```
+
+Use `--a11y-config PATH` (or launcher parameter `-A11yConfig PATH`) to select a
+different file explicitly. An explicit missing or invalid file is an error; an
+absent default `./privacy.toml` is normal.
+
+Names are exact and case-insensitive; `.exe` is optional. Repeatable
+`--a11y-deny-app` options add temporary entries, and
+`SHELLGLASS_A11Y_CONFIG` can provide the config path for service launchers. The
+worker checks the accessibility application name and foreground process
+executable before traversing its window. A denied application produces only a
+generic "blocked by privacy policy" frame; its name, title, and tree never enter
+the published frame. If process identity cannot be established, capture fails
+closed instead of streaming the unidentified window.
+
+The adapter remains loaded for the lifetime of `WindowsTerminal.exe`; rebuilding
+or retesting a new DLL requires fully exiting that process. See
 [`native/windows/README.md`](native/windows/README.md) and
 [`docs/windows-render-taps.md`](docs/windows-render-taps.md).
+
+## Local accessibility preview
+
+The standalone preview renders the same reconstructed `Frame` into the invoking
+terminal's alternate screen, without starting shellglass HTTP/push transport:
+
+```powershell
+cargo run --no-default-features --features accessibility -- preview
+```
+
+This build contains the terminal preview without shellglass serve/push transport.
+Press Ctrl-C to restore the terminal. Initially the preview may reconstruct its
+own terminal because launching it gives that window focus; switch to the GUI
+window you want to inspect. Renderer controls are shared with serve/push:
+
+```powershell
+cargo run --no-default-features --features accessibility -- preview `
+  --a11y-cols 140 --a11y-rows 45 --a11y-depth 16
+```
+
+The default snapshot interval is 300 ms. `--a11y-interval-ms`, `--a11y-cols`,
+`--a11y-rows`, `--a11y-depth`, and `--a11y-max-nodes` are also accepted by
+`serve`, `push`, and `stream start`.
