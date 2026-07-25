@@ -1,0 +1,35 @@
+[package]
+name = "shellglass-wt-tap"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+# Independent project kept beside the shellglass checkout during development.
+# Replace the sibling path dependency with a pinned git revision after the
+# reusable API is upstream.
+[workspace]
+
+[features]
+default = ["serve", "push"]
+serve = ["shellglass/serve-api"]
+push = ["shellglass/push-api"]
+
+[dependencies]
+anyhow = "1.0.103"
+bytes = "1"
+clap = { version = "4.6.1", features = ["derive", "env"] }
+shellglass = { path = "../shellglass", default-features = false }
+tokio = { version = "1.52.3", features = ["full"] }
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_Security_Authorization",
+    "Win32_System_Pipes",
+    "Win32_System_RemoteDesktop",
+    "Win32_System_Threading",
+    "Win32_UI_Accessibility",
+    "Win32_UI_WindowsAndMessaging",
+] }
