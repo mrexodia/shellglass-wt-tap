@@ -37,6 +37,8 @@ const MAGENTA: Color = Color::Rgb(198, 160, 246);
 const RED: Color = Color::Rgb(235, 111, 146);
 const MAX_FIELD_CHARS: usize = 2_000;
 const MAX_MULTILINE_FIELD_CHARS: usize = 8_192;
+const DEFAULT_MAX_DEPTH: usize = 40;
+const DEFAULT_MAX_NODES: usize = 2_000;
 const BUILTIN_DENIED_APPS: &[&str] = &["discord", "discordcanary", "discordptb"];
 
 /// Shared CLI/configuration surface for accessibility reconstruction.
@@ -52,10 +54,10 @@ pub struct AccessibilityOptions {
     #[arg(long = "a11y-rows", default_value_t = 60)]
     pub rows: u16,
     /// Maximum accessibility-tree depth (at most 64).
-    #[arg(long = "a11y-depth", default_value_t = 12)]
+    #[arg(long = "a11y-depth", default_value_t = DEFAULT_MAX_DEPTH)]
     pub max_depth: usize,
     /// Maximum accessibility nodes captured per snapshot (at most 100000).
-    #[arg(long = "a11y-max-nodes", default_value_t = 1_000)]
+    #[arg(long = "a11y-max-nodes", default_value_t = DEFAULT_MAX_NODES)]
     pub max_nodes: usize,
     /// TOML privacy policy; defaults to ./privacy.toml when that file exists.
     #[arg(long = "a11y-config", env = "SHELLGLASS_A11Y_CONFIG")]
@@ -76,8 +78,8 @@ impl Default for AccessibilityOptions {
             interval_ms: 300,
             cols: 200,
             rows: 60,
-            max_depth: 12,
-            max_nodes: 1_000,
+            max_depth: DEFAULT_MAX_DEPTH,
+            max_nodes: DEFAULT_MAX_NODES,
             policy_config: None,
             denied_apps: Vec::new(),
         }
@@ -584,6 +586,12 @@ fn capture_node(
                 element.name.as_deref().unwrap_or("")
             )
         })? {
+            // Hidden/offscreen subtrees cannot contribute to the spatial
+            // frame. Chromium exposes the entire offscreen document here;
+            // pruning it keeps deep web trees bounded without losing pixels.
+            if !child.states.visible {
+                continue;
+            }
             let Some(child) = capture_node(
                 &child,
                 depth + 1,
@@ -1082,7 +1090,10 @@ fn render_table_children(
         if row >= table_bottom || row >= canvas.rows {
             continue;
         }
-        let source_indent = bounds.x.saturating_sub(columns[column]) as u64;
+        // Providers can expose a spanning/outlier cell slightly left of the
+        // first inferred column. Clamp that offset instead of casting a
+        // negative coordinate delta to a huge unsigned value.
+        let source_indent = bounds.x.saturating_sub(columns[column]).max(0) as u64;
         let indent = (source_indent * table_rect.width as u64
             / u64::from(table_bounds.width.max(1))) as usize;
         let indent = indent.min(widths[column].saturating_sub(1));
@@ -2241,7 +2252,7 @@ pub fn render_layout_fixture(
         &fixture.snapshot,
         cols.unwrap_or(fixture.cols),
         rows.unwrap_or(fixture.rows),
-        12,
+        DEFAULT_MAX_DEPTH,
     );
     let text = plain_frame(&rendered);
     if let Some(path) = output {
@@ -2785,6 +2796,23 @@ mod tests {
     }
 
     #[test]
+    fn visual_studio_fixture_handles_rows_left_of_inferred_table_columns() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/visual-studio-2022/tree.json"
+        ))
+        .expect("parse Visual Studio fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        assert!(rendered.contains("Solution 'TooltipNotes'"));
+        assert!(rendered.contains("Text Editor"));
+        assert!(rendered.contains("current Visual Studio version does not support targeting"));
+    }
+
+    #[test]
     fn total_commander_fixture_packs_file_rows_and_keeps_complete_menus() {
         let fixture: LayoutFixture = serde_json::from_str(include_str!(
             "../tests/fixtures/accessibility/total-commander/tree.json"
@@ -2848,6 +2876,7 @@ mod tests {
     fn accessibility_stream_defaults_target_a_1080p_viewer() {
         let options = AccessibilityOptions::default();
         assert_eq!((options.cols, options.rows), (200, 60));
+        assert_eq!((options.max_depth, options.max_nodes), (40, 2_000));
     }
 
     #[test]

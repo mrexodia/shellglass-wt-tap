@@ -32,6 +32,8 @@ Committed fixtures:
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value
   contains the complete newline-delimited log history.
+- `visual-studio-2022` — a WPF IDE workspace with a table row positioned left
+  of its inferred first column, exercising defensive coordinate handling.
 - `total-commander` — adjacent menus/tabs and two dense file lists from Total
   Commander.
 
