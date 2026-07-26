@@ -56,6 +56,8 @@ Committed fixtures:
   of its inferred first column, exercising defensive coordinate handling.
 - `total-commander` — adjacent menus/tabs and two dense file lists from Total
   Commander.
+- `total-commander-lister` — a custom-painted text viewport that exposes only
+  window chrome and a scrollbar, with no accessible document or text value.
 
 Tests use the JSON snapshots for deterministic structural assertions. PNGs are
 human references because native GUI pixels and semantic terminal output are not

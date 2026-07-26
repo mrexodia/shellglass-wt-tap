@@ -824,7 +824,28 @@ fn render_spatial_snapshot(
         &mut positioned,
     );
     if positioned == 0 {
-        return None;
+        fn contains_scrollbar(node: &SnapshotNode) -> bool {
+            matches!(node.role, Role::ScrollBar | Role::ScrollThumb)
+                || node.children.iter().any(contains_scrollbar)
+        }
+        if contains_scrollbar(&snapshot.root) {
+            let message = "⟦ content not exposed via accessibility ⟧";
+            let width = UnicodeWidthStr::width(message).min(canvas.cols);
+            canvas.text(
+                canvas.cols.saturating_sub(width) / 2,
+                canvas.rows / 2,
+                width,
+                message,
+                Style {
+                    fg: MUTED,
+                    dim: true,
+                    ..Style::default()
+                },
+            );
+            positioned = 1;
+        } else {
+            return None;
+        }
     }
 
     let mut rendered_rows = vec![
@@ -3947,6 +3968,23 @@ mod tests {
         assert!(name < size && size < modified && modified < crc);
         assert!(!rendered.contains("1-iw4sp.pdb"));
         assert!(!rendered.contains("2-iw4mp.exe"));
+    }
+
+    #[test]
+    fn total_commander_lister_fixture_marks_unexposed_custom_content() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/total-commander-lister/tree.json"
+        ))
+        .expect("parse Total Commander Lister fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        assert!(rendered.contains("⟦ content not exposed via accessibility ⟧"));
+        assert!(!rendered.contains("scroll_bar"));
+        assert!(!rendered.contains("Page right"));
     }
 
     #[test]

@@ -1,0 +1,564 @@
+{
+  "schema_version": 1,
+  "cols": 200,
+  "rows": 60,
+  "snapshot": {
+    "app_name": "Lister - [c:\\CodeBlocks\\zeromcp\\pyproject.toml]",
+    "pid": 24636,
+    "window_name": "Lister - [c:\\CodeBlocks\\zeromcp\\pyproject.toml]",
+    "root": {
+      "role": "Window",
+      "bounds": {
+        "x": 1929,
+        "y": 43,
+        "width": 960,
+        "height": 1019
+      },
+      "name": "Lister - [c:\\CodeBlocks\\zeromcp\\pyproject.toml]",
+      "value": null,
+      "description": null,
+      "states": {
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "active": true,
+        "checked": null,
+        "selected": false,
+        "expanded": null,
+        "editable": false,
+        "focusable": true,
+        "modal": false,
+        "required": false,
+        "busy": false
+      },
+      "children": [
+        {
+          "role": "ScrollBar",
+          "bounds": {
+            "x": 1937,
+            "y": 1037,
+            "width": 944,
+            "height": 17
+          },
+          "name": "Horizontal",
+          "value": "0",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "numeric_value": 0.0,
+          "min_value": 0.0,
+          "max_value": 100.0,
+          "children": [
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1937,
+                "y": 1037,
+                "width": 17,
+                "height": 17
+              },
+              "name": "Column left",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ScrollThumb",
+              "bounds": {
+                "x": 1954,
+                "y": 1037,
+                "width": 17,
+                "height": 17
+              },
+              "name": "Position",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1971,
+                "y": 1037,
+                "width": 893,
+                "height": 17
+              },
+              "name": "Page right",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2864,
+                "y": 1037,
+                "width": 17,
+                "height": 17
+              },
+              "name": "Column right",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 1953,
+            "y": 46,
+            "width": 928,
+            "height": 28
+          },
+          "name": null,
+          "value": "Lister - [c:\\CodeBlocks\\zeromcp\\pyproject.toml]",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuBar",
+              "bounds": {
+                "x": 1937,
+                "y": 51,
+                "width": 22,
+                "height": 22
+              },
+              "name": "System",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "MenuItem",
+                  "bounds": {
+                    "x": 1937,
+                    "y": 51,
+                    "width": 22,
+                    "height": 22
+                  },
+                  "name": "System",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": false,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2742,
+                "y": 44,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Minimise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2789,
+                "y": 44,
+                "width": 46,
+                "height": 30
+              },
+              "name": "Maximise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2835,
+                "y": 44,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Close",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "MenuBar",
+          "bounds": {
+            "x": 1937,
+            "y": 74,
+            "width": 944,
+            "height": 19
+          },
+          "name": "Application",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 1937,
+                "y": 74,
+                "width": 32,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 1969,
+                "y": 74,
+                "width": 34,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2003,
+                "y": 74,
+                "width": 56,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2059,
+                "y": 74,
+                "width": 53,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2112,
+                "y": 74,
+                "width": 64,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2176,
+                "y": 74,
+                "width": 39,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2836,
+                "y": 74,
+                "width": 45,
+                "height": 19
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "node_count": 20,
+    "truncated": false,
+    "capture_time": {
+      "secs": 0,
+      "nanos": 58783300
+    }
+  }
+}
