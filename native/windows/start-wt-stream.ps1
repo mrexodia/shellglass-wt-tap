@@ -86,10 +86,19 @@ if($PSCmdlet.ParameterSetName-eq'Push'){
     # in case the previous launcher used a different target profile.
     $stopCandidates=@($tap)
     $stopCandidates+=@(Get-CimInstance Win32_Process -Filter "name='shellglass-wt-tap.exe'" -ErrorAction SilentlyContinue|ForEach-Object ExecutablePath)
+    $stopOut=Join-Path $env:TEMP "shellglass-stream-stop-$PID.out"
+    $stopErr=Join-Path $env:TEMP "shellglass-stream-stop-$PID.err"
     foreach($candidate in @($stopCandidates|Where-Object{$_-and(Test-Path $_)}|Select-Object -Unique)){
-        & $candidate stream stop *> $null
-        if($LASTEXITCODE-eq0){Write-Host 'Stopped the existing detached WT stream.';Start-Sleep -Milliseconds 250;break}
+        Remove-Item $stopOut,$stopErr -Force -ErrorAction SilentlyContinue
+        $stopProcess=Start-Process -PassThru -Wait -WindowStyle Hidden $candidate `
+            -ArgumentList @('stream','stop') -RedirectStandardOutput $stopOut -RedirectStandardError $stopErr
+        if($stopProcess.ExitCode-eq0){
+            Write-Host 'Stopped the existing detached WT stream.'
+            Start-Sleep -Milliseconds 250
+            break
+        }
     }
+    Remove-Item $stopOut,$stopErr -Force -ErrorAction SilentlyContinue
 
     $cargo=(Get-Command cargo -ErrorAction Stop).Source
     $manifest=Join-Path $root 'Cargo.toml'
