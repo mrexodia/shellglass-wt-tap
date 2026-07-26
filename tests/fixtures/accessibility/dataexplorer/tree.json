@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "cols": 200,
+  "rows": 60,
+  "snapshot": {
+    "app_name": "DataExplorer",
+    "pid": 24504,
+    "window_name": "DataExplorer",
+    "root": {
+      "role": "Window",
+      "bounds": {
+        "x": 1126,
+        "y": 226,
+        "width": 732,
+        "height": 621
+      },
+      "name": "DataExplorer",
+      "value": null,
+      "description": null,
+      "states": {
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "active": true,
+        "checked": null,
+        "selected": false,
+        "expanded": null,
+        "editable": false,
+        "focusable": true,
+        "modal": false,
+        "required": false,
+        "busy": false
+      },
+      "children": [
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 1142,
+            "y": 198,
+            "width": 716,
+            "height": 28
+          },
+          "name": null,
+          "value": "DataExplorer",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuBar",
+              "bounds": {
+                "x": 1126,
+                "y": 203,
+                "width": 22,
+                "height": 22
+              },
+              "name": "System",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "MenuItem",
+                  "bounds": {
+                    "x": 1126,
+                    "y": 203,
+                    "width": 22,
+                    "height": 22
+                  },
+                  "name": "System",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": false,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1825,
+                "y": 196,
+                "width": 34,
+                "height": 30
+              },
+              "name": "Close",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "TextField",
+          "bounds": {
+            "x": 1136,
+            "y": 236,
+            "width": 711,
+            "height": 401
+          },
+          "name": null,
+          "value": "struct Foo {\n  u32 x;\n  u8 y;\n};\n\nstruct Cat {\n  u16 meow;\n};\n\nstruct Bar {\n  Foo foo;\n  u64 z;\n};\n\nstruct Test {\n  u8 a;\n  u8 b;\n  Cat c;\n  Foo foo;\n  u8 arr[10];\n  Cat c2[2];\n};\n\nTest t @ 0x77761000;",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": true,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": true,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 1154,
+                "y": 237,
+                "width": 692,
+                "height": 399
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": true,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 1137,
+                "y": 237,
+                "width": 17,
+                "height": 399
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "StaticText",
+          "bounds": {
+            "x": 1136,
+            "y": 636,
+            "width": 31,
+            "height": 16
+          },
+          "name": "Log:",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "StaticText",
+          "bounds": {
+            "x": 1136,
+            "y": 656,
+            "width": 711,
+            "height": 181
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 1137,
+                "y": 657,
+                "width": 709,
+                "height": 179
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Button",
+          "bounds": {
+            "x": 1816,
+            "y": 606,
+            "width": 31,
+            "height": 31
+          },
+          "name": "▶️",
+          "value": null,
+          "description": "Run Pattern",
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        }
+      ]
+    },
+    "node_count": 12,
+    "truncated": false,
+    "capture_time": {
+      "secs": 0,
+      "nanos": 227251000
+    }
+  }
+}

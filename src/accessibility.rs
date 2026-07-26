@@ -916,10 +916,11 @@ fn render_collection_children(
     fit_window: bool,
     positioned: &mut usize,
 ) {
-    let bottom = collection
+    let collection_rect = collection
         .bounds
-        .and_then(|bounds| project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window))
-        .map_or(canvas.rows, |rect| rect.y + rect.height);
+        .and_then(|bounds| project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window));
+    let bottom = collection_rect.map_or(canvas.rows, |rect| rect.y + rect.height);
+    let collection_right = collection_rect.map_or(canvas.cols, |rect| rect.x + rect.width);
     let mut source_row = None;
     let mut source_bottom = None;
     let mut output_row = None;
@@ -959,11 +960,30 @@ fn render_collection_children(
         }
         rect.y = row;
         if let Some(label) = bullet_list_label(child) {
-            let wrapped = wrap_flow_text(&label, rect.width, canvas.rows.saturating_sub(row));
+            let available_rows = bottom.min(canvas.rows).saturating_sub(row);
+            let wrapped = wrap_flow_text(&label, rect.width, available_rows);
             rect.height = rect.height.max(wrapped.len()).max(1);
         } else {
             rect.height = 1;
+            if child.role == Role::ListItem && compact_list_row_label(child).is_none() {
+                // A sole list item on its source row may use the empty
+                // remainder of the containing pane. Multi-column rows retain
+                // narrow bounds so collision-aware flow places flags safely.
+                let same_row_count = collection
+                    .children
+                    .iter()
+                    .filter_map(|sibling| sibling.bounds)
+                    .filter(|sibling| sibling.y == bounds.y)
+                    .count();
+                if same_row_count == 1 {
+                    rect.width = rect.width.max(collection_right.saturating_sub(rect.x));
+                }
+            }
         }
+        // `row` is the item's first output row. Advance the packed-row cursor
+        // past every wrapped line so the next list item cannot overwrite this
+        // item's continuation lines.
+        output_row = Some(row.saturating_add(rect.height.saturating_sub(1)));
         let owns_text = owns_descendant_text(child);
         let rendered = if child.role == Role::ListItem && !child.children.is_empty() && !owns_text {
             // Composite cards expose a concatenated ListItem name as well as
@@ -1494,6 +1514,20 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             draw_intrinsic_label(canvas, rect, &format!("[{state}] {label}"), style);
             true
         }
+        Role::TextField if raw_label.contains('\n') => {
+            // UIA commonly maps multiline code editors to Edit/TextField
+            // rather than TextArea. Newlines are stronger evidence than the
+            // nominal role; centering this value as a one-line field destroys
+            // the editor layout.
+            draw_text_area(
+                canvas,
+                rect,
+                raw_label,
+                style,
+                vertical_scroll_fraction(node),
+            );
+            true
+        }
         Role::TextField | Role::ComboBox | Role::SpinButton => {
             draw_labeled_box(canvas, rect, label, style);
             true
@@ -1641,6 +1675,19 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
                 true
             }
         }
+        Role::ListItem => {
+            if label.is_empty() {
+                false
+            } else {
+                let label_width = UnicodeWidthStr::width(label);
+                if label_width > rect.width && label_width <= 12 {
+                    canvas.flow_text(rect.x, line, label, style);
+                } else {
+                    draw_inline_label(canvas, rect, label, style, false);
+                }
+                true
+            }
+        }
         Role::StaticText if inline_flow_text(node).is_some() => {
             let text = inline_flow_text(node).expect("flow text checked above");
             draw_flow_text(canvas, rect, &text, style);
@@ -1658,7 +1705,6 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
         }
         Role::StaticText
         | Role::Heading
-        | Role::ListItem
         | Role::Menu
         | Role::MenuBar
         | Role::TabGroup
@@ -3064,6 +3110,25 @@ mod tests {
         for register in ["RAX =", "RBX =", "RCX =", "RDX =", "RSP =", "RIP ="] {
             assert!(rendered.contains(register), "missing {register}");
         }
+        for flags in [
+            "ZF = 0 PF = 0 AF = 0",
+            "OF = 0 SF = 0 DF = 0",
+            "CF = 0 TF = 0 IF = 1",
+            "GS = 002B FS = 0053",
+            "ES = 002B DS = 002B",
+            "CS = 0033 SS = 002B",
+        ] {
+            assert!(rendered.contains(flags), "truncated flag row: {flags}");
+        }
+        assert!(rendered.contains("LastError = 00000000 (ERROR_SUCCESS)"));
+        assert!(rendered.contains("LastStatus = 00000000 (STATUS_SUCCESS)"));
+        for index in 0..=4 {
+            let register = format!("ST({index}) = 00000000000000000000");
+            assert!(
+                rendered.contains(&register),
+                "truncated x87 register: {register}"
+            );
+        }
         assert!(rendered.contains("00007FFB54D43D5A E8 4DB1F8FF"));
         assert!(rendered.contains("BOOLEAN InheritedAddressSpace"));
         assert!(rendered.contains("000000569881B000"));
@@ -3139,6 +3204,32 @@ mod tests {
     }
 
     #[test]
+    fn x64dbg_commands_fixture_keeps_wrapped_list_item_continuations() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chrome-x64dbg-commands/tree.json"
+        ))
+        .expect("parse x64dbg commands fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        for continuation in [
+            "also means a variable cannot begin with letters from A to F.",
+            "content in the memory pointer, don’t add “[” and “]”.",
+            "arguments. Do not use a space to separate the arguments.",
+            "use an appropriate plugin which provides such feature.",
+            "is used to transfer the value of the expression to the destination.",
+        ] {
+            assert!(
+                rendered.contains(continuation),
+                "missing wrapped list continuation: {continuation}"
+            );
+        }
+    }
+
+    #[test]
     fn hugging_face_fixture_wraps_bullets_and_compacts_result_rows() {
         let fixture: LayoutFixture = serde_json::from_str(include_str!(
             "../tests/fixtures/accessibility/chrome-huggingface-list/tree.json"
@@ -3164,6 +3255,29 @@ mod tests {
         ));
         assert!(rendered.contains("datacurve/deep-swe · Deep Swe leaderboard 40.4"));
         assert!(rendered.contains("ScaleAI/SWE-bench_Pro · SWE Bench Pro leaderboard 59.4"));
+    }
+
+    #[test]
+    fn dataexplorer_fixture_treats_multiline_text_fields_as_editors() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/dataexplorer/tree.json"
+        ))
+        .expect("parse DataExplorer fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let foo = lines
+            .iter()
+            .position(|line| line.contains("struct Foo {"))
+            .expect("Foo declaration");
+        assert!(lines[foo + 1].contains("u32 x;"));
+        assert!(lines[foo + 2].contains("u8 y;"));
+        assert!(!lines[foo].contains("struct Cat"));
+        assert!(rendered.contains("Test t @ 0x77761000;"));
     }
 
     #[test]

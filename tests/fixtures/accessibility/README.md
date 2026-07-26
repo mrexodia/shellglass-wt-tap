@@ -30,8 +30,12 @@ Committed fixtures:
 
 - `chrome-striga` — Chromium article content with nested headings, links, and
   inline text runs whose union bounds overlap within each HTML paragraph.
+- `chrome-x64dbg-commands` — variable-height FAQ list items whose wrapped
+  continuation lines must not be overwritten by following items.
 - `chrome-huggingface-list` — variable-height HTML bullet items and compact
   evaluation-result rows from a Hugging Face model page.
+- `dataexplorer` — a multiline code editor exposed by UIA as `TextField`
+  rather than `TextArea`.
 - `x64dbg-cpu` — dense menus, disassembly, registers, flags, tables, and nested
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value
