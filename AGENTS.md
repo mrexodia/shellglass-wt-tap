@@ -183,6 +183,14 @@ If the answer to question 1 is no, stop trying layout heuristics. Document the
 provider limitation and render a bounded neutral marker such as
 `⟦ content not exposed via accessibility ⟧` when appropriate.
 
+Zed requires special care during fixture capture. As of Zed 1.12.0 it calls
+`Application::new_inaccessible` unless `ZED_EXPERIMENTAL_A11Y=1` was inherited by
+Zed at startup. Fully exit and relaunch Zed with that variable before concluding
+that its AccessKit tree is empty. Setting the variable on Shellglass cannot alter
+an existing Zed process. Even when enabled, the current tree exposes application
+chrome and named pane containers but not project entries or editor text; do not
+infer those missing pixels. See the root README for launch commands.
+
 ## Common renderer failure patterns
 
 Implement the narrowest structural correction that addresses the captured shape.

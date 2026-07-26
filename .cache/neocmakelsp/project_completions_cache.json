@@ -1,0 +1,25 @@
+{
+  "date": "2026-07-27T00:32:55.319526200+02:00",
+  "data": {
+    "C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt": [
+      {
+        "label": "shellglass_harden",
+        "kind": 3,
+        "detail": "Function",
+        "documentation": "defined function\nfrom: C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt"
+      },
+      {
+        "label": "DIA_LIB_ARCH",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt"
+      },
+      {
+        "label": "DIA_LIB_ARCH",
+        "kind": 12,
+        "detail": "Value",
+        "documentation": "defined variable\nfrom: C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt"
+      }
+    ]
+  }
+}

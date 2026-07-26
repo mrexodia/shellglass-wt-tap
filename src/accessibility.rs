@@ -1783,6 +1783,19 @@ fn collect_inline_text(node: &SnapshotNode, output: &mut String) -> bool {
     }
 }
 
+fn has_exposed_descendant_text(node: &SnapshotNode) -> bool {
+    node.children.iter().any(|child| {
+        if !child.states.visible || matches!(child.role, Role::ScrollBar | Role::ScrollThumb) {
+            return false;
+        }
+        nonempty(&child.value)
+            .or_else(|| nonempty(&child.name))
+            .or_else(|| nonempty(&child.description))
+            .is_some()
+            || has_exposed_descendant_text(child)
+    })
+}
+
 fn single_descendant_static_text(node: &SnapshotNode) -> Option<String> {
     fn collect(node: &SnapshotNode, values: &mut Vec<String>) {
         if node.role == Role::StaticText
@@ -1838,9 +1851,6 @@ fn draw_spatial_control(
             if let Some(text) = inline_flow_text(node) {
                 draw_flow_text(canvas, rect, &text, style);
                 true
-            } else if node.children.is_empty() && !label.is_empty() {
-                draw_inline_label(canvas, rect, label, style, true);
-                true
             } else if !node.children.is_empty()
                 && node
                     .children
@@ -1854,6 +1864,25 @@ fn draw_spatial_control(
                     "⟦ list not exposed ⟧",
                     Style { fg: MUTED, ..style },
                 );
+                true
+            } else if !label.is_empty()
+                && rect.width >= 20
+                && rect.height >= 5
+                && !has_exposed_descendant_text(node)
+            {
+                canvas.text(rect.x, rect.y, rect.width, label, style);
+                let message = "⟦ content not exposed ⟧";
+                let width = UnicodeWidthStr::width(message).min(rect.width);
+                canvas.text(
+                    rect.x + rect.width.saturating_sub(width) / 2,
+                    rect.y + rect.height / 2,
+                    width,
+                    message,
+                    Style { fg: MUTED, ..style },
+                );
+                true
+            } else if node.children.is_empty() && !label.is_empty() {
+                draw_inline_label(canvas, rect, label, style, true);
                 true
             } else {
                 false
@@ -3810,6 +3839,25 @@ mod tests {
         ));
         assert!(rendered.contains("datacurve/deep-swe · Deep Swe leaderboard 40.4"));
         assert!(rendered.contains("ScaleAI/SWE-bench_Pro · SWE Bench Pro leaderboard 59.4"));
+    }
+
+    #[test]
+    fn zed_fixture_marks_large_named_panes_without_exposed_content() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/zed-experimental-a11y/tree.json"
+        ))
+        .expect("parse Zed experimental accessibility fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        assert!(rendered.contains("Left dock"));
+        assert!(rendered.contains("Editor"));
+        assert_eq!(rendered.matches("⟦ content not exposed ⟧").count(), 2);
+        assert!(!rendered.contains("let mut b = Adapter::new"));
+        assert!(!rendered.contains("toolbar  “Status bar”"));
     }
 
     #[test]

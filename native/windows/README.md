@@ -141,8 +141,13 @@ Generation deliberately fails if any required exact function or ABI fact is abse
 or ambiguous. There is no signature-scan fallback. Place the generated profile beside
 `shellglass-wt-adapter.dll` with the same stem (`shellglass-wt-adapter.sgnp`). The
 `start-wt-stream.ps1` is the first-party operator path for the verified personal
-x64 deployment: it fail-closed profiles the installed package, starts local serve
-or detached push, and injects every visible WT process. Existing controls recover lazily on their first post-injection focus gain/loss
+x64 deployment: it automatically configures/builds stale or missing native
+artifacts when no running WT process has the adapter loaded, fail-closed profiles
+the installed package, starts local serve or detached push, and injects every
+visible WT process. A normal uninjected WT does not block that first build. If a
+stale process-lifetime adapter is already loaded, the launcher reports its PID and
+requires that process to exit before CMake can relink it safely.
+Existing controls recover lazily on their first post-injection focus gain/loss
 or authoritative `OwningHwnd` assignment using exact PDB-verified `_renderer`,
 `_pData`, and `_owningHwnd` offsets; they are never scanned or guessed. The owner
 setter path covers a default-terminal handoff whose first pane predates injection

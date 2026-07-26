@@ -1,0 +1,39 @@
+{
+  "date": "2026-07-27T00:32:55.320070600+02:00",
+  "data": {
+    "shellglass_harden": {
+      "location": {
+        "uri": "file:///C:/CodeBlocks/shellglass-wt-tap/native/windows/CMakeLists.txt",
+        "range": {
+          "start": {
+            "line": 7,
+            "character": 9
+          },
+          "end": {
+            "line": 7,
+            "character": 26
+          }
+        }
+      },
+      "document_info": "defined function\nfrom: C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt",
+      "is_function": true
+    },
+    "DIA_LIB_ARCH": {
+      "location": {
+        "uri": "file:///C:/CodeBlocks/shellglass-wt-tap/native/windows/CMakeLists.txt",
+        "range": {
+          "start": {
+            "line": 75,
+            "character": 6
+          },
+          "end": {
+            "line": 75,
+            "character": 18
+          }
+        }
+      },
+      "document_info": "defined variable\nfrom: C:\\CodeBlocks\\shellglass-wt-tap\\native\\windows\\CMakeLists.txt",
+      "is_function": false
+    }
+  }
+}

@@ -48,6 +48,9 @@ Committed fixtures:
   must not wrap into visually blank rows.
 - `vscode-screen-reader` — a Monaco editor whose complete multiline value is
   exposed on a current-line `TextField` with much smaller bounds than its host.
+- `zed-experimental-a11y` — Zed 1.12.0 with `ZED_EXPERIMENTAL_A11Y=1`, exposing
+  title/status controls and large named panes but no project entries or editor
+  text.
 - `x64dbg-cpu` — dense menus, disassembly, registers, flags, tables, and nested
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value

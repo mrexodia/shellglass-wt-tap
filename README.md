@@ -89,8 +89,10 @@ title, tree, and focus transition never enter the stream. If process
 identity cannot be established, capture fails closed instead of streaming the
 unidentified window.
 
-The adapter remains loaded for the lifetime of `WindowsTerminal.exe`; rebuilding
-or retesting a new DLL requires fully exiting that process. See
+The adapter remains loaded for the lifetime of `WindowsTerminal.exe`. The launcher
+automatically configures/builds stale or missing native artifacts while running WT
+processes have no adapter loaded. If an adapter update is needed after injection,
+it reports the affected PIDs and asks the operator to exit those processes. See
 [`native/windows/README.md`](native/windows/README.md) and
 [`docs/windows-render-taps.md`](docs/windows-render-taps.md).
 
@@ -120,6 +122,34 @@ large enough to make useful use of a typical 1080p viewer. `--a11y-cols` and
 preview dimensions come from its terminal. `--a11y-interval-ms`, `--a11y-depth`, and
 `--a11y-max-nodes` apply to both.
 
+### Zed's experimental accessibility tree
+
+As of Zed 1.12.0, its GPUI AccessKit adapter is compiled in but disabled by
+default. Zed constructs an explicitly inaccessible application unless
+`ZED_EXPERIMENTAL_A11Y=1` is present in **Zed's** environment at process startup.
+A UIA query or event subscription cannot activate an already-running inaccessible
+instance. Fully exit every Zed process, then launch it from a PowerShell session
+with the switch enabled:
+
+```powershell
+$env:ZED_EXPERIMENTAL_A11Y = "1"
+zed
+```
+
+For future processes, the variable can instead be stored in the user environment;
+Zed still needs to be restarted:
+
+```powershell
+[Environment]::SetEnvironmentVariable("ZED_EXPERIMENTAL_A11Y", "1", "User")
+```
+
+This is an upstream experimental switch and may change. In Zed 1.12.0 it enables
+UIA activation and exposes title/status controls plus named `Left dock` and
+`Editor` panes, but the project entries and editor text are not yet included in
+the tree. Shellglass marks those large panes as
+`⟦ content not exposed ⟧` rather than reconstructing pixels absent from the
+provider. Setting the variable on Shellglass itself has no effect on Zed.
+
 ### Developing the spatial renderer
 
 Screenshots are development oracles, not live renderer inputs. Capture a test
@@ -135,9 +165,9 @@ cargo run -- capture-layout-fixture target\layout-fixtures\my-case --delay-ms 30
 ```
 
 It writes `tree.json`, `reference.png`, and the current `render.txt`, but live
-streaming never invokes screenshot capture. Committed x64dbg CPU and Total
-Commander fixtures under `tests/fixtures/accessibility/` now exercise dense
-register/table/list rows, menu packing, collision precedence, and truncation.
+streaming never invokes screenshot capture. Committed x64dbg CPU, Total Commander, and Zed fixtures under
+`tests/fixtures/accessibility/` exercise dense register/table/list rows, menu
+packing, collision precedence, truncation, and explicitly unavailable panes.
 See that directory's README for the refresh workflow.
 
 The xa11y AccessKit, Qt, GTK, WinForms, WPF, and Cocoa test applications provide

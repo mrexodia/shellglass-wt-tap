@@ -11,7 +11,8 @@ param(
 )
 # Operator convenience launcher for the two verified x64 WT families. This is
 # automated only inside the disposable operator Sandbox gate; host automation
-# must never call it against the user's real WT. Existing controls recover lazily on their first post-injection focus gain/loss.
+# must never call it against the user's real WT. Existing controls recover lazily
+# on their first post-injection focus gain/loss or authoritative owner assignment.
 # -NewTab remains available as a convenient way to force a transition.
 $ErrorActionPreference='Stop'
 $root=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
@@ -25,13 +26,74 @@ $family=switch([string]$package.Version){
     '1.24.11321.0' {'wt_1_24_11321';break}
     default {throw "WT $($package.Version) is unknown and will not be injected; only 1.24.11911.0 and 1.24.11321.0 are verified"}
 }
-$native=Join-Path $root 'target/native-windows/Release'
+$nativeBuild=Join-Path $root 'target/native-windows'
+$native=Join-Path $nativeBuild 'Release'
 $profileTool=Join-Path $native 'shellglass-profile.exe'
 $adapter=Join-Path $native 'shellglass-wt-adapter.dll'
 $injector=Join-Path $native 'shellglass-inject.exe'
 $tap=@((Join-Path $root 'target/release/shellglass-wt-tap.exe'),(Join-Path $root 'target/debug/shellglass-wt-tap.exe'))|Where-Object{Test-Path $_}|Select-Object -First 1
+$cmakeFile=Join-Path $PSScriptRoot 'CMakeLists.txt'
+$nativePairs=@(
+    @($profileTool,(Join-Path $PSScriptRoot 'profile_tool.cpp')),
+    @($adapter,(Join-Path $PSScriptRoot 'wt_adapter.cpp')),
+    @($injector,(Join-Path $PSScriptRoot 'injector.cpp'))
+)
+$nativeNeedsBuild=$false
+foreach($pair in $nativePairs){
+    if(-not(Test-Path $pair[0]) -or
+       (Get-Item $pair[1]).LastWriteTimeUtc-gt(Get-Item $pair[0] -ErrorAction SilentlyContinue).LastWriteTimeUtc -or
+       (Get-Item $cmakeFile).LastWriteTimeUtc-gt(Get-Item $pair[0] -ErrorAction SilentlyContinue).LastWriteTimeUtc){
+        $nativeNeedsBuild=$true
+        break
+    }
+}
+if($nativeNeedsBuild){
+    # A running WT process only blocks the relink when it actually has an
+    # adapter loaded. This lets an operator build and launch from an ordinary WT
+    # window on the first run while still preventing a stale process-lifetime
+    # adapter from being mistaken for the newly built DLL.
+    $loadedAdapterPids=@()
+    $uninspectableWtPids=@()
+    foreach($target in @(Get-Process WindowsTerminal -ErrorAction SilentlyContinue)){
+        try{
+            if($target.Modules|Where-Object ModuleName -ieq 'shellglass-wt-adapter.dll'){
+                $loadedAdapterPids+=@($target.Id)
+            }
+        }catch{
+            # Ignore a process that exited during inspection. For a live process,
+            # fail closed rather than assuming that an inaccessible module list
+            # means that the adapter is absent.
+            if(Get-Process -Id $target.Id -ErrorAction SilentlyContinue){
+                $uninspectableWtPids+=@($target.Id)
+            }
+        }
+    }
+    if($loadedAdapterPids){
+        throw "the native WT build is missing or stale, but WindowsTerminal.exe PID(s) $($loadedAdapterPids -join ', ') still have shellglass-wt-adapter.dll loaded.`nFully exit those Windows Terminal processes and rerun this command; the launcher will then run CMake automatically."
+    }
+    if($uninspectableWtPids){
+        throw "the native WT build is missing or stale, but the module list for WindowsTerminal.exe PID(s) $($uninspectableWtPids -join ', ') could not be inspected.`nRerun at an equivalent integrity level or fully exit those processes before rebuilding."
+    }
+    $cmake=(Get-Command cmake.exe -ErrorAction SilentlyContinue).Source
+    if(-not$cmake){throw 'the native WT build is missing or stale and cmake.exe is not available'}
+    $cache=Join-Path $nativeBuild 'CMakeCache.txt'
+    if(Test-Path $cache){
+        $cacheHomeEntry=(Get-Content $cache|Where-Object{$_-like'CMAKE_HOME_DIRECTORY:INTERNAL=*'}|Select-Object -First 1)
+        if($cacheHomeEntry){
+            $cachedSource=$cacheHomeEntry.Substring($cacheHomeEntry.IndexOf('=')+1).Replace('/','\')
+            if([IO.Path]::GetFullPath($cachedSource)-ne[IO.Path]::GetFullPath($PSScriptRoot)){
+                Remove-Item $nativeBuild -Recurse -Force
+            }
+        }
+    }
+    Write-Host 'Building the current native WT adapter with CMake...'
+    & $cmake -S $PSScriptRoot -B $nativeBuild -A x64
+    if($LASTEXITCODE){throw "CMake configure exited $LASTEXITCODE"}
+    & $cmake --build $nativeBuild --config Release
+    if($LASTEXITCODE){throw "CMake build exited $LASTEXITCODE"}
+}
 foreach($artifact in @($profileTool,$adapter,$injector)){
-    if(-not(Test-Path $artifact)){throw "required build artifact is missing: $artifact`nBuild with: cmake --build target/native-windows --config Release"}
+    if(-not(Test-Path $artifact)){throw "native build did not produce required artifact: $artifact"}
 }
 if(-not$PrepareOnly-and$PSCmdlet.ParameterSetName-eq'Local'-and(-not$tap-or-not(Test-Path $tap))){
     throw 'local serve requires a built tap binary; run: cargo build --release'
