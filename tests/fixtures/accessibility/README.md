@@ -32,10 +32,14 @@ Committed fixtures:
   inline text runs whose union bounds overlap within each HTML paragraph.
 - `chrome-x64dbg-commands` — variable-height FAQ list items whose wrapped
   continuation lines must not be overwritten by following items.
+- `chrome-x64dbg-plugins` — nested HTML lists whose child bullets require
+  separate indented rows rather than flattened parent labels.
 - `chrome-huggingface-list` — variable-height HTML bullet items and compact
   evaluation-result rows from a Hugging Face model page.
 - `dataexplorer` — a multiline code editor exposed by UIA as `TextField`
   rather than `TextArea`.
+- `ida-pseudocode` — fixed-width editor lines padded with trailing spaces that
+  must not wrap into visually blank rows.
 - `x64dbg-cpu` — dense menus, disassembly, registers, flags, tables, and nested
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value

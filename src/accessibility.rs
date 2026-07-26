@@ -1325,8 +1325,63 @@ fn bullet_list_label(node: &SnapshotNode) -> Option<String> {
     if !has_marker {
         return None;
     }
+    if node.children.iter().any(|child| child.role == Role::List) {
+        let mut lines = vec![format!("• {}", direct_list_item_text(node)?)];
+        for list in node
+            .children
+            .iter()
+            .filter(|child| child.role == Role::List)
+        {
+            append_nested_list_labels(list, 1, &mut lines);
+        }
+        return Some(lines.join("\n"));
+    }
     let label = nonempty(&node.name)?;
     Some(format!("• {}", label.trim_start_matches('•').trim_start()))
+}
+
+fn direct_list_item_text(node: &SnapshotNode) -> Option<String> {
+    let mut parts = Vec::new();
+    for child in &node.children {
+        let text = match child.role {
+            Role::List => continue,
+            Role::Link => single_descendant_static_text(child).or_else(|| {
+                nonempty(&child.name)
+                    .or_else(|| nonempty(&child.description))
+                    .map(str::to_string)
+            }),
+            Role::StaticText => nonempty(&child.name)
+                .or_else(|| nonempty(&child.value))
+                .filter(|text| !matches!(text.trim(), "•" | "◦"))
+                .map(str::to_string),
+            _ => None,
+        };
+        if let Some(text) = text {
+            parts.push(text);
+        }
+    }
+    (!parts.is_empty()).then(|| parts.join(" "))
+}
+
+fn append_nested_list_labels(list: &SnapshotNode, depth: usize, lines: &mut Vec<String>) {
+    for item in list
+        .children
+        .iter()
+        .filter(|child| child.role == Role::ListItem)
+    {
+        let Some(label) = direct_list_item_text(item).or_else(|| nonempty(&item.name).map(clean))
+        else {
+            continue;
+        };
+        lines.push(format!("{}◦ {label}", "  ".repeat(depth)));
+        for nested in item
+            .children
+            .iter()
+            .filter(|child| child.role == Role::List)
+        {
+            append_nested_list_labels(nested, depth + 1, lines);
+        }
+    }
 }
 
 fn compact_list_row_label(node: &SnapshotNode) -> Option<String> {
@@ -1676,7 +1731,10 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             }
         }
         Role::ListItem => {
-            if label.is_empty() {
+            if let Some(list_label) = bullet_list_label(node) {
+                draw_flow_text(canvas, rect, &list_label, style);
+                true
+            } else if label.is_empty() {
                 false
             } else {
                 let label_width = UnicodeWidthStr::width(label);
@@ -1742,18 +1800,26 @@ fn wrap_flow_text(value: &str, width: usize, max_lines: usize) -> Vec<String> {
         .collect::<String>();
     let mut lines = Vec::new();
     for source_line in bounded.lines() {
+        let indent = source_line
+            .chars()
+            .take_while(|character| *character == ' ')
+            .count()
+            .min(width.saturating_sub(1));
+        let prefix = " ".repeat(indent);
+        let content_width = width.saturating_sub(indent).max(1);
         let mut current = String::new();
         let mut occupied = 0usize;
         for word in source_line.split_whitespace() {
             let word_width = UnicodeWidthStr::width(word);
-            if !current.is_empty() && occupied + 1 + word_width > width {
-                lines.push(std::mem::take(&mut current));
+            if !current.is_empty() && occupied + 1 + word_width > content_width {
+                lines.push(format!("{prefix}{current}"));
+                current.clear();
                 occupied = 0;
                 if lines.len() == max_lines {
                     return lines;
                 }
             }
-            if word_width <= width {
+            if word_width <= content_width {
                 if !current.is_empty() {
                     current.push(' ');
                     occupied += 1;
@@ -1761,14 +1827,22 @@ fn wrap_flow_text(value: &str, width: usize, max_lines: usize) -> Vec<String> {
                 current.push_str(word);
                 occupied += word_width;
             } else {
-                let chunks = wrap_text(word, width, max_lines - lines.len());
+                if !current.is_empty() {
+                    lines.push(format!("{prefix}{current}"));
+                    current.clear();
+                    occupied = 0;
+                    if lines.len() == max_lines {
+                        return lines;
+                    }
+                }
+                let chunks = wrap_text(word, content_width, max_lines - lines.len());
                 let chunk_count = chunks.len();
                 for (index, chunk) in chunks.into_iter().enumerate() {
                     if index + 1 == chunk_count {
+                        occupied = UnicodeWidthStr::width(chunk.as_str());
                         current = chunk;
-                        occupied = UnicodeWidthStr::width(current.as_str());
                     } else {
-                        lines.push(chunk);
+                        lines.push(format!("{prefix}{chunk}"));
                         if lines.len() == max_lines {
                             return lines;
                         }
@@ -1777,7 +1851,7 @@ fn wrap_flow_text(value: &str, width: usize, max_lines: usize) -> Vec<String> {
             }
         }
         if !current.is_empty() {
-            lines.push(current);
+            lines.push(format!("{prefix}{current}"));
         } else if source_line.is_empty() {
             lines.push(String::new());
         }
@@ -1796,7 +1870,15 @@ fn draw_multiline_text(
     style: Style,
     scroll_fraction: Option<f64>,
 ) {
-    let lines = wrap_text(value, rect.width, MAX_MULTILINE_FIELD_CHARS);
+    // Some editor providers expose every logical line padded to the viewport's
+    // pixel-column width. Those trailing spaces must not hard-wrap into a
+    // second visually blank terminal row.
+    let unpadded = value
+        .split('\n')
+        .map(|line| line.trim_end_matches([' ', '\t', '\r']))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let lines = wrap_text(&unpadded, rect.width, MAX_MULTILINE_FIELD_CHARS);
     let overflow = lines.len().saturating_sub(rect.height);
     let start = scroll_fraction
         .map(|fraction| (overflow as f64 * fraction).round() as usize)
@@ -3204,6 +3286,37 @@ mod tests {
     }
 
     #[test]
+    fn x64dbg_plugins_fixture_places_nested_lists_on_indented_rows() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chrome-x64dbg-plugins/tree.json"
+        ))
+        .expect("parse x64dbg plugins fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        assert_eq!(rendered.matches("◦ arguments").count(), 3);
+        assert_eq!(rendered.matches("◦ result").count(), 3);
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let parent = lines
+            .iter()
+            .position(|line| line.contains("• StartScylla/scylla/imprec"))
+            .expect("parent plugin list item");
+        let parent_column = lines[parent]
+            .find('•')
+            .expect("parent plugin bullet column");
+        assert!(lines[parent + 1].contains("◦ arguments"));
+        assert!(lines[parent + 2].contains("◦ result"));
+        assert!(
+            lines[parent + 1]
+                .find('◦')
+                .is_some_and(|column| column > parent_column)
+        );
+    }
+
+    #[test]
     fn x64dbg_commands_fixture_keeps_wrapped_list_item_continuations() {
         let fixture: LayoutFixture = serde_json::from_str(include_str!(
             "../tests/fixtures/accessibility/chrome-x64dbg-commands/tree.json"
@@ -3255,6 +3368,27 @@ mod tests {
         ));
         assert!(rendered.contains("datacurve/deep-swe · Deep Swe leaderboard 40.4"));
         assert!(rendered.contains("ScaleAI/SWE-bench_Pro · SWE Bench Pro leaderboard 59.4"));
+    }
+
+    #[test]
+    fn ida_fixture_discards_editor_padding_without_inventing_blank_rows() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/ida-pseudocode/tree.json"
+        ))
+        .expect("parse IDA fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let first = lines
+            .iter()
+            .position(|line| line.contains("LODWORD(v4->Ptr) = v2;"))
+            .expect("first pseudocode line");
+        assert!(lines[first + 1].contains("if ( (unsigned int)VidMapVpStatePage"));
+        assert!(lines[first + 2].contains("wil::details::in1diag3::_Throw_GetLastError("));
     }
 
     #[test]
