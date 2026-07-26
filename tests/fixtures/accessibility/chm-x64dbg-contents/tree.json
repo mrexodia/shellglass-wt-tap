@@ -1,0 +1,3317 @@
+{
+  "schema_version": 1,
+  "cols": 200,
+  "rows": 60,
+  "snapshot": {
+    "app_name": "x64dbg documentation",
+    "pid": 21308,
+    "window_name": "x64dbg documentation",
+    "root": {
+      "role": "Window",
+      "bounds": {
+        "x": 1978,
+        "y": 150,
+        "width": 1418,
+        "height": 768
+      },
+      "name": "x64dbg documentation",
+      "value": null,
+      "description": null,
+      "states": {
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "active": true,
+        "checked": null,
+        "selected": false,
+        "expanded": null,
+        "editable": false,
+        "focusable": true,
+        "modal": false,
+        "required": false,
+        "busy": false
+      },
+      "children": [
+        {
+          "role": "Toolbar",
+          "bounds": {
+            "x": 1986,
+            "y": 181,
+            "width": 1418,
+            "height": 40
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1986,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Hide",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2035,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Locate",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2084,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Back",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": false,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2133,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Forward",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": false,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2182,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Home",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2231,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Font",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2280,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Print",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2329,
+                "y": 181,
+                "width": 49,
+                "height": 40
+              },
+              "name": "Options",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2210,
+            "y": 221,
+            "width": 1178,
+            "height": 689
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2210,
+                "y": 221,
+                "width": 1178,
+                "height": 689
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2210,
+                    "y": 221,
+                    "width": 1178,
+                    "height": 689
+                  },
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": [
+                    {
+                      "role": "Group",
+                      "bounds": {
+                        "x": 2210,
+                        "y": 221,
+                        "width": 1178,
+                        "height": 689
+                      },
+                      "name": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/index.html",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": [
+                        {
+                          "role": "WebArea",
+                          "bounds": {
+                            "x": 2212,
+                            "y": 223,
+                            "width": 1157,
+                            "height": 685
+                          },
+                          "name": "Welcome to x64dbg�s documentation!",
+                          "value": null,
+                          "description": null,
+                          "states": {
+                            "enabled": true,
+                            "visible": true,
+                            "focused": false,
+                            "active": false,
+                            "checked": null,
+                            "selected": false,
+                            "expanded": null,
+                            "editable": false,
+                            "focusable": false,
+                            "modal": false,
+                            "required": false,
+                            "busy": false
+                          },
+                          "children": [
+                            {
+                              "role": "Link",
+                              "bounds": {
+                                "x": 2343,
+                                "y": 236,
+                                "width": 64,
+                                "height": 24
+                              },
+                              "name": "x64dbg ",
+                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/index.html#",
+                              "description": null,
+                              "states": {
+                                "enabled": true,
+                                "visible": true,
+                                "focused": false,
+                                "active": false,
+                                "checked": null,
+                                "selected": false,
+                                "expanded": null,
+                                "editable": false,
+                                "focusable": false,
+                                "modal": false,
+                                "required": false,
+                                "busy": false
+                              },
+                              "children": [
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2349,
+                                    "y": 240,
+                                    "width": 56,
+                                    "height": 16
+                                  },
+                                  "name": "x64dbg ",
+                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/index.html#",
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "role": "StaticText",
+                              "bounds": {
+                                "x": 2364,
+                                "y": 267,
+                                "width": 30,
+                                "height": 16
+                              },
+                              "name": "0.1 ",
+                              "value": null,
+                              "description": null,
+                              "states": {
+                                "enabled": true,
+                                "visible": true,
+                                "focused": false,
+                                "active": false,
+                                "checked": null,
+                                "selected": false,
+                                "expanded": null,
+                                "editable": false,
+                                "focusable": false,
+                                "modal": false,
+                                "required": false,
+                                "busy": false
+                              },
+                              "children": []
+                            },
+                            {
+                              "role": "Group",
+                              "bounds": {
+                                "x": 2212,
+                                "y": 322,
+                                "width": 300,
+                                "height": 150
+                              },
+                              "name": "main navigation",
+                              "value": null,
+                              "description": null,
+                              "states": {
+                                "enabled": true,
+                                "visible": true,
+                                "focused": false,
+                                "active": false,
+                                "checked": null,
+                                "selected": false,
+                                "expanded": null,
+                                "editable": false,
+                                "focusable": false,
+                                "modal": false,
+                                "required": false,
+                                "busy": false
+                              },
+                              "children": [
+                                {
+                                  "role": "List",
+                                  "bounds": {
+                                    "x": 2212,
+                                    "y": 322,
+                                    "width": 300,
+                                    "height": 150
+                                  },
+                                  "name": null,
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": [
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2212,
+                                        "y": 322,
+                                        "width": 300,
+                                        "height": 30
+                                      },
+                                      "name": "Introduction\r\n ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2212,
+                                            "y": 322,
+                                            "width": 300,
+                                            "height": 30
+                                          },
+                                          "name": "Introduction",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2235,
+                                                "y": 323,
+                                                "width": 81,
+                                                "height": 28
+                                              },
+                                              "name": "Introduction",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2212,
+                                        "y": 352,
+                                        "width": 300,
+                                        "height": 30
+                                      },
+                                      "name": "GUI manual\r\n ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2212,
+                                            "y": 352,
+                                            "width": 300,
+                                            "height": 30
+                                          },
+                                          "name": "GUI manual",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/gui/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2235,
+                                                "y": 353,
+                                                "width": 77,
+                                                "height": 28
+                                              },
+                                              "name": "GUI manual",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/gui/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2212,
+                                        "y": 382,
+                                        "width": 300,
+                                        "height": 30
+                                      },
+                                      "name": "Commands\r\n ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2212,
+                                            "y": 382,
+                                            "width": 300,
+                                            "height": 30
+                                          },
+                                          "name": "Commands",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/commands/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2235,
+                                                "y": 383,
+                                                "width": 74,
+                                                "height": 28
+                                              },
+                                              "name": "Commands",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/commands/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2212,
+                                        "y": 412,
+                                        "width": 300,
+                                        "height": 30
+                                      },
+                                      "name": "Developers\r\n ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2212,
+                                            "y": 412,
+                                            "width": 300,
+                                            "height": 30
+                                          },
+                                          "name": "Developers",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/developers/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2235,
+                                                "y": 413,
+                                                "width": 73,
+                                                "height": 28
+                                              },
+                                              "name": "Developers",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/developers/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2212,
+                                        "y": 442,
+                                        "width": 300,
+                                        "height": 30
+                                      },
+                                      "name": "Licenses\r\n ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2212,
+                                            "y": 442,
+                                            "width": 300,
+                                            "height": 30
+                                          },
+                                          "name": "Licenses",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/licenses.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2235,
+                                                "y": 443,
+                                                "width": 55,
+                                                "height": 28
+                                              },
+                                              "name": "Licenses",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/licenses.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "role": "Group",
+                              "bounds": {
+                                "x": 2564,
+                                "y": 249,
+                                "width": 753,
+                                "height": 91
+                              },
+                              "name": "breadcrumbs navigation",
+                              "value": null,
+                              "description": null,
+                              "states": {
+                                "enabled": true,
+                                "visible": true,
+                                "focused": false,
+                                "active": false,
+                                "checked": null,
+                                "selected": false,
+                                "expanded": null,
+                                "editable": false,
+                                "focusable": false,
+                                "modal": false,
+                                "required": false,
+                                "busy": false
+                              },
+                              "children": [
+                                {
+                                  "role": "List",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 249,
+                                    "width": 753,
+                                    "height": 52
+                                  },
+                                  "name": null,
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": [
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2564,
+                                        "y": 249,
+                                        "width": 52,
+                                        "height": 26
+                                      },
+                                      "name": "Docs » ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2564,
+                                            "y": 254,
+                                            "width": 36,
+                                            "height": 16
+                                          },
+                                          "name": "Docs",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/index.html#",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2564,
+                                                "y": 254,
+                                                "width": 36,
+                                                "height": 16
+                                              },
+                                              "name": "Docs",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/index.html#",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "role": "StaticText",
+                                          "bounds": {
+                                            "x": 2600,
+                                            "y": 254,
+                                            "width": 15,
+                                            "height": 16
+                                          },
+                                          "name": " » ",
+                                          "value": null,
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2616,
+                                        "y": 249,
+                                        "width": 272,
+                                        "height": 26
+                                      },
+                                      "name": "Welcome to x64dbg’s documentation! ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "StaticText",
+                                          "bounds": {
+                                            "x": 2616,
+                                            "y": 254,
+                                            "width": 271,
+                                            "height": 16
+                                          },
+                                          "name": "Welcome to x64dbg’s documentation! ",
+                                          "value": null,
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 3312,
+                                        "y": 275,
+                                        "width": 5,
+                                        "height": 26
+                                      },
+                                      "name": null,
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "role": "Group",
+                              "bounds": {
+                                "x": 2564,
+                                "y": 364,
+                                "width": 753,
+                                "height": 1446
+                              },
+                              "name": "Welcome to x64dbg’s documentation!\r\nSuggested reads\r\nIf you came here because someone told you to read the manual, start by reading all sections of the introduction. See commands for an overview of the available commands and how they work (the arguments are comma separated).\r\nContents:\r\nIntroduction\r\nValues \r\nExpressions \r\nExpression Functions \r\nVariables \r\nConditional Breakpoints \r\nConditional Tracing \r\nString Formatting \r\nCommand line \r\nInability \r\nFeatures \r\nGlossary \r\nGUI manual\r\nMenus \r\nViews \r\nSettings \r\nDialogs \r\nTranslate the x64dbg \r\nTips \r\nUnusual instructions \r\nCommands\r\nGeneral Purpose \r\nDebug Control \r\nBreakpoint Control \r\nConditional Breakpoint Control \r\nTracing \r\nThread Control \r\nMemory Operations \r\nOperating System Control \r\nWatch Control \r\nVariables \r\nSearching \r\nUser Database \r\nAnalysis \r\nTypes \r\nPlugins \r\nScript Commands \r\nGUI \r\nMiscellaneous \r\nDevelopers\r\nPlugins \r\nFunctions \r\nx64dbg trace file format specification \r\nLicenses \r\nIndices and tables\r\nIndex \r\nModule Index \r\nSearch Page ",
+                              "value": null,
+                              "description": null,
+                              "states": {
+                                "enabled": true,
+                                "visible": true,
+                                "focused": false,
+                                "active": false,
+                                "checked": null,
+                                "selected": false,
+                                "expanded": null,
+                                "editable": false,
+                                "focusable": false,
+                                "modal": false,
+                                "required": false,
+                                "busy": false
+                              },
+                              "children": [
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 364,
+                                    "width": 550,
+                                    "height": 32
+                                  },
+                                  "name": "Welcome to x64dbg’s documentation!",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 415,
+                                    "width": 207,
+                                    "height": 29
+                                  },
+                                  "name": "Suggested reads",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 467,
+                                    "width": 564,
+                                    "height": 16
+                                  },
+                                  "name": "If you came here because someone told you to read the manual, start by reading ",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 3128,
+                                    "y": 467,
+                                    "width": 79,
+                                    "height": 16
+                                  },
+                                  "name": "all sections",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 3207,
+                                    "y": 467,
+                                    "width": 50,
+                                    "height": 16
+                                  },
+                                  "name": " of the ",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "Link",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 467,
+                                    "width": 88,
+                                    "height": 44
+                                  },
+                                  "name": "introduction",
+                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": [
+                                    {
+                                      "role": "StaticText",
+                                      "bounds": {
+                                        "x": 2564,
+                                        "y": 491,
+                                        "width": 88,
+                                        "height": 16
+                                      },
+                                      "name": "introduction",
+                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2652,
+                                    "y": 491,
+                                    "width": 37,
+                                    "height": 16
+                                  },
+                                  "name": ". See ",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "Link",
+                                  "bounds": {
+                                    "x": 2689,
+                                    "y": 491,
+                                    "width": 76,
+                                    "height": 20
+                                  },
+                                  "name": "commands",
+                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/commands/index.html",
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": [
+                                    {
+                                      "role": "StaticText",
+                                      "bounds": {
+                                        "x": 2689,
+                                        "y": 491,
+                                        "width": 76,
+                                        "height": 16
+                                      },
+                                      "name": "commands",
+                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/commands/index.html",
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 491,
+                                    "width": 681,
+                                    "height": 40
+                                  },
+                                  "name": " for an overview of the available commands and how they work (the arguments are ",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2668,
+                                    "y": 515,
+                                    "width": 126,
+                                    "height": 16
+                                  },
+                                  "name": "comma separated",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2794,
+                                    "y": 515,
+                                    "width": 12,
+                                    "height": 16
+                                  },
+                                  "name": ").",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "StaticText",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 563,
+                                    "width": 70,
+                                    "height": 16
+                                  },
+                                  "name": "Contents:",
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "role": "List",
+                                  "bounds": {
+                                    "x": 2564,
+                                    "y": 607,
+                                    "width": 753,
+                                    "height": 1056
+                                  },
+                                  "name": null,
+                                  "value": null,
+                                  "description": null,
+                                  "states": {
+                                    "enabled": true,
+                                    "visible": true,
+                                    "focused": false,
+                                    "active": false,
+                                    "checked": null,
+                                    "selected": false,
+                                    "expanded": null,
+                                    "editable": false,
+                                    "focusable": false,
+                                    "modal": false,
+                                    "required": false,
+                                    "busy": false
+                                  },
+                                  "children": [
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2588,
+                                        "y": 607,
+                                        "width": 729,
+                                        "height": 288
+                                      },
+                                      "name": "Introduction\r\nValues \r\nExpressions \r\nExpression Functions \r\nVariables \r\nConditional Breakpoints \r\nConditional Tracing \r\nString Formatting \r\nCommand line \r\nInability \r\nFeatures \r\nGlossary ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2588,
+                                            "y": 611,
+                                            "width": 88,
+                                            "height": 16
+                                          },
+                                          "name": "Introduction",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2588,
+                                                "y": 611,
+                                                "width": 88,
+                                                "height": 16
+                                              },
+                                              "name": "Introduction",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "role": "List",
+                                          "bounds": {
+                                            "x": 2588,
+                                            "y": 631,
+                                            "width": 729,
+                                            "height": 264
+                                          },
+                                          "name": null,
+                                          "value": null,
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 631,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Values ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 635,
+                                                    "width": 47,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Values",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Values.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 635,
+                                                        "width": 47,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Values",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Values.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 655,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Expressions ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 659,
+                                                    "width": 83,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Expressions",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Expressions.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 659,
+                                                        "width": 83,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Expressions",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Expressions.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 679,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Expression Functions ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 683,
+                                                    "width": 150,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Expression Functions",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Expression-functions.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 683,
+                                                        "width": 150,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Expression Functions",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Expression-functions.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 703,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Variables ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 707,
+                                                    "width": 65,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Variables",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Variables.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 707,
+                                                        "width": 65,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Variables",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Variables.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 727,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Conditional Breakpoints ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 731,
+                                                    "width": 170,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Conditional Breakpoints",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/ConditionalBreakpoint.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 731,
+                                                        "width": 170,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Conditional Breakpoints",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/ConditionalBreakpoint.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 751,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Conditional Tracing ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 755,
+                                                    "width": 138,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Conditional Tracing",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/ConditionalTracing.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 755,
+                                                        "width": 138,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Conditional Tracing",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/ConditionalTracing.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 775,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "String Formatting ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 779,
+                                                    "width": 124,
+                                                    "height": 16
+                                                  },
+                                                  "name": "String Formatting",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Formatting.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 779,
+                                                        "width": 124,
+                                                        "height": 16
+                                                      },
+                                                      "name": "String Formatting",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Formatting.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 799,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Command line ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 803,
+                                                    "width": 101,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Command line",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Commandline.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 803,
+                                                        "width": 101,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Command line",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Commandline.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 823,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Inability ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 827,
+                                                    "width": 56,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Inability",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Inability.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 827,
+                                                        "width": 56,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Inability",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Inability.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 847,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Features ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 851,
+                                                    "width": 61,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Features",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Feature-set.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 851,
+                                                        "width": 61,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Features",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Feature-set.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "role": "ListItem",
+                                              "bounds": {
+                                                "x": 2612,
+                                                "y": 871,
+                                                "width": 705,
+                                                "height": 24
+                                              },
+                                              "name": "Glossary ",
+                                              "value": null,
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": [
+                                                {
+                                                  "role": "Link",
+                                                  "bounds": {
+                                                    "x": 2612,
+                                                    "y": 875,
+                                                    "width": 61,
+                                                    "height": 16
+                                                  },
+                                                  "name": "Glossary",
+                                                  "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Glossary.html",
+                                                  "description": null,
+                                                  "states": {
+                                                    "enabled": true,
+                                                    "visible": true,
+                                                    "focused": false,
+                                                    "active": false,
+                                                    "checked": null,
+                                                    "selected": false,
+                                                    "expanded": null,
+                                                    "editable": false,
+                                                    "focusable": false,
+                                                    "modal": false,
+                                                    "required": false,
+                                                    "busy": false
+                                                  },
+                                                  "children": [
+                                                    {
+                                                      "role": "StaticText",
+                                                      "bounds": {
+                                                        "x": 2612,
+                                                        "y": 875,
+                                                        "width": 61,
+                                                        "height": 16
+                                                      },
+                                                      "name": "Glossary",
+                                                      "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/introduction/Glossary.html",
+                                                      "description": null,
+                                                      "states": {
+                                                        "enabled": true,
+                                                        "visible": true,
+                                                        "focused": false,
+                                                        "active": false,
+                                                        "checked": null,
+                                                        "selected": false,
+                                                        "expanded": null,
+                                                        "editable": false,
+                                                        "focusable": false,
+                                                        "modal": false,
+                                                        "required": false,
+                                                        "busy": false
+                                                      },
+                                                      "children": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "role": "ListItem",
+                                      "bounds": {
+                                        "x": 2588,
+                                        "y": 895,
+                                        "width": 729,
+                                        "height": 192
+                                      },
+                                      "name": "GUI manual\r\nMenus \r\nViews \r\nSettings \r\nDialogs \r\nTranslate the x64dbg \r\nTips \r\nUnusual instructions ",
+                                      "value": null,
+                                      "description": null,
+                                      "states": {
+                                        "enabled": true,
+                                        "visible": true,
+                                        "focused": false,
+                                        "active": false,
+                                        "checked": null,
+                                        "selected": false,
+                                        "expanded": null,
+                                        "editable": false,
+                                        "focusable": false,
+                                        "modal": false,
+                                        "required": false,
+                                        "busy": false
+                                      },
+                                      "children": [
+                                        {
+                                          "role": "Link",
+                                          "bounds": {
+                                            "x": 2588,
+                                            "y": 899,
+                                            "width": 83,
+                                            "height": 16
+                                          },
+                                          "name": "GUI manual",
+                                          "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/gui/index.html",
+                                          "description": null,
+                                          "states": {
+                                            "enabled": true,
+                                            "visible": true,
+                                            "focused": false,
+                                            "active": false,
+                                            "checked": null,
+                                            "selected": false,
+                                            "expanded": null,
+                                            "editable": false,
+                                            "focusable": false,
+                                            "modal": false,
+                                            "required": false,
+                                            "busy": false
+                                          },
+                                          "children": [
+                                            {
+                                              "role": "StaticText",
+                                              "bounds": {
+                                                "x": 2588,
+                                                "y": 899,
+                                                "width": 83,
+                                                "height": 16
+                                              },
+                                              "name": "GUI manual",
+                                              "value": "mk:@MSITStore:C:\\CodeBlocks\\hhc-recompiled\\htmlhelp\\x64dbgdoc.chm::/gui/index.html",
+                                              "description": null,
+                                              "states": {
+                                                "enabled": true,
+                                                "visible": true,
+                                                "focused": false,
+                                                "active": false,
+                                                "checked": null,
+                                                "selected": false,
+                                                "expanded": null,
+                                                "editable": false,
+                                                "focusable": false,
+                                                "modal": false,
+                                                "required": false,
+                                                "busy": false
+                                              },
+                                              "children": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2206,
+            "y": 221,
+            "width": 4,
+            "height": 689
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 1986,
+            "y": 221,
+            "width": 220,
+            "height": 689
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "TabGroup",
+              "bounds": {
+                "x": 1986,
+                "y": 229,
+                "width": 216,
+                "height": 681
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "List",
+                  "bounds": {
+                    "x": 1994,
+                    "y": 255,
+                    "width": 200,
+                    "height": 647
+                  },
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": true,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": [
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 258,
+                        "width": 112,
+                        "height": 16
+                      },
+                      "name": "x64dbg documentation",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": true,
+                        "active": false,
+                        "checked": null,
+                        "selected": true,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 274,
+                        "width": 60,
+                        "height": 16
+                      },
+                      "name": "Introduction",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": false,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 290,
+                        "width": 60,
+                        "height": 16
+                      },
+                      "name": "GUI manual",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": false,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 306,
+                        "width": 56,
+                        "height": 16
+                      },
+                      "name": "Commands",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": false,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 322,
+                        "width": 58,
+                        "height": 16
+                      },
+                      "name": "Developers",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": false,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "TreeItem",
+                      "bounds": {
+                        "x": 2035,
+                        "y": 338,
+                        "width": 46,
+                        "height": 16
+                      },
+                      "name": "Licenses",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 1988,
+                    "y": 231,
+                    "width": 54,
+                    "height": 18
+                  },
+                  "name": "Contents",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": true,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2042,
+                    "y": 231,
+                    "width": 42,
+                    "height": 18
+                  },
+                  "name": "Index",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2084,
+                    "y": 231,
+                    "width": 46,
+                    "height": 18
+                  },
+                  "name": "Search",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2130,
+                    "y": 231,
+                    "width": 61,
+                    "height": 18
+                  },
+                  "name": "Favourites",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2002,
+            "y": 153,
+            "width": 1386,
+            "height": 28
+          },
+          "name": null,
+          "value": "x64dbg documentation",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuBar",
+              "bounds": {
+                "x": 1986,
+                "y": 158,
+                "width": 22,
+                "height": 22
+              },
+              "name": "System",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "MenuItem",
+                  "bounds": {
+                    "x": 1986,
+                    "y": 158,
+                    "width": 22,
+                    "height": 22
+                  },
+                  "name": "System",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": false,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3249,
+                "y": 151,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Minimise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3296,
+                "y": 151,
+                "width": 46,
+                "height": 30
+              },
+              "name": "Maximise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3342,
+                "y": 151,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Close",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "node_count": 120,
+    "truncated": false,
+    "capture_time": {
+      "secs": 4,
+      "nanos": 337921500
+    }
+  }
+}

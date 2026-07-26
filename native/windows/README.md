@@ -89,7 +89,7 @@ restart/re-registration, callback-fault disable/removal through a test-only
 adapter build, and separate 120-callback p95 intervals at 80x24, 240x80, and
 320x100. CPU/private-memory thresholds are enforced. Its sustained full-screen
 stage stalls the broker reader while keeping the pipe connected, requires a
-nonzero newest-wins drop count, and performs a real tab-focus round trip while the
+nonzero bounded-drop count followed by full-state reconciliation, and performs a real tab-focus round trip while the
 worker is blocked to prove target hooks do not share its IPC lock. It then
 hard-restarts the broker and requires a fresh full. The same already-injected WT
 is handed to the production detached push worker; the gate verifies prompt
@@ -159,8 +159,10 @@ Windows Terminal `1.24.11911.0` (`wt_1_24`) and `1.24.11321.0`
 (`wt_1_24_11321`). Their matching Microsoft PDBs expose the exact
 ControlCore lifecycle/focus/owner hooks and renderer attachment/redraw methods. The
 adapter validates the module hash, RSDS identity, profile integrity, executable
-prologues, and family-pinned type/vtable contract before patching. Render callbacks copy into fixed-capacity newest-wins batches only; all pipe I/O,
-UTF conversion, model assembly, and encoding remain on its worker. Dormant,
+prologues, and family-pinned type/vtable contract before patching. Render callbacks
+copy into fixed-capacity batches only. Because WT paints dirty-region deltas, an
+occupied queue is never replaced by a newer partial update; after a drop, the worker
+rejects the incomplete queued sequence and schedules a full repaint. All pipe I/O, UTF conversion, model assembly, and encoding remain on its worker. Dormant,
 disconnected, and closed sources release their large batch/model buffers on the
 worker after callback quiescence. Unknown hashes and changed type layouts install
 no hooks.

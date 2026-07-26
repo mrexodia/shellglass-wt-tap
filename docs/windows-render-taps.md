@@ -34,7 +34,8 @@ Implementation evidence:
   stock WT 1.24.11911.0 (`wt_1_24`) and 1.24.11321.0
   (`wt_1_24_11321`). Both pass the same isolated real-target gate. Its render
   engine is dormant until subscribed,
-  uses fixed-capacity lock-free newest-wins batches on render callbacks, reclaims
+  uses fixed-capacity lock-free batches that preserve ordered dirty-region deltas
+  and reconcile overload drops with a full repaint, reclaims
   the large fixed batches whenever a source becomes dormant, and does all
   IPC/model/encoding work on a worker. The real `test-wt-sandbox.ps1` gate
   verifies Unicode/wide-cell text, resolved styles, DECSCUSR cursor shape, title,
@@ -49,8 +50,8 @@ Implementation evidence:
   separately gates 120-callback intervals at 80x24, 240x80, and 320x100 with a
   1 ms p95 ceiling (250 us in the latest recorded runs), target CPU/private-memory
   limits, and a sustained full-screen run. Stalling the broker reader proves
-  nonzero newest-wins replacement; a real tab-focus round trip during the stall
-  proves focus/lifecycle hooks do not wait behind worker IPC. A hard broker restart then
+  nonzero bounded drops followed by full-state reconciliation; a real tab-focus
+  round trip during the stall proves focus/lifecycle hooks do not wait behind worker IPC. A hard broker restart then
   proves dormant disconnect behavior and a fresh full registration. A 121-second
   run recorded 357 dropped intermediate frames and only 1.7 MiB private-memory
   growth. The latest expanded gate also switches the already-injected WT process

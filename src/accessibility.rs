@@ -34,7 +34,6 @@ const CYAN: Color = Color::Rgb(101, 214, 232);
 const GREEN: Color = Color::Rgb(151, 224, 126);
 const YELLOW: Color = Color::Rgb(246, 193, 119);
 const MAGENTA: Color = Color::Rgb(198, 160, 246);
-const RED: Color = Color::Rgb(235, 111, 146);
 const MAX_FIELD_CHARS: usize = 2_000;
 const MAX_MULTILINE_FIELD_CHARS: usize = 8_192;
 const DEFAULT_MAX_DEPTH: usize = 40;
@@ -432,17 +431,12 @@ fn capture_loop<W, D, P, B>(
                     if last_error.as_deref() != Some(message.as_str()) {
                         eprintln!("shellglass accessibility: {message}");
                     }
-                    publish(
-                        ticket,
-                        "accessibility-error".into(),
-                        message_frame(
-                            cols,
-                            rows,
-                            "shellglass accessibility — capture error",
-                            &message,
-                            RED,
-                        ),
-                    );
+                    // Foreground transitions can briefly expose the taskbar,
+                    // desktop, popup quickbars, or a window whose provider is
+                    // between roots. Keep the last coherent publication rather
+                    // than replacing it with an error screen. This also fails
+                    // closed when process identity cannot be established: no
+                    // details from the new foreground target are published.
                     last_error = Some(message);
                 }
             }
@@ -826,6 +820,7 @@ fn render_spatial_snapshot(
         &mut canvas,
         true,
         snapshot.root.role == Role::Window,
+        None,
         &mut positioned,
     );
     if positioned == 0 {
@@ -873,20 +868,46 @@ fn render_spatial_node(
     canvas: &mut Canvas,
     is_root: bool,
     fit_window: bool,
+    editor_host: Option<Rect>,
     positioned: &mut usize,
 ) {
-    if !node.states.visible || is_window_chrome(node) {
+    if !node.states.visible
+        || is_window_chrome(node)
+        || matches!(node.role, Role::ScrollBar | Role::ScrollThumb)
+    {
         return;
     }
-    let mut rendered_here = false;
-    if !is_root
-        && let Some(rect) = node
-            .bounds
-            .and_then(|bounds| project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window))
-        && draw_spatial_control(canvas, rect, node)
+    let child_editor_host = if node.role == Role::Group
+        && let Some(bounds) = node.bounds
+        && bounds.height >= 64
     {
-        *positioned += 1;
-        rendered_here = true;
+        Some(bounds)
+    } else {
+        editor_host
+    };
+    let mut rendered_here = false;
+    if !is_root && let Some(bounds) = node.bounds {
+        let multiline_field = node.role == Role::TextField
+            && nonempty(&node.value)
+                .or_else(|| nonempty(&node.name))
+                .or_else(|| nonempty(&node.description))
+                .is_some_and(|text| text.contains('\n'));
+        let mut expanded_multiline = false;
+        let effective_bounds = if multiline_field && bounds.height < 64 {
+            editor_host
+                .filter(|host| host.height >= bounds.height.saturating_mul(3))
+                .inspect(|_| expanded_multiline = true)
+                .unwrap_or(bounds)
+        } else {
+            bounds
+        };
+        if let Some(rect) =
+            project_bounds(effective_bounds, root, canvas.cols, canvas.rows, fit_window)
+            && draw_spatial_control(canvas, rect, node, expanded_multiline)
+        {
+            *positioned += 1;
+            rendered_here = true;
+        }
     }
     if rendered_here && owns_descendant_text(node) {
         // Named semantic controls and HTML flow containers already represent
@@ -895,18 +916,123 @@ fn render_spatial_node(
         return;
     }
     if node.role == Role::List {
-        if infer_grid_columns(node).len() > 1 {
-            render_table_children(node, root, canvas, fit_window, positioned);
-        } else {
+        if node
+            .children
+            .iter()
+            .any(|child| child.role == Role::TreeItem)
+            || infer_grid_columns(node).len() <= 1
+        {
             render_collection_children(node, root, canvas, fit_window, positioned);
+        } else {
+            render_table_children(node, root, canvas, fit_window, positioned);
         }
     } else if node.role == Role::Table {
         render_table_children(node, root, canvas, fit_window, positioned);
+    } else if node.role == Role::Group
+        && render_mixed_inline_group(node, root, canvas, fit_window, positioned)
+    {
     } else {
         for child in &node.children {
-            render_spatial_node(child, root, canvas, false, fit_window, positioned);
+            render_spatial_node(
+                child,
+                root,
+                canvas,
+                false,
+                fit_window,
+                child_editor_host,
+                positioned,
+            );
         }
     }
+}
+
+fn render_mixed_inline_group(
+    group: &SnapshotNode,
+    root: Rect,
+    canvas: &mut Canvas,
+    fit_window: bool,
+    positioned: &mut usize,
+) -> bool {
+    let is_inline = |node: &SnapshotNode| matches!(node.role, Role::StaticText | Role::Link);
+    if !group.children.iter().any(|child| child.role == Role::List)
+        || group
+            .children
+            .iter()
+            .filter(|child| is_inline(child))
+            .count()
+            < 2
+    {
+        return false;
+    }
+
+    let mut index = 0;
+    while index < group.children.len() {
+        if !is_inline(&group.children[index]) {
+            render_spatial_node(
+                &group.children[index],
+                root,
+                canvas,
+                false,
+                fit_window,
+                None,
+                positioned,
+            );
+            index += 1;
+            continue;
+        }
+
+        let start = index;
+        let mut bottom = group.children[index]
+            .bounds
+            .map(|bounds| i64::from(bounds.y) + i64::from(bounds.height));
+        index += 1;
+        while index < group.children.len() && is_inline(&group.children[index]) {
+            let Some(bounds) = group.children[index].bounds else {
+                break;
+            };
+            if bottom.is_some_and(|previous| i64::from(bounds.y) > previous + 8) {
+                break;
+            }
+            bottom = Some(
+                bottom
+                    .unwrap_or(i64::from(bounds.y))
+                    .max(i64::from(bounds.y) + i64::from(bounds.height)),
+            );
+            index += 1;
+        }
+
+        let run = &group.children[start..index];
+        if run.len() == 1 {
+            render_spatial_node(&run[0], root, canvas, false, fit_window, None, positioned);
+            continue;
+        }
+        let Some(mut union) = run[0].bounds else {
+            continue;
+        };
+        let mut text = String::new();
+        let mut complete = true;
+        for child in run {
+            complete &= collect_inline_text(child, &mut text);
+            if let Some(bounds) = child.bounds {
+                let right = (i64::from(union.x) + i64::from(union.width))
+                    .max(i64::from(bounds.x) + i64::from(bounds.width));
+                let bottom = (i64::from(union.y) + i64::from(union.height))
+                    .max(i64::from(bounds.y) + i64::from(bounds.height));
+                union.x = union.x.min(bounds.x);
+                union.y = union.y.min(bounds.y);
+                union.width = u32::try_from(right - i64::from(union.x)).unwrap_or(u32::MAX);
+                union.height = u32::try_from(bottom - i64::from(union.y)).unwrap_or(u32::MAX);
+            }
+        }
+        if complete
+            && !text.trim().is_empty()
+            && let Some(rect) = project_bounds(union, root, canvas.cols, canvas.rows, fit_window)
+        {
+            draw_flow_text(canvas, rect, &text, Style::default());
+            *positioned += 1;
+        }
+    }
+    true
 }
 
 fn render_collection_children(
@@ -916,11 +1042,45 @@ fn render_collection_children(
     fit_window: bool,
     positioned: &mut usize,
 ) {
+    if collection.children.len() == 1
+        && collection.children[0].role == Role::Group
+        && !collection.children[0].children.is_empty()
+        && collection.children[0]
+            .children
+            .iter()
+            .all(|child| child.role == Role::TreeItem)
+    {
+        render_collection_children(
+            &collection.children[0],
+            root,
+            canvas,
+            fit_window,
+            positioned,
+        );
+        return;
+    }
     let collection_rect = collection
         .bounds
         .and_then(|bounds| project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window));
+    let collection_left = collection_rect.map_or(0, |rect| rect.x);
     let bottom = collection_rect.map_or(canvas.rows, |rect| rect.y + rect.height);
     let collection_right = collection_rect.map_or(canvas.cols, |rect| rect.x + rect.width);
+    let collection_source_right = collection
+        .bounds
+        .map(|bounds| i64::from(bounds.x) + i64::from(bounds.width));
+    let header_bottom = collection
+        .children
+        .iter()
+        .filter(|child| {
+            child.role == Role::Group
+                && child
+                    .children
+                    .iter()
+                    .any(|cell| cell.role == Role::TableCell)
+        })
+        .filter_map(|child| child.bounds)
+        .map(|bounds| i64::from(bounds.y) + i64::from(bounds.height))
+        .max();
     let mut source_row = None;
     let mut source_bottom = None;
     let mut output_row = None;
@@ -930,13 +1090,24 @@ fn render_collection_children(
             continue;
         }
         let Some(bounds) = child.bounds else {
-            render_spatial_node(child, root, canvas, false, fit_window, positioned);
+            render_spatial_node(child, root, canvas, false, fit_window, None, positioned);
             continue;
         };
+        if collection_source_right.is_some_and(|right| i64::from(bounds.x) >= right)
+            || (child.role == Role::ListItem
+                && header_bottom
+                    .is_some_and(|bottom| i64::from(bounds.y) + i64::from(bounds.height) <= bottom))
+        {
+            continue;
+        }
         let Some(mut rect) = project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window)
         else {
             continue;
         };
+        if rect.x >= collection_right {
+            continue;
+        }
+        rect.width = rect.width.min(collection_right - rect.x);
         let row = if source_row == Some(bounds.y) {
             output_row.unwrap_or(rect.y)
         } else {
@@ -965,7 +1136,20 @@ fn render_collection_children(
             rect.height = rect.height.max(wrapped.len()).max(1);
         } else {
             rect.height = 1;
-            if child.role == Role::ListItem && compact_list_row_label(child).is_none() {
+            if child.role == Role::TreeItem {
+                // Some native tree controls report only their painted text
+                // width. The rest of the containing tree row is still usable.
+                rect.width = rect.width.max(collection_right.saturating_sub(rect.x));
+                let required = nonempty(&child.name)
+                    .map(UnicodeWidthStr::width)
+                    .unwrap_or(0)
+                    .saturating_add(3);
+                let borrow = required
+                    .saturating_sub(rect.width)
+                    .min(rect.x.saturating_sub(collection_left));
+                rect.x -= borrow;
+                rect.width += borrow;
+            } else if child.role == Role::ListItem && compact_list_row_label(child).is_none() {
                 // A sole list item on its source row may use the empty
                 // remainder of the containing pane. Multi-column rows retain
                 // narrow bounds so collision-aware flow places flags safely.
@@ -985,13 +1169,53 @@ fn render_collection_children(
         // item's continuation lines.
         output_row = Some(row.saturating_add(rect.height.saturating_sub(1)));
         let owns_text = owns_descendant_text(child);
+        if is_tabular_list_item(child) {
+            let mut rendered = false;
+            for grandchild in &child.children {
+                let Some(cell_bounds) = grandchild.bounds else {
+                    continue;
+                };
+                let Some(mut cell_rect) =
+                    project_bounds(cell_bounds, root, canvas.cols, canvas.rows, fit_window)
+                else {
+                    continue;
+                };
+                if cell_rect.x >= collection_right {
+                    continue;
+                }
+                let next_column = child
+                    .children
+                    .iter()
+                    .filter_map(|sibling| sibling.bounds)
+                    .filter(|sibling| sibling.x > cell_bounds.x)
+                    .filter_map(|sibling| {
+                        project_bounds(sibling, root, canvas.cols, canvas.rows, fit_window)
+                    })
+                    .map(|sibling| sibling.x)
+                    .min()
+                    .unwrap_or(collection_right);
+                cell_rect.y = row;
+                cell_rect.width = cell_rect
+                    .width
+                    .max(next_column.saturating_sub(cell_rect.x))
+                    .min(collection_right - cell_rect.x);
+                cell_rect.height = 1;
+                let mut cell = grandchild.clone();
+                cell.states.selected |= child.states.selected;
+                rendered |= draw_spatial_control(canvas, cell_rect, &cell, false);
+            }
+            if rendered {
+                *positioned += 1;
+            }
+            continue;
+        }
         let rendered = if child.role == Role::ListItem && !child.children.is_empty() && !owns_text {
             // Composite cards expose a concatenated ListItem name as well as
             // richer positioned descendants. Render only the descendants;
             // simple bullet rows take the parent-name path above.
             false
         } else {
-            draw_spatial_control(canvas, rect, child)
+            draw_spatial_control(canvas, rect, child, false)
         };
         if rendered {
             *positioned += 1;
@@ -1000,7 +1224,9 @@ fn render_collection_children(
             continue;
         }
         for grandchild in &child.children {
-            render_spatial_node(grandchild, root, canvas, false, fit_window, positioned);
+            render_spatial_node(
+                grandchild, root, canvas, false, fit_window, None, positioned,
+            );
         }
     }
 }
@@ -1148,11 +1374,13 @@ fn render_table_children(
             width: widths[column] - indent,
             height: 1,
         };
-        if draw_spatial_control(canvas, rect, cell) {
+        if draw_spatial_control(canvas, rect, cell, false) {
             *positioned += 1;
         }
         for grandchild in &cell.children {
-            render_spatial_node(grandchild, root, canvas, false, fit_window, positioned);
+            render_spatial_node(
+                grandchild, root, canvas, false, fit_window, None, positioned,
+            );
         }
     }
 }
@@ -1195,6 +1423,9 @@ fn allocate_table_widths(preferred: &[usize], minimum: &[usize], total: usize) -
 }
 
 fn is_collection_chrome(child: &SnapshotNode, collection: &SnapshotNode) -> bool {
+    if matches!(child.role, Role::ScrollBar | Role::ScrollThumb) {
+        return true;
+    }
     let Some(name) = nonempty(&child.name) else {
         return false;
     };
@@ -1290,8 +1521,12 @@ fn owns_descendant_text(node: &SnapshotNode) -> bool {
     match node.role {
         Role::Group => inline_flow_text(node).is_some(),
         Role::ListItem => {
-            bullet_list_label(node).is_some() || compact_list_row_label(node).is_some()
+            bullet_list_label(node).is_some()
+                || compact_list_row_label(node).is_some()
+                || (node.children.len() == 1
+                    && matches!(node.children[0].role, Role::Link | Role::StaticText))
         }
+        Role::TreeItem => true,
         Role::Button
         | Role::CheckBox
         | Role::RadioButton
@@ -1315,17 +1550,24 @@ fn bullet_list_label(node: &SnapshotNode) -> Option<String> {
     if node.role != Role::ListItem {
         return None;
     }
-    let has_marker = nonempty(&node.name).is_some_and(|name| name.starts_with('•'))
-        || node.children.iter().any(|child| {
-            child.role == Role::StaticText
-                && nonempty(&child.name)
-                    .or_else(|| nonempty(&child.value))
-                    .is_some_and(|text| text.trim() == "•")
-        });
-    if !has_marker {
-        return None;
+    if let Some(name) = nonempty(&node.name) {
+        let lines = name
+            .lines()
+            .map(str::trim)
+            .filter(|line| !line.is_empty())
+            .collect::<Vec<_>>();
+        if lines.len() >= 2 {
+            let mut label = format!("• {}", lines[0]);
+            for line in &lines[1..] {
+                label.push_str("\n  ◦ ");
+                label.push_str(line);
+            }
+            return Some(label);
+        }
     }
     if node.children.iter().any(|child| child.role == Role::List) {
+        // A semantic list is sufficient evidence for hierarchy even when a
+        // legacy provider omits its painted bullet from the accessibility tree.
         let mut lines = vec![format!("• {}", direct_list_item_text(node)?)];
         for list in node
             .children
@@ -1335,6 +1577,16 @@ fn bullet_list_label(node: &SnapshotNode) -> Option<String> {
             append_nested_list_labels(list, 1, &mut lines);
         }
         return Some(lines.join("\n"));
+    }
+    let has_marker = nonempty(&node.name).is_some_and(|name| name.starts_with('•'))
+        || node.children.iter().any(|child| {
+            child.role == Role::StaticText
+                && nonempty(&child.name)
+                    .or_else(|| nonempty(&child.value))
+                    .is_some_and(|text| text.trim() == "•")
+        });
+    if !has_marker {
+        return None;
     }
     let label = nonempty(&node.name)?;
     Some(format!("• {}", label.trim_start_matches('•').trim_start()))
@@ -1382,6 +1634,46 @@ fn append_nested_list_labels(list: &SnapshotNode, depth: usize, lines: &mut Vec<
             append_nested_list_labels(nested, depth + 1, lines);
         }
     }
+}
+
+fn tree_item_status(node: &SnapshotNode) -> Option<&'static str> {
+    fn find_explicit(node: &SnapshotNode) -> Option<&'static str> {
+        if node.role == Role::StaticText
+            && let Some(text) = nonempty(&node.name).or_else(|| nonempty(&node.value))
+        {
+            return match text.trim() {
+                "U" => Some("U"),
+                "M" => Some("M"),
+                "A" => Some("A"),
+                "D" => Some("D"),
+                "R" => Some("R"),
+                "C" => Some("C"),
+                _ => None,
+            };
+        }
+        node.children.iter().find_map(find_explicit)
+    }
+
+    find_explicit(node).or_else(|| {
+        fn has_emphasis(node: &SnapshotNode) -> bool {
+            nonempty(&node.name).is_some_and(|name| name.contains("Contains emphasized items"))
+                || node.children.iter().any(has_emphasis)
+        }
+        has_emphasis(node).then_some("●")
+    })
+}
+
+fn is_tabular_list_item(node: &SnapshotNode) -> bool {
+    node.role == Role::ListItem
+        && node.children.len() >= 2
+        && node
+            .children
+            .iter()
+            .any(|child| child.role == Role::TextField)
+        && node
+            .children
+            .iter()
+            .all(|child| matches!(child.role, Role::TextField | Role::StaticText))
 }
 
 fn compact_list_row_label(node: &SnapshotNode) -> Option<String> {
@@ -1490,7 +1782,12 @@ fn single_descendant_static_text(node: &SnapshotNode) -> Option<String> {
     (values.len() == 1).then(|| values.remove(0))
 }
 
-fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode) -> bool {
+fn draw_spatial_control(
+    canvas: &mut Canvas,
+    rect: CellRect,
+    node: &SnapshotNode,
+    expanded_multiline: bool,
+) -> bool {
     let mut style = Style {
         fg: if node.states.focused { YELLOW } else { FG },
         bold: node.states.focused || matches!(node.role, Role::Heading),
@@ -1522,6 +1819,20 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
                 true
             } else if node.children.is_empty() && !label.is_empty() {
                 draw_inline_label(canvas, rect, label, style, true);
+                true
+            } else if !node.children.is_empty()
+                && node
+                    .children
+                    .iter()
+                    .all(|child| matches!(child.role, Role::ScrollBar | Role::ScrollThumb))
+            {
+                canvas.text(
+                    rect.x,
+                    rect.y,
+                    rect.width,
+                    "⟦ list not exposed ⟧",
+                    Style { fg: MUTED, ..style },
+                );
                 true
             } else {
                 false
@@ -1573,14 +1884,26 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             // UIA commonly maps multiline code editors to Edit/TextField
             // rather than TextArea. Newlines are stronger evidence than the
             // nominal role; centering this value as a one-line field destroys
-            // the editor layout.
-            draw_text_area(
-                canvas,
-                rect,
-                raw_label,
-                style,
-                vertical_scroll_fraction(node),
-            );
+            // the editor layout. Virtualized editors such as Monaco expose the
+            // value on the current-line field, so use its containing editor
+            // group without inventing a border that the host does not have.
+            if expanded_multiline {
+                draw_multiline_text(
+                    canvas,
+                    rect,
+                    raw_label,
+                    style,
+                    vertical_scroll_fraction(node),
+                );
+            } else {
+                draw_text_area(
+                    canvas,
+                    rect,
+                    raw_label,
+                    style,
+                    vertical_scroll_fraction(node),
+                );
+            }
             true
         }
         Role::TextField | Role::ComboBox | Role::SpinButton => {
@@ -1627,7 +1950,36 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             draw_inline_label(canvas, rect, &label, style, false);
             true
         }
-        Role::List | Role::Table | Role::TreeItem => {
+        Role::TreeItem => {
+            if label.is_empty() {
+                false
+            } else {
+                let disclosure = match node.states.expanded {
+                    Some(true) => "▾ ",
+                    Some(false) => "▸ ",
+                    None => "  ",
+                };
+                let row_width = rect.width.saturating_sub(1).max(1);
+                let mut row = format!("{disclosure}{label}");
+                if let Some(status) = tree_item_status(node) {
+                    let status_width = UnicodeWidthStr::width(status);
+                    let label_width = row_width.saturating_sub(status_width + 1);
+                    row = format!(
+                        "{}{}{}",
+                        elide(&row, label_width),
+                        " ".repeat(
+                            label_width.saturating_sub(UnicodeWidthStr::width(row.as_str())) + 1
+                        ),
+                        status
+                    );
+                } else {
+                    row = elide(&row, row_width);
+                }
+                canvas.text(rect.x, line, rect.width, &row, style);
+                true
+            }
+        }
+        Role::List | Role::Table => {
             if label.is_empty() {
                 false
             } else {
@@ -2910,6 +3262,7 @@ mod tests {
                 height: 3,
             },
             &log,
+            false,
         ));
         let rows = canvas.into_rows();
         let text = |row: usize| {
@@ -3160,6 +3513,7 @@ mod tests {
                 height: 10,
             },
             &list,
+            false,
         ));
         assert!(
             canvas.into_rows()[0]
@@ -3286,6 +3640,73 @@ mod tests {
     }
 
     #[test]
+    fn chm_fixture_flows_legacy_html_and_marks_unexposed_lists() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chm-x64dbg/tree.json"
+        ))
+        .expect("parse CHM fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let normalized = rendered.split_whitespace().collect::<Vec<_>>().join(" ");
+        assert!(normalized.contains(
+            "If you came here because someone told you to read the manual, start by reading all sections of the introduction. See commands for an overview of the available commands and how they work (the arguments are comma separated)."
+        ));
+        assert!(rendered.contains("⟦ list not exposed ⟧"));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let navigation = lines
+            .iter()
+            .position(|line| line.contains("Introduction"))
+            .expect("navigation introduction");
+        assert!(lines[navigation + 1].contains("GUI manual"));
+        assert!(lines[navigation + 2].contains("Commands"));
+        let values = lines
+            .iter()
+            .position(|line| line.trim_end().ends_with("Values"))
+            .expect("nested contents values");
+        assert!(lines[values + 1].contains("Expressions"));
+        assert!(lines[values + 2].contains("Expression Functions"));
+    }
+
+    #[test]
+    fn chm_contents_fixture_expands_native_tree_rows_and_semantic_lists() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chm-x64dbg-contents/tree.json"
+        ))
+        .expect("parse CHM contents fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let tree = lines
+            .iter()
+            .position(|line| line.trim_start().starts_with("x64dbg documentation"))
+            .expect("CHM contents root");
+        assert!(lines[tree + 1].contains("▸ Introduction"));
+        assert!(lines[tree + 2].contains("▸ GUI manual"));
+        assert!(lines[tree + 3].contains("▸ Commands"));
+        assert!(lines[tree + 4].contains("▸ Developers"));
+        assert!(lines[tree + 5].contains("Licenses"));
+        assert!(!rendered.contains("▸ Intr…"));
+
+        let contents = lines
+            .iter()
+            .position(|line| line.contains("• Introduction"))
+            .expect("document contents root");
+        assert!(lines[contents + 1].contains("◦ Values"));
+        assert!(lines[contents + 2].contains("◦ Expressions"));
+        assert!(lines[contents + 3].contains("◦ Expression Functions"));
+        assert!(rendered.contains("• GUI manual"));
+        assert!(rendered.contains("◦ Menus"));
+    }
+
+    #[test]
     fn x64dbg_plugins_fixture_places_nested_lists_on_indented_rows() {
         let fixture: LayoutFixture = serde_json::from_str(include_str!(
             "../tests/fixtures/accessibility/chrome-x64dbg-plugins/tree.json"
@@ -3311,7 +3732,7 @@ mod tests {
         assert!(lines[parent + 2].contains("◦ result"));
         assert!(
             lines[parent + 1]
-                .find('◦')
+                .rfind('◦')
                 .is_some_and(|column| column > parent_column)
         );
     }
@@ -3371,6 +3792,52 @@ mod tests {
     }
 
     #[test]
+    fn vscode_fixture_expands_virtualized_multiline_field_to_editor_bounds() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/vscode-screen-reader/tree.json"
+        ))
+        .expect("parse VS Code screen-reader fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let docstring = lines
+            .iter()
+            .position(|line| line.contains("Convenience entry point. Prefer: pyhhc"))
+            .expect("editor docstring");
+        assert!(lines[docstring + 2].contains("import sys"));
+        assert!(lines[docstring + 4].contains("from hhc_compiler.cli import main"));
+        assert!(lines[docstring + 6].contains("if __name__ == \"__main__\":"));
+        assert!(lines[docstring + 7].contains("sys.exit(main())"));
+
+        let first_tree_row = lines
+            .iter()
+            .position(|line| line.contains("▸ .ruff_cache"))
+            .expect("first Explorer tree row");
+        for (offset, name) in [
+            ".ruff_cache",
+            "hhc_compiler",
+            "htmlhelp",
+            "reference",
+            "routines",
+            ".gitignore",
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            assert!(
+                lines[first_tree_row + offset].contains(name),
+                "missing packed Explorer row: {name}"
+            );
+        }
+        assert!(lines[first_tree_row + 5].contains('U'));
+        assert!(!rendered.contains("hhchhc_compiler"));
+    }
+
+    #[test]
     fn ida_fixture_discards_editor_padding_without_inventing_blank_rows() {
         let fixture: LayoutFixture = serde_json::from_str(include_str!(
             "../tests/fixtures/accessibility/ida-pseudocode/tree.json"
@@ -3389,6 +3856,12 @@ mod tests {
             .expect("first pseudocode line");
         assert!(lines[first + 1].contains("if ( (unsigned int)VidMapVpStatePage"));
         assert!(lines[first + 2].contains("wil::details::in1diag3::_Throw_GetLastError("));
+        assert!(lines[first - 1].contains("Function name"));
+        assert!(!lines[first - 1].contains("Segment"));
+        assert!(lines[first].contains("▾ d:/os"));
+        assert!(lines[first + 1].contains("▸ obj/amd64fre"));
+        assert!(lines[first + 2].contains("▾ public/amd64fre/onecore"));
+        assert!(lines[first + 3].contains("initialize_printf_standa"));
     }
 
     #[test]
@@ -3429,6 +3902,51 @@ mod tests {
         assert!(rendered.contains("Solution 'TooltipNotes'"));
         assert!(rendered.contains("Text Editor"));
         assert!(rendered.contains("current Visual Studio version does not support targeting"));
+    }
+
+    #[test]
+    fn seven_zip_fixture_packs_visible_tabular_list_items() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/7zip-file-list/tree.json"
+        ))
+        .expect("parse 7-Zip fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+        let first = lines
+            .iter()
+            .position(|line| line.contains("2-iw4mp.map"))
+            .expect("first visible archive row");
+        for (offset, name) in [
+            "2-iw4mp.map",
+            "2-iw4mp.pdb",
+            "3-iw4sp_fast_server.exe",
+            "3-iw4sp_fast_server.map",
+            "3-iw4sp_fast_server.pdb",
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            assert!(
+                lines[first + offset].contains(name),
+                "missing packed 7-Zip row: {name}"
+            );
+        }
+        let selected = lines
+            .iter()
+            .find(|line| line.contains("5-iw4mp_demo.pdb"))
+            .expect("selected archive row");
+        let name = selected.find("5-iw4mp_demo.pdb").expect("name column");
+        let size = selected.find("19 901 440").expect("size column");
+        let modified = selected.find("2009-07-13").expect("modified column");
+        let crc = selected.find("63C05667").expect("CRC column");
+        assert!(name < size && size < modified && modified < crc);
+        assert!(!rendered.contains("1-iw4sp.pdb"));
+        assert!(!rendered.contains("2-iw4mp.exe"));
     }
 
     #[test]

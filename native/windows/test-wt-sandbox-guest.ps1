@@ -565,7 +565,7 @@ public static class BrokerPause {
         $dropMatches=[regex]::Matches($overloadLog,'WT render callback p95<=\d+us max=\d+us count=\d+ sample=\d+ dropped=(\d+)')
         if($dropMatches.Count){$dropped=($dropMatches|ForEach-Object{[int64]$_.Groups[1].Value}|Measure-Object -Maximum).Maximum}
     }while($dropped-le0-and[DateTime]::UtcNow-lt$dropDeadline)
-    if($dropped-le0){throw 'stalled-broker overload did not report replacement of stale capture frames'}
+    if($dropped-le0){throw 'stalled-broker overload did not report a bounded capture drop before reconciliation'}
     $wt.Refresh();$overloadClock.Stop();$overloadCpuMs=$wt.TotalProcessorTime.TotalMilliseconds-$overloadCpuBefore
     $overloadCpu=[Math]::Round(100*$overloadCpuMs/[Math]::Max(1,$overloadClock.Elapsed.TotalMilliseconds*$logical),2)
     $overloadDelta=$wt.PrivateMemorySize64-$overloadMemoryBefore
@@ -691,7 +691,7 @@ public static class TokenIntegrity {
     $brokerLogs=(Get-Content "$work\server.err" -Raw -ErrorAction SilentlyContinue)+(Get-Content "$work\server-restart.err" -Raw -ErrorAction SilentlyContinue)+(Get-Content "$work\server-fault.err" -Raw -ErrorAction SilentlyContinue)
     if($brokerLogs-match'native adapter disconnected'){throw "native adapter disconnected during a nominal gate: $($Matches[0])"}
     $passed = $true
-    $detail = "stock WT fidelity/resize/rapid-resize-coherence/alternate-screen/sticky-last-terminal/live-output-scrollback-reflow/tab/multi-window/elevated/rapid-focus/broker-restart/detached-push-pause-resume/newest-wins-overload/callback-fault capture passed with render callback p95<=${p95}us"
+    $detail = "stock WT fidelity/resize/rapid-resize-coherence/alternate-screen/sticky-last-terminal/live-output-scrollback-reflow/tab/multi-window/elevated/rapid-focus/broker-restart/detached-push-pause-resume/delta-safe-overload-reconciliation/callback-fault capture passed with render callback p95<=${p95}us"
 } catch {
     $detail = ($_ | Out-String)
     if ($wt -and -not $wt.HasExited) {

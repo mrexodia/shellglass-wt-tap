@@ -636,19 +636,22 @@ namespace
                 activePaint.fetch_sub(1);
                 return S_OK;
             }
-            // Capacity one is deliberately newest-wins. If the worker has not
-            // consumed the previous batch, atomically replace it and immediately
-            // recycle that older batch on the render thread. Retaining the old
-            // pending batch here would make overload latency grow stale even
-            // though memory stayed bounded.
-            if (auto* replaced = pending.exchange(current, std::memory_order_acq_rel))
+            // These batches contain dirty-region deltas, not complete terminal
+            // snapshots. Replacing an unconsumed batch can therefore lose cells
+            // that a later partial repaint does not revisit (rapid TUIs such as
+            // Claude Code expose this as missing characters). Keep the older
+            // pending delta, drop this newer one, and ask the worker to schedule
+            // one full reconciliation as soon as it frees the pending slot.
+            Batch* expected = nullptr;
+            if (pending.compare_exchange_strong(expected, current, std::memory_order_acq_rel,
+                                                std::memory_order_acquire))
             {
-                droppedFrames.fetch_add(1, std::memory_order_relaxed);
-                current = replaced;
+                current = acquireFreeBatch();
             }
             else
             {
-                current = acquireFreeBatch();
+                droppedFrames.fetch_add(1, std::memory_order_relaxed);
+                reconcileAfterDrop.store(true, std::memory_order_release);
             }
             activePaint.fetch_sub(1);
             return S_OK;
@@ -978,6 +981,7 @@ namespace
                 spare.store(batches[2].get(), std::memory_order_release);
             }
             releaseRequested.store(false, std::memory_order_release);
+            reconcileAfterDrop.store(false, std::memory_order_release);
             subscribed.store(true);
             markFullDirty();
             if (alive.load(std::memory_order_acquire)) triggerRedraw(renderer, true, true);
@@ -1003,6 +1007,7 @@ namespace
             if (!releaseRequested.load(std::memory_order_acquire) || subscribed.load() || activePaint.load() != 0) return;
             current = nullptr;
             pending.store(nullptr, std::memory_order_release);
+            reconcileAfterDrop.store(false, std::memory_order_release);
             free.store(nullptr, std::memory_order_release);
             spare.store(nullptr, std::memory_order_release);
             for (auto& batch : batches) batch.reset();
@@ -1014,7 +1019,23 @@ namespace
             modelImages.shrink_to_fit();
             releaseRequested.store(false, std::memory_order_release);
         }
-        Batch* takeBatch() noexcept { return pending.exchange(nullptr, std::memory_order_acq_rel); }
+        Batch* takeBatch() noexcept
+        {
+            auto* batch = pending.exchange(nullptr, std::memory_order_acq_rel);
+            if (batch && reconcileAfterDrop.exchange(false, std::memory_order_acq_rel))
+            {
+                // At least one newer delta was dropped, so applying this older
+                // delta would expose a knowingly incomplete intermediate model.
+                // Keep the last published model coherent and replace the queued
+                // delta with one full repaint instead.
+                releaseBatch(batch);
+                markFullDirty();
+                if (alive.load(std::memory_order_acquire) && subscribed.load())
+                    triggerRedraw(renderer, true, true);
+                return nullptr;
+            }
+            return batch;
+        }
         void releaseBatch(Batch* batch) noexcept
         {
             Batch* expected = nullptr;
@@ -1064,6 +1085,7 @@ namespace
         std::array<std::atomic<std::uint64_t>, 5> performanceBuckets{};
         std::atomic<std::uint64_t> performanceMaxMicros{ 0 };
         std::atomic<std::uint64_t> droppedFrames{ 0 };
+        std::atomic<bool> reconcileAfterDrop{ false };
         std::atomic<std::uint64_t> layoutChanges{ 0 };
         std::atomic<std::uint64_t> staleLayoutBatches{ 0 };
         // Worker-owned baselines make each diagnostic describe the latest

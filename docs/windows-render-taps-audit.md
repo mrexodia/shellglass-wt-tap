@@ -43,7 +43,7 @@ states are retained but are not completion blockers.
 | Multiple exact ABI profiles | two WT release profiles and one system-conhost profile | complete for supported x64 targets |
 | Callback fault containment | test-only WT/conhost fault DLLs and real callback diagnostics 202/212 | complete |
 | No target callback IPC/allocation/model conversion | fixed-capacity callback batches; worker-side transport/model/image encoding | complete by implementation and stalled-reader responsiveness gate |
-| Bounded newest-wins overload | atomic replacement queue and nonzero dropped-frame diagnostics under suspended broker reader | complete |
+| Bounded overload with delta preservation | capacity-one atomic queue never replaces an older dirty delta with a newer partial update; after a drop, the worker discards the now-incomplete queued sequence and schedules full reconciliation when it frees the slot; suspended-reader gate requires nonzero drop diagnostics and final-state recovery | implementation/build complete; aggregate real-WT gate rerun pending |
 | Dormant/closed-source memory release | callback-quiescence handoff and worker-side batch/model reclamation | complete; aggregate memory gate exercises many source switches |
 | Size performance matrix | 80×24, 240×80, 320×100 interval p95, CPU and private-memory thresholds | complete on both exact WT releases |
 | Sustained output/leak check | configurable `-StressSeconds`; successful 121-second primary run | complete for primary exact release |

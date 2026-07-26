@@ -46,7 +46,9 @@ the full stream, while oversized windows shrink to fit. This is semantic-only:
 live capture never takes or consults screenshots. If usable bounds are absent,
 the renderer falls back to its diagnostic tree view. A capture that races a
 terminal focus change is rejected under the
-broker lock, so it cannot overwrite the native frame. `--foreground-only`
+broker lock, so it cannot overwrite the native frame. Transient accessibility
+failures—such as taskbar focus, popup quickbars, or providers switching roots—are
+logged but leave the last coherent frame untouched. `--foreground-only`
 disables accessibility reconstruction and stops outside known terminals.
 
 Accessibility data can contain document text, messages, and form values. Keep the

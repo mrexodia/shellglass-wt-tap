@@ -28,6 +28,8 @@ cargo run -- render-layout-fixture tests\fixtures\accessibility\x64dbg-cpu\tree.
 
 Committed fixtures:
 
+- `7zip-file-list` — a list-view table with header-overlapped clipped rows,
+  interleaved scroll controls, and child controls representing each column.
 - `chrome-striga` — Chromium article content with nested headings, links, and
   inline text runs whose union bounds overlap within each HTML paragraph.
 - `chrome-x64dbg-commands` — variable-height FAQ list items whose wrapped
@@ -36,10 +38,16 @@ Committed fixtures:
   separate indented rows rather than flattened parent labels.
 - `chrome-huggingface-list` — variable-height HTML bullet items and compact
   evaluation-result rows from a Hugging Face model page.
+- `chm-x64dbg` — legacy MSHTML prose fragments, navigation lists, and a native
+  keyword-results pane whose items are not exposed through accessibility.
+- `chm-x64dbg-contents` — text-width native tree rows and legacy semantic lists
+  whose hierarchy is exposed through names and nested list structure.
 - `dataexplorer` — a multiline code editor exposed by UIA as `TextField`
   rather than `TextArea`.
 - `ida-pseudocode` — fixed-width editor lines padded with trailing spaces that
   must not wrap into visually blank rows.
+- `vscode-screen-reader` — a Monaco editor whose complete multiline value is
+  exposed on a current-line `TextField` with much smaller bounds than its host.
 - `x64dbg-cpu` — dense menus, disassembly, registers, flags, tables, and nested
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value
