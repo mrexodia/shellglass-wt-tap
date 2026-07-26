@@ -28,6 +28,10 @@ cargo run -- render-layout-fixture tests\fixtures\accessibility\x64dbg-cpu\tree.
 
 Committed fixtures:
 
+- `chrome-striga` — Chromium article content with nested headings, links, and
+  inline text runs whose union bounds overlap within each HTML paragraph.
+- `chrome-huggingface-list` — variable-height HTML bullet items and compact
+  evaluation-result rows from a Hugging Face model page.
 - `x64dbg-cpu` — dense menus, disassembly, registers, flags, tables, and nested
   panes from x64dbg's CPU view.
 - `x64dbg-log` — a multiline static-text log viewport whose accessibility value

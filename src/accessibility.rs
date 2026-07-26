@@ -878,6 +878,7 @@ fn render_spatial_node(
     if !node.states.visible || is_window_chrome(node) {
         return;
     }
+    let mut rendered_here = false;
     if !is_root
         && let Some(rect) = node
             .bounds
@@ -885,6 +886,13 @@ fn render_spatial_node(
         && draw_spatial_control(canvas, rect, node)
     {
         *positioned += 1;
+        rendered_here = true;
+    }
+    if rendered_here && owns_descendant_text(node) {
+        // Named semantic controls and HTML flow containers already represent
+        // their descendant text. Drawing both parent and child is what turns
+        // Chromium headings, links, and paragraphs into overlapping fragments.
+        return;
     }
     if node.role == Role::List {
         if infer_grid_columns(node).len() > 1 {
@@ -950,9 +958,26 @@ fn render_collection_children(
             continue;
         }
         rect.y = row;
-        rect.height = 1;
-        if draw_spatial_control(canvas, rect, child) {
+        if let Some(label) = bullet_list_label(child) {
+            let wrapped = wrap_flow_text(&label, rect.width, canvas.rows.saturating_sub(row));
+            rect.height = rect.height.max(wrapped.len()).max(1);
+        } else {
+            rect.height = 1;
+        }
+        let owns_text = owns_descendant_text(child);
+        let rendered = if child.role == Role::ListItem && !child.children.is_empty() && !owns_text {
+            // Composite cards expose a concatenated ListItem name as well as
+            // richer positioned descendants. Render only the descendants;
+            // simple bullet rows take the parent-name path above.
+            false
+        } else {
+            draw_spatial_control(canvas, rect, child)
+        };
+        if rendered {
             *positioned += 1;
+        }
+        if rendered && owns_text {
+            continue;
         }
         for grandchild in &child.children {
             render_spatial_node(grandchild, root, canvas, false, fit_window, positioned);
@@ -1241,6 +1266,155 @@ fn project_bounds(
     })
 }
 
+fn owns_descendant_text(node: &SnapshotNode) -> bool {
+    match node.role {
+        Role::Group => inline_flow_text(node).is_some(),
+        Role::ListItem => {
+            bullet_list_label(node).is_some() || compact_list_row_label(node).is_some()
+        }
+        Role::Button
+        | Role::CheckBox
+        | Role::RadioButton
+        | Role::Switch
+        | Role::TextField
+        | Role::TextArea
+        | Role::ComboBox
+        | Role::SpinButton
+        | Role::ProgressBar
+        | Role::Slider
+        | Role::Image
+        | Role::Link
+        | Role::MenuItem
+        | Role::StaticText
+        | Role::Heading => true,
+        _ => false,
+    }
+}
+
+fn bullet_list_label(node: &SnapshotNode) -> Option<String> {
+    if node.role != Role::ListItem {
+        return None;
+    }
+    let has_marker = nonempty(&node.name).is_some_and(|name| name.starts_with('•'))
+        || node.children.iter().any(|child| {
+            child.role == Role::StaticText
+                && nonempty(&child.name)
+                    .or_else(|| nonempty(&child.value))
+                    .is_some_and(|text| text.trim() == "•")
+        });
+    if !has_marker {
+        return None;
+    }
+    let label = nonempty(&node.name)?;
+    Some(format!("• {}", label.trim_start_matches('•').trim_start()))
+}
+
+fn compact_list_row_label(node: &SnapshotNode) -> Option<String> {
+    if node.role != Role::ListItem || node.children.len() < 2 {
+        return None;
+    }
+    let mut parts = Vec::new();
+    for child in &node.children {
+        let text = match child.role {
+            Role::StaticText => nonempty(&child.name)
+                .or_else(|| nonempty(&child.value))
+                .map(str::to_string),
+            Role::Link => single_descendant_static_text(child).or_else(|| {
+                nonempty(&child.name)
+                    .or_else(|| nonempty(&child.description))
+                    .map(str::to_string)
+            }),
+            _ => return None,
+        };
+        let Some(text) = text
+            .map(|text| text.trim().to_string())
+            .filter(|text| !text.is_empty())
+        else {
+            continue;
+        };
+        if text.starts_with("http://")
+            || text.starts_with("https://")
+            || text.eq_ignore_ascii_case("View evaluation results")
+        {
+            continue;
+        }
+        parts.push(text);
+    }
+    (parts.len() >= 2).then(|| parts.join(" "))
+}
+
+fn inline_flow_text(node: &SnapshotNode) -> Option<String> {
+    if node.children.is_empty() || !matches!(node.role, Role::Group | Role::StaticText) {
+        return None;
+    }
+    if node
+        .children
+        .iter()
+        .any(|child| !matches!(child.role, Role::StaticText | Role::Link | Role::Group))
+    {
+        return None;
+    }
+    let mut text = String::new();
+    for child in &node.children {
+        if !collect_inline_text(child, &mut text) {
+            return None;
+        }
+    }
+    (!text.trim().is_empty()).then_some(text)
+}
+
+fn collect_inline_text(node: &SnapshotNode, output: &mut String) -> bool {
+    match node.role {
+        Role::Link => {
+            let descendant = single_descendant_static_text(node);
+            let Some(text) = descendant
+                .as_deref()
+                .or_else(|| nonempty(&node.name))
+                .or_else(|| nonempty(&node.description))
+                .or_else(|| nonempty(&node.value))
+            else {
+                return false;
+            };
+            output.push_str(text);
+            true
+        }
+        Role::StaticText | Role::Group => {
+            if node.children.is_empty() {
+                let Some(text) = nonempty(&node.name).or_else(|| nonempty(&node.value)) else {
+                    return false;
+                };
+                output.push_str(text);
+                true
+            } else {
+                node.children
+                    .iter()
+                    .all(|child| collect_inline_text(child, output))
+            }
+        }
+        _ => false,
+    }
+}
+
+fn single_descendant_static_text(node: &SnapshotNode) -> Option<String> {
+    fn collect(node: &SnapshotNode, values: &mut Vec<String>) {
+        if node.role == Role::StaticText
+            && let Some(text) = nonempty(&node.name).or_else(|| nonempty(&node.value))
+        {
+            values.push(text.to_string());
+        } else {
+            for child in &node.children {
+                collect(child, values);
+            }
+        }
+    }
+
+    let mut values = Vec::new();
+    for child in &node.children {
+        collect(child, &mut values);
+    }
+    (values.len() == 1).then(|| values.remove(0))
+}
+
 fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode) -> bool {
     let mut style = Style {
         fg: if node.states.focused { YELLOW } else { FG },
@@ -1268,7 +1442,10 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
     match node.role {
         Role::Application | Role::Window | Role::WebArea | Role::TableRow => false,
         Role::Group => {
-            if node.children.is_empty() && !label.is_empty() {
+            if let Some(text) = inline_flow_text(node) {
+                draw_flow_text(canvas, rect, &text, style);
+                true
+            } else if node.children.is_empty() && !label.is_empty() {
                 draw_inline_label(canvas, rect, label, style, true);
                 true
             } else {
@@ -1351,6 +1528,16 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             // in providers such as Total Commander and x64dbg.
             false
         }
+        Role::ListItem if bullet_list_label(node).is_some() => {
+            let label = bullet_list_label(node).expect("bullet label checked above");
+            draw_flow_text(canvas, rect, &label, style);
+            true
+        }
+        Role::ListItem if compact_list_row_label(node).is_some() => {
+            let label = compact_list_row_label(node).expect("compact row label checked above");
+            draw_inline_label(canvas, rect, &label, style, false);
+            true
+        }
         Role::List | Role::Table | Role::TreeItem => {
             if label.is_empty() {
                 false
@@ -1423,7 +1610,14 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
         Role::Link => {
             style.fg = CYAN;
             style.italic = true;
-            draw_inline_label(canvas, rect, label, style, true);
+            let descendant = single_descendant_static_text(node);
+            let link_label = descendant
+                .as_deref()
+                .or(name.as_deref())
+                .or(description.as_deref())
+                .or(value.as_deref())
+                .unwrap_or("");
+            draw_inline_label(canvas, rect, link_label, style, true);
             true
         }
         Role::MenuBar | Role::TabGroup | Role::Toolbar | Role::Navigation
@@ -1446,6 +1640,11 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
                 draw_inline_label(canvas, rect, label, style, true);
                 true
             }
+        }
+        Role::StaticText if inline_flow_text(node).is_some() => {
+            let text = inline_flow_text(node).expect("flow text checked above");
+            draw_flow_text(canvas, rect, &text, style);
+            true
         }
         Role::StaticText if raw_label.contains('\n') => {
             draw_multiline_text(
@@ -1476,6 +1675,72 @@ fn draw_spatial_control(canvas: &mut Canvas, rect: CellRect, node: &SnapshotNode
             }
         }
     }
+}
+
+fn draw_flow_text(canvas: &mut Canvas, rect: CellRect, value: &str, style: Style) {
+    for (offset, line) in wrap_flow_text(value, rect.width, rect.height)
+        .into_iter()
+        .enumerate()
+    {
+        canvas.text(rect.x, rect.y + offset, rect.width, &line, style);
+    }
+}
+
+fn wrap_flow_text(value: &str, width: usize, max_lines: usize) -> Vec<String> {
+    if width == 0 || max_lines == 0 {
+        return Vec::new();
+    }
+    let bounded = value
+        .chars()
+        .take(MAX_MULTILINE_FIELD_CHARS)
+        .collect::<String>();
+    let mut lines = Vec::new();
+    for source_line in bounded.lines() {
+        let mut current = String::new();
+        let mut occupied = 0usize;
+        for word in source_line.split_whitespace() {
+            let word_width = UnicodeWidthStr::width(word);
+            if !current.is_empty() && occupied + 1 + word_width > width {
+                lines.push(std::mem::take(&mut current));
+                occupied = 0;
+                if lines.len() == max_lines {
+                    return lines;
+                }
+            }
+            if word_width <= width {
+                if !current.is_empty() {
+                    current.push(' ');
+                    occupied += 1;
+                }
+                current.push_str(word);
+                occupied += word_width;
+            } else {
+                let chunks = wrap_text(word, width, max_lines - lines.len());
+                let chunk_count = chunks.len();
+                for (index, chunk) in chunks.into_iter().enumerate() {
+                    if index + 1 == chunk_count {
+                        current = chunk;
+                        occupied = UnicodeWidthStr::width(current.as_str());
+                    } else {
+                        lines.push(chunk);
+                        if lines.len() == max_lines {
+                            return lines;
+                        }
+                    }
+                }
+            }
+        }
+        if !current.is_empty() {
+            lines.push(current);
+        } else if source_line.is_empty() {
+            lines.push(String::new());
+        }
+        if lines.len() >= max_lines {
+            lines.truncate(max_lines);
+            return lines;
+        }
+    }
+    lines
 }
 
 fn draw_multiline_text(
@@ -2531,6 +2796,49 @@ mod tests {
     }
 
     #[test]
+    fn nested_html_link_wrappers_join_once_in_document_order() {
+        let bounds = Rect {
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 20,
+        };
+        let mut link = test_node(Role::Link, bounds, "really lame");
+        link.children
+            .push(test_node(Role::StaticText, bounds, "really lame"));
+        let paragraph = test_node_with_children(
+            Role::Group,
+            bounds,
+            "",
+            vec![
+                test_node(Role::StaticText, bounds, "These agents are "),
+                test_node_with_children(Role::Group, bounds, "", vec![link]),
+                test_node(Role::StaticText, bounds, ". That's the whole thing."),
+            ],
+        );
+        assert_eq!(
+            inline_flow_text(&paragraph).as_deref(),
+            Some("These agents are really lame. That's the whole thing.")
+        );
+
+        let navigation = test_node_with_children(
+            Role::Link,
+            bounds,
+            "Search and explore",
+            vec![test_node_with_children(
+                Role::Group,
+                bounds,
+                "",
+                vec![test_node(Role::StaticText, bounds, "Explore")],
+            )],
+        );
+        assert_eq!(
+            single_descendant_static_text(&navigation).as_deref(),
+            Some("Explore")
+        );
+    }
+
+    #[test]
     fn cell_rows_preserve_terminal_width_with_wide_text() {
         let row = cells(&[Span::new("a界b", Style::default())], 5);
         assert_eq!(
@@ -2793,6 +3101,69 @@ mod tests {
             !rendered.contains("Initializing wait objects... Initializing debugger..."),
             "provider newlines must not be flattened into one line"
         );
+    }
+
+    #[test]
+    fn chrome_fixture_flows_inline_html_text_without_overlap() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chrome-striga/tree.json"
+        ))
+        .expect("parse Chrome article fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let normalized = rendered.split_whitespace().collect::<Vec<_>>().join(" ");
+        assert!(normalized.contains(
+            "The goal of this post is to lower the barrier of entry and let you experiment"
+        ));
+        assert!(
+            normalized.contains("Static Devirtualization of Themida post that was just released")
+        );
+        for item in [
+            "• SMT-LIB, used by Triton (symbolic execution)",
+            "• VEX, used by angr",
+            "• Sleigh, used by Ghidra, Remill and Icicle",
+            "• BNIL, used by Binary Ninja (proprietary)",
+        ] {
+            assert!(
+                normalized.contains(item),
+                "missing intact list item: {item}"
+            );
+        }
+        assert_eq!(rendered.matches("Triton").count(), 1);
+        assert_eq!(rendered.matches("Binary Ninja").count(), 1);
+        assert!(!rendered.contains("https://github.com"));
+    }
+
+    #[test]
+    fn hugging_face_fixture_wraps_bullets_and_compacts_result_rows() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/chrome-huggingface-list/tree.json"
+        ))
+        .expect("parse Hugging Face fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let normalized = rendered.split_whitespace().collect::<Vec<_>>().join(" ");
+        assert!(normalized.contains(
+            "• Mixed SWA and global attention layout: 48 layers in a 1:3 global-to-SWA ratio"
+        ));
+        assert!(
+            normalized
+                .contains("• Native reasoning support: interleaved thinking between tool calls")
+        );
+        assert!(normalized.contains("with per-request control via enable_thinking"));
+        assert!(normalized.contains(
+            "• Attention: grouped-query, 8 KV heads, head dim 128; per-head softplus output gating"
+        ));
+        assert!(rendered.contains("datacurve/deep-swe · Deep Swe leaderboard 40.4"));
+        assert!(rendered.contains("ScaleAI/SWE-bench_Pro · SWE Bench Pro leaderboard 59.4"));
     }
 
     #[test]
