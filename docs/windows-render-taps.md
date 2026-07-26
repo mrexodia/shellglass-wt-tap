@@ -23,8 +23,9 @@ Implementation evidence:
   serve or detached push, and injects running WT processes. Push reruns stop the
   prior detached worker first, then execute the current Rust source through
   `cargo run --locked --release` so a locked stale binary is never reused. Existing tabs attach
-  lazily on their first post-injection focus gain or loss through exact
-  PDB-verified member offsets; `-NewTab` is an explicit fallback, never scanning.
+  lazily on their first post-injection focus gain/loss or authoritative owner-HWND
+  assignment through exact PDB-verified member offsets; this includes the first
+  pane of a default-terminal handoff. `-NewTab` is an explicit fallback, never scanning.
 - Compatibility tooling: `native/windows/profile_tool.cpp` verifies PE/PDB
   identity through DIA, type-qualified symbols, executable RVAs/prologues, and
   the family-pinned renderer type/member/vtable ABI, then emits an integrity-tagged

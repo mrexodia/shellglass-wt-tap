@@ -20,6 +20,7 @@ states are retained but are not completion blockers.
 | Detached start/pause/resume/stop/status | `src/cli.rs`, `src/windows_native.rs`; unit test plus real WT detached push/pause/freeze/resume/hub snapshot stage | complete |
 | Broker restart and newest-frame behavior | `test-e2e.ps1`; WT stalled-reader and hard-restart stages | complete |
 | WT text MVP | `native/windows/wt_adapter.cpp`; exact profiles for 1.24.11911.0 and 1.24.11321.0 | complete for two exact x64 releases |
+| Default-terminal handoff first pane | `ControlCore::OwningHwnd` is an authoritative exact-offset lazy-recovery boundary; post-Initialize owner reconciliation covers setter-order races; isolated ShellExecute handoff requires `DEFTERM_NATIVE_OUTPUT_ONLY` | complete on primary release |
 | Last active WT remains live under non-terminal foreground | real Notepad foreground stage while output advances; `snapshot-nonterminal-foreground-live.json` | complete on primary release |
 | WT visible history, including output arriving while scrolled | `test-wt-sandbox-guest.ps1`; `snapshot-scrolled-during-output.json` | complete on both exact releases |
 | WT resize/reflow while scrolled | `test-wt-sandbox-guest.ps1`; `snapshot-scrolled-resized.json` | complete on both exact WT releases |
@@ -44,6 +45,7 @@ states are retained but are not completion blockers.
 | Callback fault containment | test-only WT/conhost fault DLLs and real callback diagnostics 202/212 | complete |
 | No target callback IPC/allocation/model conversion | fixed-capacity callback batches; worker-side transport/model/image encoding | complete by implementation and stalled-reader responsiveness gate |
 | Bounded overload with delta preservation | capacity-one atomic queue never replaces an older dirty delta with a newer partial update; after a drop, the worker discards the now-incomplete queued sequence and schedules full reconciliation when it frees the slot; suspended-reader gate requires nonzero drop diagnostics and final-state recovery | implementation/build complete; aggregate real-WT gate rerun pending |
+| CFG-safe full reconciliation | exact `TriggerRedraw` target is outside WT's GFID table; all worker calls pass through a non-inlined `guard(nocf)` island so MSVC cannot inline the indirect call back into a CFG-protected worker | crash instruction and fixed code verified in x64 disassembly; real-WT overload rerun pending |
 | Dormant/closed-source memory release | callback-quiescence handoff and worker-side batch/model reclamation | complete; aggregate memory gate exercises many source switches |
 | Size performance matrix | 80×24, 240×80, 320×100 interval p95, CPU and private-memory thresholds | complete on both exact WT releases |
 | Sustained output/leak check | configurable `-StressSeconds`; successful 121-second primary run | complete for primary exact release |

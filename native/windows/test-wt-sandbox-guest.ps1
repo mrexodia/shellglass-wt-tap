@@ -1,4 +1,4 @@
-param([string]$ExpectedVersion='1.24.11911.0',[ValidateRange(30,300)][int]$StressSeconds=30)
+param([string]$ExpectedVersion='1.24.11911.0',[ValidateRange(30,300)][int]$StressSeconds=30,[switch]$DeftermOnly)
 # Runs only inside Windows Sandbox. The host harness maps an isolated work tree
 # at C:\work; no process on the host is opened or injected.
 $ErrorActionPreference = 'Stop'
@@ -115,6 +115,25 @@ try {
     Start-Sleep 2
     if (($wt.Modules | Where-Object ModuleName -eq 'shellglass-wt-adapter.dll').Count -ne 1) {
         throw 'adapter module did not load exactly once'
+    }
+
+    # Reproduce a Run-dialog/default-terminal handoff after injection. WT creates
+    # the delegated pane before its window is finalized, then assigns OwningHwnd.
+    # That setter must lazily attach the native engine; UIA cannot expose this
+    # output-only marker from the terminal canvas.
+    $startupKey='HKCU:\Console\%%Startup'
+    New-Item $startupKey -Force|Out-Null
+    Set-ItemProperty $startupKey DelegationConsole '{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}' -Type String
+    Set-ItemProperty $startupKey DelegationTerminal '{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}' -Type String
+    $shell=New-Object -ComObject Shell.Application
+    $shell.ShellExecute('C:\work\shellglass-wt-fixture.exe','DEFTERM_LAUNCH handoff','','open',1)
+    $stage='default-terminal-handoff';$handoff=Wait-Snapshot 'DEFTERM_NATIVE_OUTPUT_ONLY' 20
+    $handoff|Set-Content "$work\snapshot-default-terminal-handoff.json" -Encoding utf8
+    Start-Sleep 4
+    if($DeftermOnly){
+        $passed=$true
+        $detail='stock WT default-terminal handoff recovered its first delegated pane through OwningHwnd'
+        return
     }
 
     # Injection occurs after the base tab only to prove that every captured core
@@ -691,7 +710,7 @@ public static class TokenIntegrity {
     $brokerLogs=(Get-Content "$work\server.err" -Raw -ErrorAction SilentlyContinue)+(Get-Content "$work\server-restart.err" -Raw -ErrorAction SilentlyContinue)+(Get-Content "$work\server-fault.err" -Raw -ErrorAction SilentlyContinue)
     if($brokerLogs-match'native adapter disconnected'){throw "native adapter disconnected during a nominal gate: $($Matches[0])"}
     $passed = $true
-    $detail = "stock WT fidelity/resize/rapid-resize-coherence/alternate-screen/sticky-last-terminal/live-output-scrollback-reflow/tab/multi-window/elevated/rapid-focus/broker-restart/detached-push-pause-resume/delta-safe-overload-reconciliation/callback-fault capture passed with render callback p95<=${p95}us"
+    $detail = "stock WT fidelity/default-terminal-handoff/resize/rapid-resize-coherence/alternate-screen/sticky-last-terminal/live-output-scrollback-reflow/tab/multi-window/elevated/rapid-focus/broker-restart/detached-push-pause-resume/delta-safe-overload-reconciliation/callback-fault capture passed with render callback p95<=${p95}us"
 } catch {
     $detail = ($_ | Out-String)
     if ($wt -and -not $wt.HasExited) {

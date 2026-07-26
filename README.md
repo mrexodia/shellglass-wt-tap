@@ -10,8 +10,9 @@ only ordinary `Frame`s through `SourceSession`.
 Supported x64 Windows Terminal families currently include exact releases
 `1.24.11911.0` and `1.24.11321.0`. Unknown hashes, RSDS identities, prologues, or
 PDB-verified layouts fail closed. Existing controls are recovered lazily on their
-first post-injection focus transition through exact `_renderer`, `_pData`, and
-`_owningHwnd` offsets—never heap or signature scanning.
+first post-injection focus transition or authoritative `OwningHwnd` assignment
+through exact `_renderer`, `_pData`, and `_owningHwnd` offsets—never heap or
+signature scanning.
 
 ## Build
 

@@ -984,7 +984,7 @@ namespace
             reconcileAfterDrop.store(false, std::memory_order_release);
             subscribed.store(true);
             markFullDirty();
-            if (alive.load(std::memory_order_acquire)) triggerRedraw(renderer, true, true);
+            triggerFullRedraw();
         }
         void disableCapture() noexcept
         {
@@ -1030,8 +1030,7 @@ namespace
                 // delta with one full repaint instead.
                 releaseBatch(batch);
                 markFullDirty();
-                if (alive.load(std::memory_order_acquire) && subscribed.load())
-                    triggerRedraw(renderer, true, true);
+                triggerFullRedraw();
                 return nullptr;
             }
             return batch;
@@ -1126,6 +1125,17 @@ namespace
         std::uint8_t cursorStyle = 0;
 
     private:
+        // The exact TriggerRedraw target is not in WT's GFID table. Keep this
+        // call in a non-inlined nocf island: MSVC otherwise inlines requestFull
+        // or takeBatch into the CFG-protected worker and emits a guarded indirect
+        // call, which fail-fasts precisely when drop reconciliation requests a
+        // full redraw.
+        __declspec(noinline) __declspec(guard(nocf)) void triggerFullRedraw() noexcept
+        {
+            if (alive.load(std::memory_order_acquire) && subscribed.load())
+                triggerRedraw(renderer, true, true);
+        }
+
         static bool grow(std::atomic<std::uint16_t>& value, const std::uint16_t candidate) noexcept
         {
             auto currentValue = value.load(std::memory_order_relaxed);
@@ -1252,6 +1262,25 @@ namespace
         initializingCore = core;
         const auto result = originalInitialize(core, width, height, scale);
         initializingCore = nullptr;
+        if (result)
+        {
+            // Some default-terminal/delegation launches initialize the first
+            // ControlCore without traversing the hooked OwningHwnd setter after
+            // our render engine is attached. Reconcile the final exact member
+            // once Initialize returns; otherwise the source remains owner=0 and
+            // the broker falls back to accessibility until another tab focuses.
+            std::uint64_t owner = 0;
+            std::memcpy(&owner, static_cast<std::uint8_t*>(core) + coreOwnerOffset, sizeof(owner));
+            if (owner)
+            {
+                std::scoped_lock lock{ enginesMutex };
+                if (const auto found = coreEngines.find(core); found != coreEngines.end())
+                {
+                    found->second->owner.store(owner, std::memory_order_release);
+                    found->second->metadataChanged.store(true, std::memory_order_release);
+                }
+            }
+        }
         return result;
     }
     __declspec(guard(nocf)) void __fastcall hookedDestructor(void* core)
@@ -1276,17 +1305,37 @@ namespace
         // focused pre-injection tab recover as soon as the user switches tabs
         // or leaves WT; the next gain transition then selects it normally.
         recoverExistingCore(core, focused);
+        // Focus callbacks are authoritative live ControlCore pointers. Refresh
+        // the same exact verified owner member here too, repairing any source
+        // created before a delegated window had finalized its HWND.
+        std::uint64_t owner = 0;
+        std::memcpy(&owner, static_cast<std::uint8_t*>(core) + coreOwnerOffset, sizeof(owner));
         std::scoped_lock lock{ enginesMutex };
         coreFocus[core] = focused;
         if (const auto found = coreEngines.find(core); found != coreEngines.end())
         {
             found->second->focused.store(focused);
+            if (owner) found->second->owner.store(owner, std::memory_order_release);
             found->second->metadataChanged.store(true);
         }
     }
     __declspec(guard(nocf)) void __fastcall hookedOwner(void* core, std::uint64_t owner)
     {
         originalOwner(core, owner);
+        bool focused = false;
+        {
+            std::scoped_lock lock{ enginesMutex };
+            if (const auto known = coreFocus.find(core); known != coreFocus.end())
+                focused = known->second;
+        }
+        // Default-terminal handoff can create its ControlCore before injection
+        // and assign the real window only later (TerminalPage::Initialize walks
+        // the defterm panes and calls OwningHwnd). The setter is therefore an
+        // authoritative lazy-recovery boundary just like _focusChanged. Without
+        // this, that first delegated SSH tab has no native engine and hybrid mode
+        // falls back to UIA; a subsequently created ordinary tab works by chance.
+        recoverExistingCore(core, focused);
+
         std::scoped_lock lock{ enginesMutex };
         coreOwners[core] = owner;
         if (const auto found = coreEngines.find(core); found != coreEngines.end())

@@ -128,6 +128,7 @@ int wmain(const int argc, wchar_t** argv)
     unsigned long stressSeconds = 0;
     bool liveOutput = false;
     bool alternateScreen = false;
+    bool defaultTerminalHandoff = false;
     if (argc > 2)
     {
         if (std::wstring_view{ argv[2] } == L"live")
@@ -138,12 +139,23 @@ int wmain(const int argc, wchar_t** argv)
         {
             alternateScreen = true;
         }
+        else if (std::wstring_view{ argv[2] } == L"handoff")
+        {
+            defaultTerminalHandoff = true;
+        }
         else
         {
             wchar_t* end = nullptr;
             stressSeconds = std::wcstoul(argv[2], &end, 10);
             if (!end || *end != L'\0' || stressSeconds == 0 || stressSeconds > 300) return 2;
         }
+    }
+    if (defaultTerminalHandoff)
+    {
+        constexpr std::string_view handoffMarker{ "DEFTERM_NATIVE_OUTPUT_ONLY\r\n" };
+        if (!WriteFile(output, handoffMarker.data(), static_cast<DWORD>(handoffMarker.size()), &written, nullptr) || written != handoffMarker.size()) return 1;
+        Sleep(3000);
+        return 0;
     }
     if (alternateScreen)
     {

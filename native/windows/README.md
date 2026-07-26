@@ -142,9 +142,11 @@ or ambiguous. There is no signature-scan fallback. Place the generated profile b
 `shellglass-wt-adapter.dll` with the same stem (`shellglass-wt-adapter.sgnp`). The
 `start-wt-stream.ps1` is the first-party operator path for the verified personal
 x64 deployment: it fail-closed profiles the installed package, starts local serve
-or detached push, and injects every visible WT process. Existing controls recover
-lazily on their first post-injection focus gain or loss using exact PDB-verified
-`_renderer`, `_pData`, and `_owningHwnd` offsets; they are never scanned or guessed.
+or detached push, and injects every visible WT process. Existing controls recover lazily on their first post-injection focus gain/loss
+or authoritative `OwningHwnd` assignment using exact PDB-verified `_renderer`,
+`_pData`, and `_owningHwnd` offsets; they are never scanned or guessed. The owner
+setter path covers a default-terminal handoff whose first pane predates injection
+but receives its real window only afterward.
 Pass `-NewTab` only as a fallback to force a transition immediately. The actual
 script is exercised by `test-start-wt-stream-sandbox-guest.ps1`; the latest
 persistent-Sandbox result reached the browser snapshot end-to-end. The

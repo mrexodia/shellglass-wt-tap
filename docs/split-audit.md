@@ -29,7 +29,7 @@ runtime gates are listed separately.
 | Images, recording, SSH, broker reconnect, push/hub reconnect | `native/windows/test-e2e.ps1` completed: `native mock -> serve/SSH/image/recording + broker restart + push/hub reconnect: OK` | verified after split |
 | Unknown builds/layouts fail closed | `native/windows/test-profile.ps1` completed all success + mismatch/stale-output checks; launcher exact-version switch; adapter exact profile validation | verified |
 | x64 and retained ARM64 compile gates | x64 and ARM64 CMake Release builds completed in `target/` | verified |
-| Operator launcher supports existing tabs | `start-wt-stream.ps1` defaults to lazy focus-transition recovery and uses `-NewTab` only on request; docs state DLLs are process-lifetime | implemented |
+| Operator launcher supports existing tabs | `start-wt-stream.ps1` defaults to exact lazy recovery on focus transitions or owner-HWND assignment (including default-terminal handoff) and uses `-NewTab` only on request; docs state DLLs are process-lifetime | implemented |
 | Sandbox avoids host GPU virtualization | WT Sandbox scripts specify `<VGpu>Disable</VGpu>` after host bugcheck 0x119 from vGPU; both second-family aggregate/lifecycle and operator gates subsequently ran without a host crash | verified |
 
 ## Automated verification already completed after the split

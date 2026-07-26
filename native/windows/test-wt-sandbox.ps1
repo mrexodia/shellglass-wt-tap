@@ -8,12 +8,14 @@ param(
     [ValidateRange(30,300)][int]$StressSeconds = 30,
     [switch]$IncludeLifecycle,
     [switch]$IncludeOperator,
+    [switch]$DeftermOnly,
     [switch]$KeepSandboxOpen,
     [int]$TimeoutSeconds = 480
 )
 $ErrorActionPreference = 'Stop'
 if($KeepSandboxOpen-and-not$IncludeLifecycle){throw '-KeepSandboxOpen requires -IncludeLifecycle'}
 if($IncludeOperator-and-not$IncludeLifecycle){throw '-IncludeOperator requires -IncludeLifecycle'}
+if($DeftermOnly-and($IncludeLifecycle-or$IncludeOperator-or$KeepSandboxOpen)){throw '-DeftermOnly cannot be combined with lifecycle/operator/persistent modes'}
 $root = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $sandboxExe = "$env:SystemRoot\System32\WindowsSandbox.exe"
 if (-not (Test-Path $sandboxExe)) { throw 'Windows Sandbox is unavailable; never run this test against the active terminal host' }
@@ -89,6 +91,7 @@ if($IncludeOperator){Copy-Item $profile (Join-Path $work 'prepared.sgnp') -Force
 $escaped = [System.Security.SecurityElement]::Escape($work)
 $persistentArg=if($KeepSandboxOpen){' -Persistent'}else{''}
 $operatorArg=if($IncludeOperator){' -IncludeOperator'}else{''}
+$deftermArg=if($DeftermOnly){' -DeftermOnly'}else{''}
 $config = Join-Path $work 'test.wsb'
 @"
 <Configuration>
@@ -97,7 +100,7 @@ $config = Join-Path $work 'test.wsb'
        bugchecks under repeated WT Sandbox runs. WARP is sufficient for these
        capture semantics and keeps this disposable-target gate off the host GPU. -->
   <Networking>Default</Networking><VGpu>Disable</VGpu>
-  <LogonCommand><Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\work\guest.ps1 -ExpectedVersion $Version -StressSeconds $StressSeconds$persistentArg$operatorArg</Command></LogonCommand>
+  <LogonCommand><Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\work\guest.ps1 -ExpectedVersion $Version -StressSeconds $StressSeconds$persistentArg$operatorArg$deftermArg</Command></LogonCommand>
 </Configuration>
 "@ | Set-Content $config -Encoding utf8
 
