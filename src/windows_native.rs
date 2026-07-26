@@ -138,32 +138,43 @@ pub fn start(keep_last_terminal: bool) -> Result<SourceSession> {
 pub fn start_hybrid(
     accessibility: crate::accessibility::AccessibilityOptions,
 ) -> Result<SourceSession> {
-    let (broker, source) = start_named_broker(false, pipe_name()?)?;
+    // Keep the last terminal subscribed while accessibility owns presentation.
+    // Its frames are suppressed unless the foreground app is privacy-blocked,
+    // allowing a direct terminal -> blocked-app switch to remain live.
+    let (broker, source) = start_named_broker(true, true, pipe_name()?)?;
     let wanted_broker = Arc::clone(&broker);
     let publish_broker = Arc::clone(&broker);
     crate::accessibility::spawn(
         accessibility,
-        move || wanted_broker.wants_accessibility(),
-        move |identity, frame| {
-            publish_broker.publish_accessibility(identity, frame);
+        move || wanted_broker.accessibility_ticket(),
+        move |ticket, identity, frame| {
+            publish_broker.publish_accessibility(ticket, identity, frame);
+        },
+        move |ticket| {
+            broker.accessibility_blocked(ticket);
         },
     )?;
     Ok(source)
 }
 
 fn start_named(keep_last_terminal: bool, name: String) -> Result<SourceSession> {
-    Ok(start_named_broker(keep_last_terminal, name)?.1)
+    Ok(start_named_broker(keep_last_terminal, false, name)?.1)
 }
 
 fn start_named_broker(
     keep_last_terminal: bool,
+    accessibility_fallback: bool,
     name: String,
 ) -> Result<(Arc<NativeBroker>, SourceSession)> {
     // FIRST_PIPE_INSTANCE makes a second broker fail loud instead of silently
     // sharing the adapter namespace with another shellglass process.
     let first = create_user_pipe(&name, true)
         .with_context(|| format!("creating native render-tap pipe {name}"))?;
-    let (broker, source) = NativeBroker::new_with_policy(keep_last_terminal);
+    let (broker, source) = if accessibility_fallback {
+        NativeBroker::new_hybrid()
+    } else {
+        NativeBroker::new_with_policy(keep_last_terminal)
+    };
     let runtime = Arc::new(Runtime {
         broker: Arc::clone(&broker),
         routes: Mutex::new(HashMap::new()),

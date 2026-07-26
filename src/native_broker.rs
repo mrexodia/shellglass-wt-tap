@@ -105,6 +105,9 @@ struct State {
     selected: Option<SourceKey>,
     published: Option<PublishedSource>,
     focus_clock: u64,
+    foreground_epoch: u64,
+    privacy_hold_terminal: bool,
+    pending_full: Option<(SourceKey, u64)>,
     paused: bool,
 }
 
@@ -115,6 +118,7 @@ pub struct NativeBroker {
     frames: FramePublisher,
     max_fps: u16,
     keep_last_terminal: bool,
+    accessibility_fallback: bool,
 }
 
 impl NativeBroker {
@@ -125,12 +129,24 @@ impl NativeBroker {
     }
 
     pub fn new_with_policy(keep_last_terminal: bool) -> (Arc<Self>, SourceSession) {
+        Self::new_with_modes(keep_last_terminal, false)
+    }
+
+    pub fn new_hybrid() -> (Arc<Self>, SourceSession) {
+        Self::new_with_modes(true, true)
+    }
+
+    fn new_with_modes(
+        keep_last_terminal: bool,
+        accessibility_fallback: bool,
+    ) -> (Arc<Self>, SourceSession) {
         let (frames, source) = external_source(blank_frame());
         let broker = Arc::new(Self {
             state: Mutex::new(State::default()),
             frames,
             max_fps: 30,
             keep_last_terminal,
+            accessibility_fallback,
         });
         (broker, source)
     }
@@ -210,6 +226,8 @@ impl NativeBroker {
             return Vec::new();
         }
         state.foreground_hwnd = hwnd;
+        state.foreground_epoch = state.foreground_epoch.wrapping_add(1);
+        state.privacy_hold_terminal = false;
         self.reselect(&mut state)
     }
 
@@ -227,22 +245,31 @@ impl NativeBroker {
         self.state.lock().unwrap().selected
     }
 
-    /// Whether the current foreground HWND has no native terminal source and
-    /// may therefore be reconstructed through the accessibility API.
-    pub fn wants_accessibility(&self) -> bool {
+    /// Return a foreground-generation ticket when accessibility may capture.
+    /// A retained terminal subscription does not block accessibility unless it
+    /// actually belongs to the foreground HWND.
+    pub fn accessibility_ticket(&self) -> Option<u64> {
         let state = self.state.lock().unwrap();
-        !state.paused && state.selected.is_none()
+        (!state.paused && !state.privacy_hold_terminal && self.choose_foreground(&state).is_none())
+            .then_some(state.foreground_epoch)
     }
 
-    /// Publish an accessibility reconstruction only while no native terminal
-    /// source is selected. The selection check and publication are serialized
-    /// under the broker lock so a capture that races a terminal focus change
-    /// can never overwrite the native terminal frame.
-    pub fn publish_accessibility(&self, identity: String, frame: Frame) -> bool {
+    pub fn wants_accessibility(&self) -> bool {
+        self.accessibility_ticket().is_some()
+    }
+
+    /// Publish an accessibility reconstruction only if the foreground has not
+    /// changed since capture began and has no native terminal source.
+    pub fn publish_accessibility(&self, ticket: u64, identity: String, frame: Frame) -> bool {
         let mut state = self.state.lock().unwrap();
-        if state.paused || state.selected.is_some() {
+        if state.paused
+            || state.foreground_epoch != ticket
+            || self.choose_foreground(&state).is_some()
+        {
             return false;
         }
+        state.privacy_hold_terminal = false;
+        state.pending_full = None;
         let source = PublishedSource::Accessibility(identity);
         if state.published.as_ref() == Some(&source) {
             self.frames.publish(frame);
@@ -250,6 +277,21 @@ impl NativeBroker {
             self.frames.switch_source(frame);
             state.published = Some(source);
         }
+        true
+    }
+
+    /// Keep the retained terminal live when the matching accessibility app is
+    /// privacy-blocked. The ticket prevents a stale capture from changing the
+    /// policy after another foreground transition.
+    pub fn accessibility_blocked(&self, ticket: u64) -> bool {
+        let mut state = self.state.lock().unwrap();
+        if state.paused
+            || state.foreground_epoch != ticket
+            || self.choose_foreground(&state).is_some()
+        {
+            return false;
+        }
+        state.privacy_hold_terminal = true;
         true
     }
 
@@ -266,11 +308,15 @@ impl NativeBroker {
 
     pub fn status(&self) -> (bool, usize, Option<SourceKey>, bool) {
         let state = self.state.lock().unwrap();
+        let terminal_presented = !self.accessibility_fallback
+            || state.privacy_hold_terminal
+            || self.choose_foreground(&state).is_some();
+        let selected = terminal_presented.then_some(state.selected).flatten();
         (
             state.paused,
             state.sources.len(),
-            state.selected,
-            state.selected.is_none()
+            selected,
+            selected.is_none()
                 && matches!(state.published, Some(PublishedSource::Accessibility(_))),
         )
     }
@@ -347,8 +393,13 @@ impl NativeBroker {
             source.title = title;
         }
         if let Some(focused) = updated.focused {
+            // Metadata packets always carry the current focus bit, including
+            // unrelated title/resize updates. Count only a false -> true edge;
+            // otherwise a late repeated `true` from the old tab can outrank the
+            // newly focused tab and make selection snap back intermittently.
+            let gained_focus = focused && !source.focused;
             source.focused = focused;
-            if focused {
+            if gained_focus {
                 state.focus_clock = state.focus_clock.saturating_add(1);
                 source.last_focus = state.focus_clock;
             }
@@ -361,6 +412,11 @@ impl NativeBroker {
             process_nonce,
             source_id: frame.source_id,
         };
+        let publish_native = !self.accessibility_fallback
+            || state.privacy_hold_terminal
+            || self
+                .choose_foreground(state)
+                .is_some_and(|foreground| foreground == key);
         let Some(source) = state.sources.get_mut(&key) else {
             return Ok(());
         };
@@ -374,6 +430,9 @@ impl NativeBroker {
             bail!("native frame sequence regressed");
         }
         source.last_frame_sequence = Some(frame.frame_sequence);
+        if state.pending_full == Some((key, frame.generation)) {
+            state.pending_full = None;
+        }
         let Frame::Screen(grid) = Arc::make_mut(&mut frame.frame);
         if grid.rows.len() != source.rows as usize || grid.cols != source.cols {
             bail!("native frame dimensions disagree with source metadata");
@@ -384,7 +443,7 @@ impl NativeBroker {
             };
             grid.image_data.insert(placement.hash.clone(), blob.clone());
         }
-        if state.selected == Some(key) {
+        if state.selected == Some(key) && publish_native {
             let identity = PublishedSource::Terminal(key, frame.generation);
             let frame = Arc::unwrap_or_clone(frame.frame);
             if state.published.as_ref() == Some(&identity) {
@@ -420,76 +479,99 @@ impl NativeBroker {
 
     fn reselect(&self, state: &mut State) -> Vec<BrokerCommand> {
         let next = self.choose(state);
-        if next == state.selected {
-            return Vec::new();
+        let mut commands = Vec::with_capacity(3);
+        if next != state.selected {
+            if let Some(old) = state.selected
+                && let Some(source) = state.sources.get(&old)
+            {
+                commands.push(BrokerCommand::Unsubscribe {
+                    key: old,
+                    generation: source.generation,
+                });
+            }
+            state.selected = next;
+            if let Some(new) = next {
+                let source = &state.sources[&new];
+                commands.push(BrokerCommand::Subscribe {
+                    key: new,
+                    generation: source.generation,
+                    max_fps: self.max_fps,
+                });
+            }
         }
-        let mut commands = Vec::with_capacity(2);
-        if let Some(old) = state.selected
-            && let Some(source) = state.sources.get(&old)
-        {
-            commands.push(BrokerCommand::Unsubscribe {
-                key: old,
-                generation: source.generation,
-            });
-        }
-        state.selected = next;
-        if let Some(new) = next {
-            let source = &state.sources[&new];
-            commands.push(BrokerCommand::Subscribe {
-                key: new,
-                generation: source.generation,
-                max_fps: self.max_fps,
-            });
+
+        let foreground = self.choose_foreground(state);
+        let restore = next.filter(|key| {
+            self.accessibility_fallback
+                && (state.privacy_hold_terminal || foreground == Some(*key))
+                && state.sources.get(key).is_some_and(|source| {
+                    state.published != Some(PublishedSource::Terminal(*key, source.generation))
+                })
+        });
+        if let Some(key) = restore {
+            let generation = state.sources[&key].generation;
+            if state.pending_full != Some((key, generation)) {
+                commands.push(BrokerCommand::RequestFull { key, generation });
+                state.pending_full = Some((key, generation));
+            }
+        } else {
+            state.pending_full = None;
         }
         commands
+    }
+
+    fn choose_foreground(&self, state: &State) -> Option<SourceKey> {
+        let hwnd = state.foreground_hwnd?;
+        let candidates = |provider| {
+            state.sources.iter().filter(move |(_, source)| {
+                source.provider == provider && source.owner_hwnd == hwnd && source.visible
+            })
+        };
+
+        for provider in [Provider::WindowsTerminal, Provider::Conhost] {
+            let mut best: Option<(SourceKey, u64)> = None;
+            let mut tied = false;
+            for (key, source) in candidates(provider) {
+                match best {
+                    None => {
+                        best = Some((*key, source.last_focus));
+                        tied = false;
+                    }
+                    Some((_, epoch)) if source.last_focus > epoch => {
+                        best = Some((*key, source.last_focus));
+                        tied = false;
+                    }
+                    Some((_, epoch)) if source.last_focus == epoch => tied = true,
+                    _ => {}
+                }
+            }
+            if let Some((key, epoch)) = best {
+                // Multiple never-focused conhosts sharing an HWND are ambiguous.
+                // Retain an already-unambiguous selection; otherwise freeze.
+                if tied && epoch == 0 {
+                    if state.selected.is_some_and(|selected| {
+                        state.sources.get(&selected).is_some_and(|source| {
+                            source.provider == provider
+                                && source.owner_hwnd == hwnd
+                                && source.visible
+                        })
+                    }) {
+                        return state.selected;
+                    }
+                    continue;
+                }
+                return Some(key);
+            }
+        }
+        None
     }
 
     fn choose(&self, state: &State) -> Option<SourceKey> {
         if state.paused {
             return None;
         }
-        if let Some(hwnd) = state.foreground_hwnd {
-            let candidates = |provider| {
-                state.sources.iter().filter(move |(_, source)| {
-                    source.provider == provider && source.owner_hwnd == hwnd && source.visible
-                })
-            };
-
-            for provider in [Provider::WindowsTerminal, Provider::Conhost] {
-                let mut best: Option<(SourceKey, u64)> = None;
-                let mut tied = false;
-                for (key, source) in candidates(provider) {
-                    match best {
-                        None => {
-                            best = Some((*key, source.last_focus));
-                            tied = false;
-                        }
-                        Some((_, epoch)) if source.last_focus > epoch => {
-                            best = Some((*key, source.last_focus));
-                            tied = false;
-                        }
-                        Some((_, epoch)) if source.last_focus == epoch => tied = true,
-                        _ => {}
-                    }
-                }
-                if let Some((key, epoch)) = best {
-                    // Multiple never-focused conhosts sharing an HWND are ambiguous.
-                    // Retain an already-unambiguous selection; otherwise freeze.
-                    if tied && epoch == 0 {
-                        if state.selected.is_some_and(|selected| {
-                            state.sources.get(&selected).is_some_and(|source| {
-                                source.provider == provider
-                                    && source.owner_hwnd == hwnd
-                                    && source.visible
-                            })
-                        }) {
-                            return state.selected;
-                        }
-                        continue;
-                    }
-                    return Some(key);
-                }
-            }
+        if let Some(foreground) = self.choose_foreground(state) {
+            return Some(foreground);
         }
         if self.keep_last_terminal {
             // Switching to Discord, a browser, the desktop, or an unknown HWND
@@ -633,7 +715,8 @@ mod tests {
         let mut accessibility = blank_frame();
         let Frame::Screen(grid) = &mut accessibility;
         grid.rows[0][0].text = "a11y".into();
-        assert!(broker.publish_accessibility("window-1".into(), accessibility));
+        let initial_ticket = broker.accessibility_ticket().unwrap();
+        assert!(broker.publish_accessibility(initial_ticket, "window-1".into(), accessibility));
         {
             let current = source.frames.borrow_and_update();
             let Frame::Screen(grid) = &**current;
@@ -655,7 +738,7 @@ mod tests {
         update.push(1);
         wt.send(&broker, MessageType::SourceUpdated, &update);
         assert!(!broker.wants_accessibility());
-        assert!(!broker.publish_accessibility("window-2".into(), blank_frame()));
+        assert!(!broker.publish_accessibility(0, "window-2".into(), blank_frame()));
         {
             let current = source.frames.borrow_and_update();
             let Frame::Screen(grid) = &**current;
@@ -678,10 +761,124 @@ mod tests {
         let mut next_accessibility = blank_frame();
         let Frame::Screen(grid) = &mut next_accessibility;
         grid.rows[0][0].text = "next-a11y".into();
-        assert!(broker.publish_accessibility("window-2".into(), next_accessibility));
+        let next_ticket = broker.accessibility_ticket().unwrap();
+        assert!(broker.publish_accessibility(next_ticket, "window-2".into(), next_accessibility));
         let current = source.frames.borrow_and_update();
         let Frame::Screen(grid) = &**current;
         assert_eq!(grid.rows[0][0].text, "next-a11y");
+    }
+
+    #[test]
+    fn blocked_accessibility_keeps_the_retained_terminal_live() {
+        let (broker, mut source) = NativeBroker::new_hybrid();
+        broker.foreground_changed(Some(77));
+        let mut wt = Adapter::new(&broker, 9, Provider::WindowsTerminal);
+        wt.send(
+            &broker,
+            MessageType::SourceAdded,
+            &testwire::source_added(20, 1, 77),
+        );
+        let mut update = Vec::new();
+        update.extend_from_slice(&20u64.to_le_bytes());
+        update.extend_from_slice(&1u64.to_le_bytes());
+        update.push(12); // focused + visible
+        update.push(1);
+        update.push(1);
+        wt.send(&broker, MessageType::SourceUpdated, &update);
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 1, "terminal-1"),
+        );
+
+        broker.foreground_changed(Some(999));
+        let ticket = broker
+            .accessibility_ticket()
+            .expect("non-terminal foreground should request accessibility");
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 2, "suppressed-before-policy"),
+        );
+        {
+            let current = source.frames.borrow_and_update();
+            let Frame::Screen(grid) = &**current;
+            assert_eq!(grid.rows[0][0].text, "terminal-1");
+        }
+
+        assert!(broker.accessibility_blocked(ticket));
+        assert!(!broker.wants_accessibility());
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 3, "terminal-continues"),
+        );
+        {
+            let current = source.frames.borrow_and_update();
+            let Frame::Screen(grid) = &**current;
+            assert_eq!(grid.rows[0][0].text, "terminal-continues");
+        }
+
+        broker.foreground_changed(Some(1_000));
+        let next_ticket = broker
+            .accessibility_ticket()
+            .expect("new foreground should clear the privacy hold");
+        assert!(!broker.accessibility_blocked(ticket));
+        let mut accessibility = blank_frame();
+        let Frame::Screen(grid) = &mut accessibility;
+        grid.rows[0][0].text = "accessibility".into();
+        assert!(broker.publish_accessibility(next_ticket, "window".into(), accessibility));
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 4, "terminal-suppressed"),
+        );
+        let current = source.frames.borrow_and_update();
+        let Frame::Screen(grid) = &**current;
+        assert_eq!(grid.rows[0][0].text, "accessibility");
+    }
+
+    #[test]
+    fn returning_from_accessibility_requests_a_full_retained_terminal_frame() {
+        let (broker, _source) = NativeBroker::new_hybrid();
+        broker.foreground_changed(Some(77));
+        let mut wt = Adapter::new(&broker, 9, Provider::WindowsTerminal);
+        wt.send(
+            &broker,
+            MessageType::SourceAdded,
+            &testwire::source_added(20, 1, 77),
+        );
+        let mut update = Vec::new();
+        update.extend_from_slice(&20u64.to_le_bytes());
+        update.extend_from_slice(&1u64.to_le_bytes());
+        update.push(12); // focused + visible
+        update.push(1);
+        update.push(1);
+        wt.send(&broker, MessageType::SourceUpdated, &update);
+        wt.send(
+            &broker,
+            MessageType::Frame,
+            &testwire::frame(20, 1, 1, "native"),
+        );
+
+        assert!(broker.foreground_changed(Some(999)).is_empty());
+        let ticket = broker.accessibility_ticket().unwrap();
+        assert!(broker.publish_accessibility(ticket, "window".into(), blank_frame()));
+
+        let commands = broker.foreground_changed(Some(77));
+        assert!(matches!(
+            commands.as_slice(),
+            [BrokerCommand::RequestFull {
+                key: SourceKey {
+                    process_nonce: 9,
+                    source_id: 20
+                },
+                generation: 1
+            }]
+        ));
+        // Metadata arriving before the requested frame must not flood the
+        // adapter with duplicate full-frame requests.
+        assert!(broker.foreground_changed(Some(77)).is_empty());
     }
 
     #[test]
@@ -756,6 +953,38 @@ mod tests {
             [BrokerCommand::Subscribe { .. }]
         ));
         assert_eq!(broker.selected().unwrap().source_id, 1);
+    }
+
+    #[test]
+    fn repeated_true_metadata_cannot_steal_focus_back_from_a_new_tab() {
+        let (broker, _source) = NativeBroker::new();
+        broker.foreground_changed(Some(77));
+        let mut wt = Adapter::new(&broker, 12, Provider::WindowsTerminal);
+        for id in [1u64, 2] {
+            wt.send(
+                &broker,
+                MessageType::SourceAdded,
+                &testwire::source_added(id, 1, 77),
+            );
+        }
+        let focused = |id: u64| {
+            let mut update = Vec::new();
+            update.extend_from_slice(&id.to_le_bytes());
+            update.extend_from_slice(&1u64.to_le_bytes());
+            update.push(12); // focused + visible
+            update.push(1);
+            update.push(1);
+            update
+        };
+        wt.send(&broker, MessageType::SourceUpdated, &focused(1));
+        wt.send(&broker, MessageType::SourceUpdated, &focused(2));
+        assert_eq!(broker.selected().unwrap().source_id, 2);
+
+        // Worker metadata is level-triggered, so an unrelated update from the
+        // old engine can still report true before its loss edge is observed.
+        // It is not a new focus event and must not advance its focus epoch.
+        wt.send(&broker, MessageType::SourceUpdated, &focused(1));
+        assert_eq!(broker.selected().unwrap().source_id, 2);
     }
 
     #[test]

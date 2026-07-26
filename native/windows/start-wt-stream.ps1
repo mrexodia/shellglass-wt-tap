@@ -10,8 +10,8 @@ param(
     [switch]$PrepareOnly
 )
 # Operator convenience launcher for the two verified x64 WT families. This is
-# intentionally never called by automated tests: it injects the user's real WT.
-# Existing controls recover lazily on their first post-injection focus gain/loss.
+# automated only inside the disposable operator Sandbox gate; host automation
+# must never call it against the user's real WT. Existing controls recover lazily on their first post-injection focus gain/loss.
 # -NewTab remains available as a convenient way to force a transition.
 $ErrorActionPreference='Stop'
 $root=(Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
@@ -30,8 +30,11 @@ $profileTool=Join-Path $native 'shellglass-profile.exe'
 $adapter=Join-Path $native 'shellglass-wt-adapter.dll'
 $injector=Join-Path $native 'shellglass-inject.exe'
 $tap=@((Join-Path $root 'target/release/shellglass-wt-tap.exe'),(Join-Path $root 'target/debug/shellglass-wt-tap.exe'))|Where-Object{Test-Path $_}|Select-Object -First 1
-foreach($artifact in @($profileTool,$adapter,$injector,$tap)){
-    if(-not$artifact-or-not(Test-Path $artifact)){throw "required build artifact is missing: $artifact`nBuild with: cmake --build target/native-windows --config Release; cargo build --release"}
+foreach($artifact in @($profileTool,$adapter,$injector)){
+    if(-not(Test-Path $artifact)){throw "required build artifact is missing: $artifact`nBuild with: cmake --build target/native-windows --config Release"}
+}
+if(-not$PrepareOnly-and$PSCmdlet.ParameterSetName-eq'Local'-and(-not$tap-or-not(Test-Path $tap))){
+    throw 'local serve requires a built tap binary; run: cargo build --release'
 }
 $module=Join-Path $package.InstallLocation 'Microsoft.Terminal.Control.dll'
 $profile=Join-Path $native 'shellglass-wt-adapter.sgnp'
@@ -78,23 +81,30 @@ if($PrepareOnly){
 $server=$null
 $startedWorker=$false
 if($PSCmdlet.ParameterSetName-eq'Push'){
-    $statusOut=Join-Path $env:TEMP 'shellglass-stream-status.out';$statusErr=Join-Path $env:TEMP 'shellglass-stream-status.err'
-    Remove-Item $statusOut,$statusErr -Force -ErrorAction SilentlyContinue
-    $statusProcess=Start-Process -PassThru -Wait -WindowStyle Hidden $tap -ArgumentList @('stream','status') `
-        -RedirectStandardOutput $statusOut -RedirectStandardError $statusErr
-    if($statusProcess.ExitCode -ne 0){
-        # Clap accepts SHELLGLASS_KEY directly; avoid placing the long-lived
-        # capability in either the launcher or detached worker command line.
-        $priorKey=[Environment]::GetEnvironmentVariable('SHELLGLASS_KEY','Process')
-        try{
-            [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$Key,'Process')
-            & $tap stream start --hub $Hub @a11yArgs
-            if($LASTEXITCODE){throw 'detached stream worker did not start'}
-        }finally{
-            [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$priorKey,'Process')
-        }
-        $startedWorker=$true
-    }else{Write-Host 'A detached stream worker is already running; reusing it.'}
+    # A prior worker locks its executable on Windows, so stop it before asking
+    # Cargo to rebuild that release artifact. Include process-discovered paths
+    # in case the previous launcher used a different target profile.
+    $stopCandidates=@($tap)
+    $stopCandidates+=@(Get-CimInstance Win32_Process -Filter "name='shellglass-wt-tap.exe'" -ErrorAction SilentlyContinue|ForEach-Object ExecutablePath)
+    foreach($candidate in @($stopCandidates|Where-Object{$_-and(Test-Path $_)}|Select-Object -Unique)){
+        & $candidate stream stop *> $null
+        if($LASTEXITCODE-eq0){Write-Host 'Stopped the existing detached WT stream.';Start-Sleep -Milliseconds 250;break}
+    }
+
+    $cargo=(Get-Command cargo -ErrorAction Stop).Source
+    $manifest=Join-Path $root 'Cargo.toml'
+    # Clap accepts SHELLGLASS_KEY directly; avoid placing the long-lived
+    # capability in either the Cargo or detached worker command line.
+    $priorKey=[Environment]::GetEnvironmentVariable('SHELLGLASS_KEY','Process')
+    try{
+        [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$Key,'Process')
+        & $cargo run --locked --release --manifest-path $manifest -- stream start --hub $Hub @a11yArgs
+        if($LASTEXITCODE){throw 'cargo run did not start the detached stream worker'}
+    }finally{
+        [Environment]::SetEnvironmentVariable('SHELLGLASS_KEY',$priorKey,'Process')
+    }
+    $tap=Join-Path $root 'target/release/shellglass-wt-tap.exe'
+    $startedWorker=$true
 }else{
     $server=Start-Process -PassThru -WindowStyle Hidden $tap `
         -ArgumentList (@('serve','--bind',$Bind)+$a11yArgs) `

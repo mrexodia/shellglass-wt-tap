@@ -20,7 +20,9 @@ Implementation evidence:
   pause unsubscribes and freezes, resume selects and forces a fresh full.
 - Operator launch: `native/windows/start-wt-stream.ps1` selects only a verified
   installed x64 family, generates the exact fail-closed profile, starts local
-  serve or detached push, and injects running WT processes. Existing tabs attach
+  serve or detached push, and injects running WT processes. Push reruns stop the
+  prior detached worker first, then execute the current Rust source through
+  `cargo run --locked --release` so a locked stale binary is never reused. Existing tabs attach
   lazily on their first post-injection focus gain or loss through exact
   PDB-verified member offsets; `-NewTab` is an explicit fallback, never scanning.
 - Compatibility tooling: `native/windows/profile_tool.cpp` verifies PE/PDB
@@ -834,7 +836,8 @@ Default policy:
 
 - if the foreground HWND has a native terminal-host source, subscribe to its focused pane;
 - otherwise, if it has an unambiguous conhost source, subscribe to that source;
-- when a different terminal HWND becomes foreground, switch to its selected source;
+- when a different terminal HWND or WT tab becomes active, switch to its selected source;
+- treat focus metadata as a level but advance selection order only on a false-to-true edge, so a delayed repeated `true` from the old tab cannot steal selection back;
 - when a non-terminal window becomes foreground, keep the last selected terminal live;
 - never downgrade a retained WT pane to its backing conhost merely because the foreground HWND is unrelated; and
 - when the selected source dies, fall back only to a visible source that has previously been focused.

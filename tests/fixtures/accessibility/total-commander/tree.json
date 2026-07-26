@@ -1,0 +1,4845 @@
+{
+  "schema_version": 1,
+  "cols": 200,
+  "rows": 60,
+  "snapshot": {
+    "app_name": "Total Commander (x64) 11.50 - x64dbg - Duncan Ogilvie",
+    "pid": 24636,
+    "window_name": "Total Commander (x64) 11.50 - x64dbg - Duncan Ogilvie",
+    "root": {
+      "role": "Window",
+      "bounds": {
+        "x": 2092,
+        "y": 130,
+        "width": 1281,
+        "height": 800
+      },
+      "name": "Total Commander (x64) 11.50 - x64dbg - Duncan Ogilvie",
+      "value": null,
+      "description": null,
+      "states": {
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "active": true,
+        "checked": null,
+        "selected": false,
+        "expanded": null,
+        "editable": false,
+        "focusable": true,
+        "modal": false,
+        "required": false,
+        "busy": false
+      },
+      "children": [
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2731,
+            "y": 245,
+            "width": 3,
+            "height": 628
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2732,
+            "y": 214,
+            "width": 632,
+            "height": 30
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2100,
+            "y": 214,
+            "width": 632,
+            "height": 30
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2100,
+            "y": 182,
+            "width": 1265,
+            "height": 32
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": []
+        },
+        {
+          "role": "List",
+          "bounds": {
+            "x": 2736,
+            "y": 325,
+            "width": 627,
+            "height": 529
+          },
+          "name": "RIGHT ",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "ScrollBar",
+              "bounds": {
+                "x": 3346,
+                "y": 325,
+                "width": 17,
+                "height": 529
+              },
+              "name": "Vertical",
+              "value": "0",
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 3346,
+                    "y": 325,
+                    "width": 17,
+                    "height": 17
+                  },
+                  "name": "Line up",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "ScrollThumb",
+                  "bounds": {
+                    "x": 3346,
+                    "y": 342,
+                    "width": 17,
+                    "height": 252
+                  },
+                  "name": "Position",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 3346,
+                    "y": 594,
+                    "width": 17,
+                    "height": 243
+                  },
+                  "name": "Page down",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 3346,
+                    "y": 837,
+                    "width": 17,
+                    "height": 17
+                  },
+                  "name": "Line down",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 325,
+                "width": 610,
+                "height": 17
+              },
+              "name": "..\t<DIR>\t19/07/2026 21:38\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 342,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".cache\t<DIR>\t17/03/2025 02:13\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 359,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".codex\t<DIR>\t25/01/2026 14:15\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 376,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".devcontainer\t<DIR>\t14/04/2026 23:47\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 393,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".git\t<DIR>\t24/07/2026 23:32\t--h-",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 410,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".github\t<DIR>\t16/07/2026 18:18\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 427,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".idea\t<DIR>\t01/12/2025 20:06\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 444,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".pi\t<DIR>\t25/02/2026 01:55\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 461,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".vs\t<DIR>\t26/06/2025 18:59\t--h-",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 478,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".vscode\t<DIR>\t22/07/2025 14:17\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 495,
+                "width": 610,
+                "height": 17
+              },
+              "name": "bin\t<DIR>\t16/07/2026 13:16\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 512,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build\t<DIR>\t19/07/2026 16:27\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 529,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build32\t<DIR>\t20/07/2026 17:12\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 546,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build64\t<DIR>\t20/07/2026 17:12\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 563,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build-cross\t<DIR>\t20/04/2026 20:19\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 580,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build-cross-ninja\t<DIR>\t20/07/2026 17:01\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 597,
+                "width": 610,
+                "height": 17
+              },
+              "name": "ci-artifacts\t<DIR>\t13/04/2026 02:04\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 614,
+                "width": 610,
+                "height": 17
+              },
+              "name": "ci-max-artifacts\t<DIR>\t13/04/2026 15:17\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 631,
+                "width": 610,
+                "height": 17
+              },
+              "name": "cmake\t<DIR>\t17/04/2026 16:30\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 648,
+                "width": 610,
+                "height": 17
+              },
+              "name": "deps\t<DIR>\t12/04/2026 19:21\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 665,
+                "width": 610,
+                "height": 17
+              },
+              "name": "docs\t<DIR>\t14/07/2026 14:34\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 682,
+                "width": 610,
+                "height": 17
+              },
+              "name": "llm\t<DIR>\t21/03/2026 15:57\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 699,
+                "width": 610,
+                "height": 17
+              },
+              "name": "out\t<DIR>\t21/06/2025 14:18\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 716,
+                "width": 610,
+                "height": 17
+              },
+              "name": "release\t<DIR>\t12/04/2026 19:20\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 733,
+                "width": 610,
+                "height": 17
+              },
+              "name": "src\t<DIR>\t17/04/2026 16:30\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 750,
+                "width": 610,
+                "height": 17
+              },
+              "name": "test-artifacts\t<DIR>\t27/05/2026 00:07\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 767,
+                "width": 610,
+                "height": 17
+              },
+              "name": "README.md\t8.920\t19/07/2026 12:11\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 784,
+                "width": 610,
+                "height": 17
+              },
+              "name": "cmake.toml\t6.503\t16/07/2026 18:18\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 801,
+                "width": 610,
+                "height": 17
+              },
+              "name": "CMakeLists.txt\t33.883\t16/07/2026 18:18\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 818,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-commits-2026.04.20-2026.05.27.json\t9.064\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 835,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-pulls-2026.04.20-2026.05.27.json\t169.974\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2736,
+                "y": 852,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-compare-2026.04.20-2026.05.27.json\t383.032\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-2025.08.19-a6d430b.json\t59.526\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-2025.08.19-a6d430b.json\t914.906\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-2025.08.19-a6d430b.json\t2.187.406\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "script-plan.md\t7.412\t17/04/2026 16:30\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitmodules\t372\t17/04/2026 16:30\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "format.bat\t128\t16/04/2026 15:06\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeUserPresets.json\t1.349\t13/04/2026 00:20\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitignore\t481\t12/04/2026 19:25\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "sign_all.bat\t1.086\t12/04/2026 19:23\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t63.849\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t943.493\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t1.751.159\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-2025.06.30-2025.08.19.json\t35.708\t19/08/2025 22:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog.py\t9.570\t19/08/2025 22:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-2025.06.30-2025.08.19.json\t566.768\t19/08/2025 21:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-2025.06.30-2025.08.19.json\t1.152.020\t19/08/2025 21:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeLists.txt.user\t54.053\t17/08/2025 17:52\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".clang-tidy\t4.565\t15/08/2025 16:58\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CLAUDE.md\t3.219\t01/08/2025 13:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeSettings.json\t1.580\t21/07/2025 15:12\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "README_zh.md\t2.524\t02/07/2025 23:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits.json\t27.836\t30/06/2025 18:03\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls.json\t375.766\t30/06/2025 17:15\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare.json\t1.627.417\t30/06/2025 17:11\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".user-feedback.json\t82\t23/03/2025 16:15\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "build-and-run.bat\t86\t23/03/2025 16:12\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitattributes\t165\t25/01/2025 02:41\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".editorconfig\t281\t25/01/2025 02:41\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "LICENSE\t36.298\t02/05/2020 23:22\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "List",
+          "bounds": {
+            "x": 2102,
+            "y": 325,
+            "width": 627,
+            "height": 529
+          },
+          "name": "LEFT ",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": true,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "ScrollBar",
+              "bounds": {
+                "x": 2712,
+                "y": 325,
+                "width": 17,
+                "height": 529
+              },
+              "name": "Vertical",
+              "value": "0",
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 2712,
+                    "y": 325,
+                    "width": 17,
+                    "height": 17
+                  },
+                  "name": "Line up",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "ScrollThumb",
+                  "bounds": {
+                    "x": 2712,
+                    "y": 342,
+                    "width": 17,
+                    "height": 252
+                  },
+                  "name": "Position",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 2712,
+                    "y": 594,
+                    "width": 17,
+                    "height": 243
+                  },
+                  "name": "Page down",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 2712,
+                    "y": 837,
+                    "width": 17,
+                    "height": 17
+                  },
+                  "name": "Line down",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 325,
+                "width": 610,
+                "height": 17
+              },
+              "name": "..\t<DIR>\t19/07/2026 21:38\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 342,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".cache\t<DIR>\t17/03/2025 02:13\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 359,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".codex\t<DIR>\t25/01/2026 14:15\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 376,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".devcontainer\t<DIR>\t14/04/2026 23:47\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 393,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".git\t<DIR>\t24/07/2026 23:32\t--h-",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 410,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".github\t<DIR>\t16/07/2026 18:18\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 427,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".idea\t<DIR>\t01/12/2025 20:06\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": true,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 444,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".pi\t<DIR>\t25/02/2026 01:55\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 461,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".vs\t<DIR>\t26/06/2025 18:59\t--h-",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 478,
+                "width": 610,
+                "height": 17
+              },
+              "name": ".vscode\t<DIR>\t22/07/2025 14:17\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 495,
+                "width": 610,
+                "height": 17
+              },
+              "name": "bin\t<DIR>\t16/07/2026 13:16\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 512,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build\t<DIR>\t19/07/2026 16:27\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 529,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build32\t<DIR>\t20/07/2026 17:12\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 546,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build64\t<DIR>\t20/07/2026 17:12\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 563,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build-cross\t<DIR>\t20/04/2026 20:19\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 580,
+                "width": 610,
+                "height": 17
+              },
+              "name": "build-cross-ninja\t<DIR>\t20/07/2026 17:01\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 597,
+                "width": 610,
+                "height": 17
+              },
+              "name": "ci-artifacts\t<DIR>\t13/04/2026 02:04\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 614,
+                "width": 610,
+                "height": 17
+              },
+              "name": "ci-max-artifacts\t<DIR>\t13/04/2026 15:17\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 631,
+                "width": 610,
+                "height": 17
+              },
+              "name": "cmake\t<DIR>\t17/04/2026 16:30\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 648,
+                "width": 610,
+                "height": 17
+              },
+              "name": "deps\t<DIR>\t12/04/2026 19:21\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 665,
+                "width": 610,
+                "height": 17
+              },
+              "name": "docs\t<DIR>\t14/07/2026 14:34\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 682,
+                "width": 610,
+                "height": 17
+              },
+              "name": "llm\t<DIR>\t21/03/2026 15:57\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 699,
+                "width": 610,
+                "height": 17
+              },
+              "name": "out\t<DIR>\t21/06/2025 14:18\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 716,
+                "width": 610,
+                "height": 17
+              },
+              "name": "release\t<DIR>\t12/04/2026 19:20\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 733,
+                "width": 610,
+                "height": 17
+              },
+              "name": "src\t<DIR>\t17/04/2026 16:30\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 750,
+                "width": 610,
+                "height": 17
+              },
+              "name": "test-artifacts\t<DIR>\t27/05/2026 00:07\t----",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 767,
+                "width": 610,
+                "height": 17
+              },
+              "name": "README.md\t8.920\t19/07/2026 12:11\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 784,
+                "width": 610,
+                "height": 17
+              },
+              "name": "cmake.toml\t6.503\t16/07/2026 18:18\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 801,
+                "width": 610,
+                "height": 17
+              },
+              "name": "CMakeLists.txt\t33.883\t16/07/2026 18:18\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 818,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-commits-2026.04.20-2026.05.27.json\t9.064\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 835,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-pulls-2026.04.20-2026.05.27.json\t169.974\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": {
+                "x": 2102,
+                "y": 852,
+                "width": 610,
+                "height": 17
+              },
+              "name": "changelog-compare-2026.04.20-2026.05.27.json\t383.032\t27/05/2026 03:16\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-2025.08.19-a6d430b.json\t59.526\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-2025.08.19-a6d430b.json\t914.906\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-2025.08.19-a6d430b.json\t2.187.406\t20/04/2026 01:33\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "script-plan.md\t7.412\t17/04/2026 16:30\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitmodules\t372\t17/04/2026 16:30\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "format.bat\t128\t16/04/2026 15:06\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeUserPresets.json\t1.349\t13/04/2026 00:20\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitignore\t481\t12/04/2026 19:25\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "sign_all.bat\t1.086\t12/04/2026 19:23\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t63.849\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t943.493\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-1d3aa9b40716b42d086a90619db01fa12532eea6-2025.08.19.json\t1.751.159\t21/08/2025 17:34\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits-2025.06.30-2025.08.19.json\t35.708\t19/08/2025 22:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog.py\t9.570\t19/08/2025 22:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls-2025.06.30-2025.08.19.json\t566.768\t19/08/2025 21:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare-2025.06.30-2025.08.19.json\t1.152.020\t19/08/2025 21:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeLists.txt.user\t54.053\t17/08/2025 17:52\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".clang-tidy\t4.565\t15/08/2025 16:58\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CLAUDE.md\t3.219\t01/08/2025 13:07\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "CMakeSettings.json\t1.580\t21/07/2025 15:12\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "README_zh.md\t2.524\t02/07/2025 23:26\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-commits.json\t27.836\t30/06/2025 18:03\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-pulls.json\t375.766\t30/06/2025 17:15\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "changelog-compare.json\t1.627.417\t30/06/2025 17:11\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".user-feedback.json\t82\t23/03/2025 16:15\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "build-and-run.bat\t86\t23/03/2025 16:12\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".gitattributes\t165\t25/01/2025 02:41\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": ".editorconfig\t281\t25/01/2025 02:41\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ListItem",
+              "bounds": null,
+              "name": "LICENSE\t36.298\t02/05/2020 23:22\t-a--",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2100,
+            "y": 873,
+            "width": 1265,
+            "height": 49
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "ComboBox",
+              "bounds": {
+                "x": 2523,
+                "y": 876,
+                "width": 841,
+                "height": 21
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "TextField",
+                  "bounds": {
+                    "x": 2526,
+                    "y": 879,
+                    "width": 818,
+                    "height": 15
+                  },
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": true,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 3348,
+                    "y": 877,
+                    "width": 15,
+                    "height": 19
+                  },
+                  "name": "Open",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2101,
+                "y": 876,
+                "width": 419,
+                "height": 19
+              },
+              "name": "c:\\CodeBlocks\\x64dbg>",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2100,
+            "y": 245,
+            "width": 631,
+            "height": 628
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "TabGroup",
+              "bounds": {
+                "x": 2101,
+                "y": 270,
+                "width": 631,
+                "height": 603
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2102,
+                    "y": 854,
+                    "width": 627,
+                    "height": 17
+                  },
+                  "name": "0 k / 10.195 k in 0 / 35 file(s), 0 / 25 dir(s)",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2102,
+                    "y": 307,
+                    "width": 627,
+                    "height": 18
+                  },
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2102,
+                    "y": 291,
+                    "width": 589,
+                    "height": 16
+                  },
+                  "name": "c:\\CodeBlocks\\x64dbg\\*.*",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2103,
+                    "y": 272,
+                    "width": 79,
+                    "height": 18
+                  },
+                  "name": "*Downloads",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2182,
+                    "y": 272,
+                    "width": 80,
+                    "height": 18
+                  },
+                  "name": "*Documents",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": true,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2262,
+                    "y": 272,
+                    "width": 58,
+                    "height": 18
+                  },
+                  "name": "*x64dbg",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2320,
+                    "y": 272,
+                    "width": 81,
+                    "height": 18
+                  },
+                  "name": "*BinaryNinja",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2401,
+                    "y": 272,
+                    "width": 49,
+                    "height": 18
+                  },
+                  "name": "*resym",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2450,
+                    "y": 272,
+                    "width": 58,
+                    "height": 18
+                  },
+                  "name": "*myroms",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2508,
+                    "y": 272,
+                    "width": 67,
+                    "height": 18
+                  },
+                  "name": "*Sapphire",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2575,
+                    "y": 272,
+                    "width": 74,
+                    "height": 18
+                  },
+                  "name": "Downloads",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "ComboBox",
+              "bounds": {
+                "x": 2101,
+                "y": 246,
+                "width": 52,
+                "height": 22
+              },
+              "name": null,
+              "value": "[-c-]",
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "StaticText",
+                  "bounds": {
+                    "x": 3,
+                    "y": 3,
+                    "width": 29,
+                    "height": 16
+                  },
+                  "name": null,
+                  "value": "[-c-]",
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": false,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 2137,
+                    "y": 247,
+                    "width": 15,
+                    "height": 20
+                  },
+                  "name": "Open",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2154,
+                "y": 247,
+                "width": 536,
+                "height": 20
+              },
+              "name": "[_none_]  31.513.816 k of 3.906.355.196 k free",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2734,
+            "y": 245,
+            "width": 631,
+            "height": 628
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "TabGroup",
+              "bounds": {
+                "x": 2735,
+                "y": 270,
+                "width": 631,
+                "height": 603
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2736,
+                    "y": 854,
+                    "width": 627,
+                    "height": 17
+                  },
+                  "name": "0 k / 10.195 k in 0 / 35 file(s), 0 / 25 dir(s)",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2736,
+                    "y": 307,
+                    "width": 627,
+                    "height": 18
+                  },
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Group",
+                  "bounds": {
+                    "x": 2736,
+                    "y": 291,
+                    "width": 589,
+                    "height": 16
+                  },
+                  "name": "c:\\CodeBlocks\\x64dbg\\*.*",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2737,
+                    "y": 272,
+                    "width": 79,
+                    "height": 18
+                  },
+                  "name": "*Downloads",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2816,
+                    "y": 272,
+                    "width": 80,
+                    "height": 18
+                  },
+                  "name": "*Documents",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": true,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2896,
+                    "y": 272,
+                    "width": 70,
+                    "height": 18
+                  },
+                  "name": "*exploitme",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "ComboBox",
+              "bounds": {
+                "x": 2735,
+                "y": 246,
+                "width": 52,
+                "height": 22
+              },
+              "name": null,
+              "value": "[-c-]",
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "StaticText",
+                  "bounds": {
+                    "x": 3,
+                    "y": 3,
+                    "width": 29,
+                    "height": 16
+                  },
+                  "name": null,
+                  "value": "[-c-]",
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": false,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Button",
+                  "bounds": {
+                    "x": 2771,
+                    "y": 247,
+                    "width": 15,
+                    "height": 20
+                  },
+                  "name": "Open",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2788,
+                "y": 247,
+                "width": 536,
+                "height": 20
+              },
+              "name": "[_none_]  31.513.816 k of 3.906.355.196 k free",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 2116,
+            "y": 133,
+            "width": 1249,
+            "height": 28
+          },
+          "name": null,
+          "value": "Total Commander (x64) 11.50 - x64dbg - Duncan Ogilvie",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuBar",
+              "bounds": {
+                "x": 2100,
+                "y": 138,
+                "width": 22,
+                "height": 22
+              },
+              "name": "System",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "MenuItem",
+                  "bounds": {
+                    "x": 2100,
+                    "y": 138,
+                    "width": 22,
+                    "height": 22
+                  },
+                  "name": "System",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": false,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3226,
+                "y": 131,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Minimise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3273,
+                "y": 131,
+                "width": 46,
+                "height": 30
+              },
+              "name": "Maximise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3319,
+                "y": 131,
+                "width": 47,
+                "height": 30
+              },
+              "name": "Close",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "MenuBar",
+          "bounds": {
+            "x": 2100,
+            "y": 161,
+            "width": 1265,
+            "height": 19
+          },
+          "name": "Application",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2100,
+                "y": 161,
+                "width": 37,
+                "height": 19
+              },
+              "name": "Files",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2137,
+                "y": 161,
+                "width": 41,
+                "height": 19
+              },
+              "name": "Mark",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2178,
+                "y": 161,
+                "width": 76,
+                "height": 19
+              },
+              "name": "Commands",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2254,
+                "y": 161,
+                "width": 33,
+                "height": 19
+              },
+              "name": "Net",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2287,
+                "y": 161,
+                "width": 43,
+                "height": 19
+              },
+              "name": "Show",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2330,
+                "y": 161,
+                "width": 88,
+                "height": 19
+              },
+              "name": "Configuration",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2418,
+                "y": 161,
+                "width": 38,
+                "height": 19
+              },
+              "name": "Start",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 3280,
+                "y": 161,
+                "width": 39,
+                "height": 19
+              },
+              "name": "Help",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 3319,
+                "y": 161,
+                "width": 46,
+                "height": 19
+              },
+              "name": "Drives",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": false,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "node_count": 189,
+    "truncated": false,
+    "capture_time": {
+      "secs": 0,
+      "nanos": 849360400
+    }
+  }
+}

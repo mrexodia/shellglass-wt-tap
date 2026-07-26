@@ -16,6 +16,8 @@ cargo build --release
 # Intentional real-WT operator launch (never used by automated tests):
 powershell -File native/windows/start-wt-stream.ps1 -Bind 127.0.0.1:8080
 # Or: ... -Hub https://hub -Key <secret> [-Pdb C:\symbols\Microsoft.Terminal.Control.pdb]
+# Push launch replaces any existing detached stream and runs the current Rust
+# source through cargo run --locked --release before injection/reuse.
 powershell -File native/windows/test-profile.ps1
 powershell -File native/windows/test-e2e.ps1
 # Real-target tests: injection occurs only inside Windows Sandbox.

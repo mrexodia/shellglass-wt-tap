@@ -30,7 +30,7 @@ states are retained but are not completion blockers.
 | Classic conhost MVP | `native/windows/conhost_adapter.cpp`; `test-conhost-sandbox.ps1` | complete for `conhost_10_0_19045` x64 |
 | Headless ConPTY text capture | system family real test receives no application text; current package source creates `Renderer` only outside `IsInVtIoMode()` | explicitly excluded by user; correctly fail closed |
 | WT/conhost dedup and ambiguity | broker precedence/ambiguity tests | complete at broker policy level; real backing-conhost coexistence cannot be exercised by the fail-closed headless family |
-| Tabs, split panes, rapid focus, multiple windows | aggregate WT gate plus dedicated lifecycle gate | complete on both exact WT releases |
+| Tabs, split panes, rapid focus, multiple windows | aggregate WT gate plus dedicated lifecycle gate; unit regression rejects repeated-true metadata stealing focus back from a new tab | complete on both exact WT releases |
 | Pane detach, reattach, close | `test-wt-lifecycle-sandbox.ps1`: two already-hooked named windows; split closes during sustained callbacks | complete on both exact WT releases; latest expanded primary gate passed |
 | Elevated target authorization | mandatory-label RID assertions in aggregate WT gate | complete in Windows Sandbox |
 | Hyperlinks, underline colors/styles | WT fixture and snapshot assertions | complete |
@@ -49,7 +49,7 @@ states are retained but are not completion blockers.
 | Sustained output/leak check | configurable `-StressSeconds`; successful 121-second primary run | complete for primary exact release |
 | Broker absence and slow reader | suspended-reader drop test plus hard process restart/full-frame recovery | complete |
 | Push/hub reconnect | native mock E2E; real WT detached worker publishes through a local hub | complete |
-| First-party operator startup | `start-wt-stream.ps1`; `test-start-wt-stream-sandbox-guest.ps1` | complete: actual script profiled/served/injected/opened a fresh tab/published it in the persistent Sandbox |
+| First-party operator startup | `start-wt-stream.ps1`; `test-start-wt-stream-sandbox-guest.ps1` | complete: actual script profiled/served/injected/opened a fresh tab/published it in the persistent Sandbox; push reruns stop the prior worker and use `cargo run --locked --release` |
 | ARM64 runtime hooks | explicitly excluded by user; tooling/fixtures still compile | not a completion blocker |
 
 ## Scenario evidence boundaries

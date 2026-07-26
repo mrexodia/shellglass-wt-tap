@@ -3281,6 +3281,7 @@ dependencies = [
  "clap",
  "crossterm",
  "serde",
+ "serde_json",
  "shellglass",
  "tokio",
  "toml",

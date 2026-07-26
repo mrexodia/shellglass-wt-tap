@@ -6,7 +6,7 @@ use anyhow::bail;
 use clap::{Parser, Subcommand};
 #[cfg(feature = "accessibility")]
 use shellglass_wt_tap::accessibility::AccessibilityOptions;
-#[cfg(any(feature = "serve", feature = "push"))]
+#[cfg(any(feature = "accessibility", feature = "serve", feature = "push"))]
 use std::path::PathBuf;
 
 #[derive(Parser)]
@@ -88,6 +88,27 @@ enum Command {
     Preview {
         #[command(flatten)]
         accessibility: AccessibilityOptions,
+    },
+    /// Capture a screenshot/tree/TUI fixture for renderer development.
+    #[cfg(feature = "accessibility")]
+    CaptureLayoutFixture {
+        output: PathBuf,
+        /// Delay before capture so the target window can be focused.
+        #[arg(long, default_value_t = 2_000)]
+        delay_ms: u64,
+        #[command(flatten)]
+        accessibility: AccessibilityOptions,
+    },
+    /// Replay a captured accessibility tree through the current renderer.
+    #[cfg(feature = "accessibility")]
+    RenderLayoutFixture {
+        input: PathBuf,
+        #[arg(short, long)]
+        output: Option<PathBuf>,
+        #[arg(long)]
+        cols: Option<u16>,
+        #[arg(long)]
+        rows: Option<u16>,
     },
 }
 
@@ -194,6 +215,28 @@ async fn main() -> Result<()> {
         Command::Preview { accessibility } => {
             shellglass_wt_tap::accessibility::preview(accessibility).await
         }
+        #[cfg(feature = "accessibility")]
+        Command::CaptureLayoutFixture {
+            output,
+            delay_ms,
+            accessibility,
+        } => shellglass_wt_tap::accessibility::capture_layout_fixture(
+            accessibility,
+            &output,
+            std::time::Duration::from_millis(delay_ms),
+        ),
+        #[cfg(feature = "accessibility")]
+        Command::RenderLayoutFixture {
+            input,
+            output,
+            cols,
+            rows,
+        } => shellglass_wt_tap::accessibility::render_layout_fixture(
+            &input,
+            output.as_deref(),
+            cols,
+            rows,
+        ),
     }
 }
 

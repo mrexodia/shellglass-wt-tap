@@ -1,0 +1,2210 @@
+{
+  "schema_version": 1,
+  "cols": 200,
+  "rows": 60,
+  "snapshot": {
+    "app_name": "x64dbg.exe - PID: 22604 - Module: ntdll.dll - Thread: Main Thread 15320 - x64dbg",
+    "pid": 21632,
+    "window_name": "x64dbg.exe - PID: 22604 - Module: ntdll.dll - Thread: Main Thread 15320 - x64dbg",
+    "root": {
+      "role": "Window",
+      "bounds": {
+        "x": 1920,
+        "y": 23,
+        "width": 1920,
+        "height": 1027
+      },
+      "name": "x64dbg.exe - PID: 22604 - Module: ntdll.dll - Thread: Main Thread 15320 - x64dbg",
+      "value": null,
+      "description": null,
+      "states": {
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "active": true,
+        "checked": null,
+        "selected": false,
+        "expanded": null,
+        "editable": false,
+        "focusable": true,
+        "modal": false,
+        "required": false,
+        "busy": false
+      },
+      "children": [
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 1936,
+            "y": -5,
+            "width": 1904,
+            "height": 28
+          },
+          "name": null,
+          "value": "x64dbg.exe - PID: 22604 - Module: ntdll.dll - Thread: Main Thread 15320 - x64dbg",
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuBar",
+              "bounds": {
+                "x": 1920,
+                "y": 0,
+                "width": 22,
+                "height": 22
+              },
+              "name": "System",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "MenuItem",
+                  "bounds": {
+                    "x": 1920,
+                    "y": 0,
+                    "width": 22,
+                    "height": 22
+                  },
+                  "name": "System",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": false,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3699,
+                "y": 8,
+                "width": 47,
+                "height": 14
+              },
+              "name": "Minimise",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 3746,
+                "y": 8,
+                "width": 46,
+                "height": 14
+              },
+              "name": "Restore",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": null,
+              "name": "Close",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": false,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "MenuBar",
+          "bounds": {
+            "x": 1920,
+            "y": 23,
+            "width": 1920,
+            "height": 19
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 1920,
+                "y": 23,
+                "width": 32,
+                "height": 18
+              },
+              "name": "File",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 1952,
+                "y": 23,
+                "width": 38,
+                "height": 18
+              },
+              "name": "View",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 1990,
+                "y": 23,
+                "width": 47,
+                "height": 18
+              },
+              "name": "Debug",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2037,
+                "y": 23,
+                "width": 51,
+                "height": 18
+              },
+              "name": "Tracing",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2088,
+                "y": 23,
+                "width": 49,
+                "height": 18
+              },
+              "name": "Plugins",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2137,
+                "y": 23,
+                "width": 67,
+                "height": 18
+              },
+              "name": "Favourites",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2204,
+                "y": 23,
+                "width": 53,
+                "height": 18
+              },
+              "name": "Options",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2257,
+                "y": 23,
+                "width": 37,
+                "height": 18
+              },
+              "name": "Help",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "MenuItem",
+              "bounds": {
+                "x": 2294,
+                "y": 23,
+                "width": 138,
+                "height": 18
+              },
+              "name": "Jul 20 2026 (TitanEngine)",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": false,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Toolbar",
+          "bounds": {
+            "x": 1920,
+            "y": 42,
+            "width": 1920,
+            "height": 26
+          },
+          "name": "Toolbar",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1922,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Open",
+              "value": null,
+              "description": "Open (F3)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1945,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Restart",
+              "value": null,
+              "description": "Restart (Ctrl+F2)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1968,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Close",
+              "value": null,
+              "description": "Close (Alt+F2)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 1991,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1997,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Run",
+              "value": null,
+              "description": "Run (F9)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2020,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Pause",
+              "value": null,
+              "description": "Pause (F12)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2043,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2049,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Step into",
+              "value": null,
+              "description": "Step into (F7)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2072,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Step over",
+              "value": null,
+              "description": "Step over (F8)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2095,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2101,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Trace into",
+              "value": null,
+              "description": "Trace into... (Ctrl+Alt+F7)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2124,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Trace over",
+              "value": null,
+              "description": "Trace over... (Ctrl+Alt+F8)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2147,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2153,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Execute till return",
+              "value": null,
+              "description": "Execute till return (Ctrl+F9)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2176,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Run to user code",
+              "value": null,
+              "description": "Run to user code (Alt+F9)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2199,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2205,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Scylla",
+              "value": null,
+              "description": "Scylla (Ctrl+I)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2228,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2234,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Patch file",
+              "value": null,
+              "description": "Patch file... (Ctrl+P)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2257,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Comments",
+              "value": null,
+              "description": "Comments (Ctrl+Alt+C)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2280,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Labels",
+              "value": null,
+              "description": "Labels (Ctrl+Alt+L)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2303,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Bookmarks",
+              "value": null,
+              "description": "Bookmarks (Ctrl+Alt+B)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2326,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Functions",
+              "value": null,
+              "description": "Functions (Ctrl+Alt+F)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2349,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Variables",
+              "value": null,
+              "description": "Variables",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2372,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2378,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Find Strings",
+              "value": null,
+              "description": "Find Strings",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2401,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Find Intermodular Calls",
+              "value": null,
+              "description": "Find Intermodular Calls",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Group",
+              "bounds": {
+                "x": 2424,
+                "y": 44,
+                "width": 6,
+                "height": 22
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2430,
+                "y": 44,
+                "width": 23,
+                "height": 22
+              },
+              "name": "Calculator",
+              "value": null,
+              "description": "Calculator (?)",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 2453,
+                "y": 44,
+                "width": 122,
+                "height": 22
+              },
+              "name": "Check for Updates",
+              "value": null,
+              "description": "Check for Updates",
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Status",
+          "bounds": {
+            "x": 1920,
+            "y": 1027,
+            "width": 1920,
+            "height": 23
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "StaticText",
+              "bounds": {
+                "x": 1922,
+                "y": 1030,
+                "width": 64,
+                "height": 18
+              },
+              "name": "Paused",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "StaticText",
+              "bounds": {
+                "x": 1992,
+                "y": 1030,
+                "width": 1651,
+                "height": 18
+              },
+              "name": "283 reference(s) in 141ms",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "StaticText",
+              "bounds": {
+                "x": 3649,
+                "y": 1030,
+                "width": 191,
+                "height": 18
+              },
+              "name": "Time Wasted Debugging: 16:06:51:22",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "role": "Toolbar",
+          "bounds": {
+            "x": 1920,
+            "y": 1003,
+            "width": 1920,
+            "height": 24
+          },
+          "name": "CommandBar",
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": false,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "StaticText",
+              "bounds": {
+                "x": 1922,
+                "y": 1005,
+                "width": 54,
+                "height": 20
+              },
+              "name": "Command: ",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "TextField",
+              "bounds": {
+                "x": 1976,
+                "y": 1005,
+                "width": 1782,
+                "height": 20
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": true,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": []
+            },
+            {
+              "role": "ComboBox",
+              "bounds": {
+                "x": 3758,
+                "y": 1005,
+                "width": 80,
+                "height": 20
+              },
+              "name": null,
+              "value": "Default",
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "List",
+                  "bounds": null,
+                  "name": null,
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": false,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": [
+                    {
+                      "role": "ListItem",
+                      "bounds": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 640,
+                        "height": 13
+                      },
+                      "name": "Default",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "ListItem",
+                      "bounds": {
+                        "x": 0,
+                        "y": 13,
+                        "width": 640,
+                        "height": 13
+                      },
+                      "name": "Script DLL",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "ListItem",
+                      "bounds": {
+                        "x": 0,
+                        "y": 26,
+                        "width": 640,
+                        "height": 13
+                      },
+                      "name": "DotX64Dbg",
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": true,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "role": "Group",
+          "bounds": {
+            "x": 1920,
+            "y": 68,
+            "width": 1920,
+            "height": 935
+          },
+          "name": null,
+          "value": null,
+          "description": null,
+          "states": {
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "active": false,
+            "checked": null,
+            "selected": false,
+            "expanded": null,
+            "editable": false,
+            "focusable": true,
+            "modal": false,
+            "required": false,
+            "busy": false
+          },
+          "children": [
+            {
+              "role": "Button",
+              "bounds": {
+                "x": 1920,
+                "y": 92,
+                "width": 1920,
+                "height": 911
+              },
+              "name": null,
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": false,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "StaticText",
+                  "bounds": {
+                    "x": 1920,
+                    "y": 92,
+                    "width": 1920,
+                    "height": 911
+                  },
+                  "name": "Log",
+                  "value": "Initializing wait objects...\nInitializing debugger...\nInitializing debugger functions...\nSetting JSON memory management functions...\nGetting directory information...\nSymbol Path: C:\\CodeBlocks\\x64dbg\\bin\\x64\\symbols\nStart file read thread...\nRetrieving syscall indices...\nAllocating message stack...\nInitializing global script variables...\nRegistering debugger commands...\nRegistering GUI command handler...\nRegistering expression functions...\nRegistering format functions...\nRegistering Script DLL command handler...\nStarting command loop...\nInitialization successful!\nLoading plugins...\n[pluginload] Acceleron\nSyscall indices loaded!\n[Acceleron] pluginInit(pluginHandle: 1)\n[PLUGIN, Acceleron] Command \"Acceleron\" registered!\n[PLUGIN] Acceleron v1 Loaded!\n[Acceleron] pluginSetup(pluginHandle: 1)\n[pluginload] BigCopy\nError codes database loaded!\nException codes database loaded!\nNTSTATUS codes database loaded!\n[PLUGIN] BigCopy v1 Loaded!\nWindows constant database loaded!\nReading notes file...\nFile read thread finished!\n[pluginload] DataExplorer\n[PLUGIN] DataExplorer v1 Loaded!\n[changeEvent] dark=0\n[pluginload] DisableParallelLoader\n[PLUGIN] DisableParallelLoader v1 Loaded!\n[pluginload] Dotx64Dbg\n[PLUGIN, Dotx64Dbg] Command \"dotscript\" registered!\n[DotX64Dbg] Manager initialized\n[PLUGIN] DotX64Dbg v1 Loaded!\n[DotX64Dbg] Plugins Path: C:\\CodeBlocks\\x64dbg\\bin\\dotplugins\n[DotX64Dbg] Generating project for BreakpointLog\n[DotX64Dbg] Generating project for ERC\n[DotX64Dbg] Generating project for Example Plugin\n[DotX64Dbg] Generating project for FileLog\n[DotX64Dbg] Generating project for FindMnemonic\n[DotX64Dbg] Generating project for LoadFile\n[DotX64Dbg] Generating project for LogApi\n[DotX64Dbg] Generating project for MapFile\n[pluginload] HotkeyBug\n[HotkeyBug] pluginInit(pluginHandle: 6)\n[PLUGIN, HotkeyBug] Command \"HotkeyBug\" registered!\n[PLUGIN, HotkeyBug] Expression function \"myTest\" registered!\n[PLUGIN] HotkeyBug v1 Loaded!\n[HotkeyBug] pluginSetup(pluginHandle: 6)\n[pluginload] PluginDevHelper\n[PLUGIN] PluginDevHelper v1 Loaded!\n[pluginload] RefCmd\n[RefCmd] pluginInit(pluginHandle: 8)\n[PLUGIN, RefCmd] Command \"example\" registered!\n[PLUGIN, RefCmd] Command \"refcmdadd\" registered!\n[PLUGIN, RefCmd] Expression function \"set.contains\" registered!\n[PLUGIN, RefCmd] Expression function \"set.clear\" registered!\n[PLUGIN, RefCmd] Expression function \"set.add\" registered!\n[PLUGIN, RefCmd] Expression function \"set.remove\" registered!\n[PLUGIN, RefCmd] Expression function \"set.item\" registered!\n[PLUGIN, RefCmd] Expression function \"set.count\" registered!\n[PLUGIN, RefCmd] Expression function \"nset.contains\" registered!\n[PLUGIN, RefCmd] Expression function \"nset.clear\" registered!\n[PLUGIN, RefCmd] Expression function \"nset.add\" registered!\n[PLUGIN] RefCmd v1 Loaded!\n[RefCmd] pluginSetup(pluginHandle: 8)\n[pluginload] manytypes-plugin\n[PLUGIN] ManyTypes v1 Loaded!\n[PLUGIN, ManyTypes] Command \"pt\" registered!\nHandling command line...\n  \"C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\" \n[DotX64Dbg] Loading 'BreakpointLog'\n[PLUGIN, DotX64Dbg] Command \"snowdemo\" registered!\n[PLUGIN, DotX64Dbg] Command \"CustomBreakpoints\" registered!\n[DotX64Dbg] Loaded 'BreakpointLog'\n[DotX64Dbg] Loading 'ERC'\n[PLUGIN, DotX64Dbg] Command \"hello\" registered!\n[DotX64Dbg] Loaded 'ERC'\n[DotX64Dbg] Loading 'Example Plugin'\nExamplePlugin Constructor\nExamplePlugin Startup\nNestedClass::TestFunc()\nTest::IntegerList = 1,2,3,4,5,6,7,8,9\nTest::StringSet = Hello,World,foo,Bar,Foo\nTest::NestedStringVar = hello world\n[PLUGIN, DotX64Dbg] Command \"Test1\" registered!\n[PLUGIN, DotX64Dbg] Command \"Test2\" registered!\n[PLUGIN, DotX64Dbg] Command \"Test3\" registered!\n[PLUGIN, DotX64Dbg] Command \"SetStatusText\" registered!\n[PLUGIN, DotX64Dbg] Command \"Selection\" registered!\n[PLUGIN, DotX64Dbg] Command \"CmdNoArgs\" registered!\n[PLUGIN, DotX64Dbg] Command \"CmdNoArgs2\" registered!\n[PLUGIN, DotX64Dbg] Command \"DisassembleIP\" registered!\n[PLUGIN, DotX64Dbg] Command \"EvaluateExpressions01\" registered!\n[PLUGIN, DotX64Dbg] Command \"EvaluateExpressions02\" registered!\n[PLUGIN, DotX64Dbg] Command \"EvaluateExpressions03\" registered!\n[PLUGIN, DotX64Dbg] Command \"EvaluateExpressions04\" registered!\n[PLUGIN, DotX64Dbg] Expression function \"expr_no_input\" registered!\n[PLUGIN, DotX64Dbg] Expression function \"expr_one_input\" registered!\n[PLUGIN, DotX64Dbg] Expression function \"expr_two_inputs\" registered!\n[PLUGIN, DotX64Dbg] Command \"Test5\" registered!\n[PLUGIN, DotX64Dbg] Command \"TestAssembler\" registered!\n[PLUGIN, DotX64Dbg] Command \"AssembleFromIP\" registered!\n[PLUGIN, DotX64Dbg] Command \"AssembleWithLabel\" registered!\n[DotX64Dbg] Loaded 'Example Plugin'\n[DotX64Dbg] Loading 'FileLog'\n[FileLog] Startup\n[PLUGIN, DotX64Dbg] Command \"FileLog\" registered!\n[PLUGIN, DotX64Dbg] Command \"FileLogClose\" registered!\n[DotX64Dbg] Loaded 'FileLog'\n[DotX64Dbg] Loading 'FindMnemonic'\n[PLUGIN, DotX64Dbg] Command \"findmnemonic\" registered!\n[DotX64Dbg] Loaded 'FindMnemonic'\n[DotX64Dbg] Loading 'LoadFile'\nHello World\n[PLUGIN, DotX64Dbg] Command \"LoadFile\" registered!\n[DotX64Dbg] Loaded 'LoadFile'\n[DotX64Dbg] Loading 'LogApi'\nHello World\n[PLUGIN, DotX64Dbg] Command \"LogApi\" registered!\n[DotX64Dbg] Loaded 'LogApi'\n[DotX64Dbg] Loading 'MapFile'\nHello World\n[DotX64Dbg] Loaded 'MapFile'\nDebugging: C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\nDatabase file: C:\\CodeBlocks\\x64dbg\\bin\\x64\\db\\x64dbg.exe.dd64\nLoading commandline...\n[ManyTypes] initialized workspace C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\nLoading database from C:\\CodeBlocks\\x64dbg\\bin\\x64\\db\\x64dbg.exe.dd64 0ms\nProcess Started: 0000000140000000 C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\n  \"C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\"\n  argv[0]: C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64dbg.exe\nModule x64dbg.exe loaded from disk path\nWARNING: The database has a checksum that is different from the module you are debugging. It is possible that your debuggee has been modified since last session. The content of this database may be incorrect.\nBreakpoint at 000000014002EF18 (entry breakpoint) set!\n[DisableParallelLoader] PEB->ProcessParameters->LoaderThreads: 0 -> 1\nBreakpoint 00007FFB54D43D9A has been disabled because the bytes don't match! Expected: E8 0D, Found: 85 C0\nDLL Loaded: 00007FFB54C70000 C:\\Windows\\System32\\ntdll.dll\nDLL Loaded: 00007FFB53A80000 C:\\Windows\\System32\\kernel32.dll\nDLL Loaded: 00007FFB52750000 C:\\Windows\\System32\\KernelBase.dll\nDLL Loaded: 00007FFB522F0000 C:\\Windows\\System32\\wintrust.dll\nDLL Loaded: 00007FFB53470000 C:\\Windows\\System32\\msvcrt.dll\nDLL Loaded: 00007FFB54420000 C:\\Windows\\System32\\rpcrt4.dll\nDLL Loaded: 00007FFB53550000 C:\\Windows\\System32\\user32.dll\nDLL Loaded: 00007FFB52420000 C:\\Windows\\System32\\win32u.dll\nDLL Loaded: 00007FFB53510000 C:\\Windows\\System32\\gdi32.dll\nDLL Loaded: 00007FFB52B30000 C:\\Windows\\System32\\gdi32full.dll\nDLL Loaded: 00007FFB525B0000 C:\\Windows\\System32\\msvcp_win.dll\nDLL Loaded: 00007FFB52650000 C:\\Windows\\System32\\ucrtbase.dll\nDLL Loaded: 00007FFB52D00000 C:\\Windows\\System32\\shell32.dll\nDLL Loaded: 00007FFB337D0000 C:\\CodeBlocks\\x64dbg\\bin\\x64\\x64bridge.dll\nDLL Loaded: 00007FFB536F0000 C:\\Windows\\System32\\advapi32.dll\nDLL Loaded: 00007FFB547A0000 C:\\Windows\\System32\\sechost.dll\nDLL Loaded: 00007FFB52C50000 C:\\Windows\\System32\\bcrypt.dll\nDLL Loaded: 00007FFB20B90000 C:\\CodeBlocks\\x64dbg\\bin\\x64\\msvcp140.dll\nDLL Loaded: 00007FFB337B0000 C:\\CodeBlocks\\x64dbg\\bin\\x64\\vcruntime140.dll\nDLL Loaded: 00007FFB4AF10000 C:\\CodeBlocks\\x64dbg\\bin\\x64\\vcruntime140_1.dll\nSystem breakpoint reached!\n[ManyTypes] updated json db ManyTypes\\.artifacts\\x64dbg.json\nTypes loaded\nThread 11844 created, Entry: ntdll.00007FFB54CBD110, Parameter: 000002434F360BC0\nStarted trace recording to file: C:\\CodeBlocks\\x64dbg\\bin\\x64\\db\\x64dbg-20260726-020206.trace64\nStep filter set to: none\nTrace finished after 32920 steps!\n283 reference(s) in 141ms\n",
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": true,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": [
+                    {
+                      "role": "Group",
+                      "bounds": {
+                        "x": 1921,
+                        "y": 93,
+                        "width": 1901,
+                        "height": 909
+                      },
+                      "name": null,
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": true,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": false,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": []
+                    },
+                    {
+                      "role": "Group",
+                      "bounds": {
+                        "x": 3822,
+                        "y": 93,
+                        "width": 17,
+                        "height": 909
+                      },
+                      "name": null,
+                      "value": null,
+                      "description": null,
+                      "states": {
+                        "enabled": true,
+                        "visible": true,
+                        "focused": false,
+                        "active": false,
+                        "checked": null,
+                        "selected": false,
+                        "expanded": null,
+                        "editable": false,
+                        "focusable": false,
+                        "modal": false,
+                        "required": false,
+                        "busy": false
+                      },
+                      "children": [
+                        {
+                          "role": "ScrollBar",
+                          "bounds": {
+                            "x": 3822,
+                            "y": 93,
+                            "width": 17,
+                            "height": 909
+                          },
+                          "name": null,
+                          "value": "21",
+                          "description": null,
+                          "states": {
+                            "enabled": true,
+                            "visible": true,
+                            "focused": false,
+                            "active": false,
+                            "checked": null,
+                            "selected": false,
+                            "expanded": null,
+                            "editable": false,
+                            "focusable": false,
+                            "modal": false,
+                            "required": false,
+                            "busy": false
+                          },
+                          "numeric_value": 21.0,
+                          "min_value": 0.0,
+                          "max_value": 1521.0,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "TabGroup",
+              "bounds": {
+                "x": 1920,
+                "y": 68,
+                "width": 1121,
+                "height": 24
+              },
+              "name": "Log",
+              "value": null,
+              "description": null,
+              "states": {
+                "enabled": true,
+                "visible": true,
+                "focused": false,
+                "active": false,
+                "checked": null,
+                "selected": false,
+                "expanded": null,
+                "editable": false,
+                "focusable": true,
+                "modal": false,
+                "required": false,
+                "busy": false
+              },
+              "children": [
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 1920,
+                    "y": 68,
+                    "width": 64,
+                    "height": 24
+                  },
+                  "name": "CPU",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 1984,
+                    "y": 68,
+                    "width": 61,
+                    "height": 24
+                  },
+                  "name": "Log",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2045,
+                    "y": 68,
+                    "width": 105,
+                    "height": 24
+                  },
+                  "name": "Memory Map",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2150,
+                    "y": 68,
+                    "width": 82,
+                    "height": 24
+                  },
+                  "name": "Handles",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2232,
+                    "y": 68,
+                    "width": 90,
+                    "height": 24
+                  },
+                  "name": "Call Stack",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2322,
+                    "y": 68,
+                    "width": 63,
+                    "height": 24
+                  },
+                  "name": "SEH",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2385,
+                    "y": 68,
+                    "width": 83,
+                    "height": 24
+                  },
+                  "name": "Symbols",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2468,
+                    "y": 68,
+                    "width": 77,
+                    "height": 24
+                  },
+                  "name": "Source",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2545,
+                    "y": 68,
+                    "width": 100,
+                    "height": 24
+                  },
+                  "name": "Breakpoints",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2645,
+                    "y": 68,
+                    "width": 71,
+                    "height": 24
+                  },
+                  "name": "Script",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2716,
+                    "y": 68,
+                    "width": 72,
+                    "height": 24
+                  },
+                  "name": "Notes",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2788,
+                    "y": 68,
+                    "width": 71,
+                    "height": 24
+                  },
+                  "name": "Trace",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2859,
+                    "y": 68,
+                    "width": 99,
+                    "height": 24
+                  },
+                  "name": "References",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                },
+                {
+                  "role": "Tab",
+                  "bounds": {
+                    "x": 2958,
+                    "y": 68,
+                    "width": 83,
+                    "height": 24
+                  },
+                  "name": "Threads",
+                  "value": null,
+                  "description": null,
+                  "states": {
+                    "enabled": true,
+                    "visible": true,
+                    "focused": false,
+                    "active": false,
+                    "checked": null,
+                    "selected": false,
+                    "expanded": null,
+                    "editable": false,
+                    "focusable": true,
+                    "modal": false,
+                    "required": false,
+                    "busy": false
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "node_count": 81,
+    "truncated": false,
+    "capture_time": {
+      "secs": 0,
+      "nanos": 115384300
+    }
+  }
+}
