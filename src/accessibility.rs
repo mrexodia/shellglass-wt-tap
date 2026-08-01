@@ -631,6 +631,12 @@ struct CellRect {
     height: usize,
 }
 
+#[derive(Clone, Copy)]
+struct SpatialContext {
+    root: Rect,
+    clip: Rect,
+}
+
 #[derive(Clone, Default)]
 struct CanvasCell {
     cell: StyledCell,
@@ -704,14 +710,26 @@ impl Canvas {
     }
 
     fn flow_text(&mut self, preferred_x: usize, y: usize, text: &str, style: Style) {
-        if preferred_x >= self.cols || y >= self.rows {
+        self.flow_text_bounded(preferred_x, y, self.cols, text, style);
+    }
+
+    fn flow_text_bounded(
+        &mut self,
+        preferred_x: usize,
+        y: usize,
+        right: usize,
+        text: &str,
+        style: Style,
+    ) {
+        let right = right.min(self.cols);
+        if preferred_x >= right || y >= self.rows {
             return;
         }
         let text = clean(text);
         let desired = UnicodeWidthStr::width(text.as_str()).saturating_add(1);
         let mut start = preferred_x;
-        while start < self.cols {
-            let end = start.saturating_add(desired).min(self.cols);
+        while start < right {
+            let end = start.saturating_add(desired).min(right);
             if let Some(occupied) = (start..end).find(|column| {
                 let slot = &self.cells[y][*column];
                 slot.continuation || !slot.cell.text.is_empty()
@@ -721,15 +739,20 @@ impl Canvas {
             }
             break;
         }
-        if start >= self.cols {
+        if start >= right {
             return;
         }
-        let available = self.cols - start;
-        let max_label_width = available.saturating_sub(1);
+        let available = right - start;
+        let text_width = UnicodeWidthStr::width(text.as_str());
+        let max_label_width = if text_width <= available {
+            available
+        } else {
+            available.saturating_sub(1)
+        };
         let fitted = elide(&text, max_label_width);
         let label_width = UnicodeWidthStr::width(fitted.as_str());
         self.text(start, y, label_width, &fitted, style);
-        if start + label_width < self.cols {
+        if start + label_width < right {
             self.text(start + label_width, y, 1, " ", style);
         }
     }
@@ -816,7 +839,10 @@ fn render_spatial_snapshot(
     let mut positioned = 0usize;
     render_spatial_node(
         &snapshot.root,
-        root_bounds,
+        SpatialContext {
+            root: root_bounds,
+            clip: root_bounds,
+        },
         &mut canvas,
         true,
         snapshot.root.role == Role::Window,
@@ -885,7 +911,7 @@ fn render_spatial_snapshot(
 
 fn render_spatial_node(
     node: &SnapshotNode,
-    root: Rect,
+    context: SpatialContext,
     canvas: &mut Canvas,
     is_root: bool,
     fit_window: bool,
@@ -906,6 +932,7 @@ fn render_spatial_node(
     } else {
         editor_host
     };
+    let composite_button = is_composite_button(node);
     let mut rendered_here = false;
     if !is_root && let Some(bounds) = node.bounds {
         let multiline_field = node.role == Role::TextField
@@ -922,9 +949,14 @@ fn render_spatial_node(
         } else {
             bounds
         };
-        if let Some(rect) =
-            project_bounds(effective_bounds, root, canvas.cols, canvas.rows, fit_window)
-            && draw_spatial_control(canvas, rect, node, expanded_multiline)
+        if let Some(rect) = project_clipped_bounds(
+            effective_bounds,
+            context.clip,
+            context.root,
+            canvas.cols,
+            canvas.rows,
+            fit_window,
+        ) && draw_spatial_control(canvas, rect, node, expanded_multiline)
         {
             *positioned += 1;
             rendered_here = true;
@@ -936,6 +968,21 @@ fn render_spatial_node(
         // Chromium headings, links, and paragraphs into overlapping fragments.
         return;
     }
+    let child_clip = if composite_button {
+        let Some(bounds) = node
+            .bounds
+            .and_then(|bounds| intersect_rect(bounds, context.clip))
+        else {
+            return;
+        };
+        bounds
+    } else {
+        context.clip
+    };
+    let child_context = SpatialContext {
+        clip: child_clip,
+        ..context
+    };
     if node.role == Role::List {
         if node
             .children
@@ -943,20 +990,20 @@ fn render_spatial_node(
             .any(|child| child.role == Role::TreeItem)
             || infer_grid_columns(node).len() <= 1
         {
-            render_collection_children(node, root, canvas, fit_window, positioned);
+            render_collection_children(node, child_context, canvas, fit_window, positioned);
         } else {
-            render_table_children(node, root, canvas, fit_window, positioned);
+            render_table_children(node, child_context, canvas, fit_window, positioned);
         }
     } else if node.role == Role::Table {
-        render_table_children(node, root, canvas, fit_window, positioned);
+        render_table_children(node, child_context, canvas, fit_window, positioned);
     } else if node.role == Role::Group
-        && render_mixed_inline_group(node, root, canvas, fit_window, positioned)
+        && render_mixed_inline_group(node, child_context, canvas, fit_window, positioned)
     {
     } else {
         for child in &node.children {
             render_spatial_node(
                 child,
-                root,
+                child_context,
                 canvas,
                 false,
                 fit_window,
@@ -969,11 +1016,12 @@ fn render_spatial_node(
 
 fn render_mixed_inline_group(
     group: &SnapshotNode,
-    root: Rect,
+    context: SpatialContext,
     canvas: &mut Canvas,
     fit_window: bool,
     positioned: &mut usize,
 ) -> bool {
+    let SpatialContext { root, clip } = context;
     let is_inline = |node: &SnapshotNode| matches!(node.role, Role::StaticText | Role::Link);
     if !group.children.iter().any(|child| child.role == Role::List)
         || group
@@ -991,7 +1039,7 @@ fn render_mixed_inline_group(
         if !is_inline(&group.children[index]) {
             render_spatial_node(
                 &group.children[index],
-                root,
+                context,
                 canvas,
                 false,
                 fit_window,
@@ -1024,7 +1072,9 @@ fn render_mixed_inline_group(
 
         let run = &group.children[start..index];
         if run.len() == 1 {
-            render_spatial_node(&run[0], root, canvas, false, fit_window, None, positioned);
+            render_spatial_node(
+                &run[0], context, canvas, false, fit_window, None, positioned,
+            );
             continue;
         }
         let Some(mut union) = run[0].bounds else {
@@ -1047,7 +1097,8 @@ fn render_mixed_inline_group(
         }
         if complete
             && !text.trim().is_empty()
-            && let Some(rect) = project_bounds(union, root, canvas.cols, canvas.rows, fit_window)
+            && let Some(rect) =
+                project_clipped_bounds(union, clip, root, canvas.cols, canvas.rows, fit_window)
         {
             draw_flow_text(canvas, rect, &text, Style::default());
             *positioned += 1;
@@ -1058,11 +1109,12 @@ fn render_mixed_inline_group(
 
 fn render_collection_children(
     collection: &SnapshotNode,
-    root: Rect,
+    context: SpatialContext,
     canvas: &mut Canvas,
     fit_window: bool,
     positioned: &mut usize,
 ) {
+    let SpatialContext { root, clip } = context;
     if collection.children.len() == 1
         && collection.children[0].role == Role::Group
         && !collection.children[0].children.is_empty()
@@ -1073,16 +1125,16 @@ fn render_collection_children(
     {
         render_collection_children(
             &collection.children[0],
-            root,
+            context,
             canvas,
             fit_window,
             positioned,
         );
         return;
     }
-    let collection_rect = collection
-        .bounds
-        .and_then(|bounds| project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window));
+    let collection_rect = collection.bounds.and_then(|bounds| {
+        project_clipped_bounds(bounds, clip, root, canvas.cols, canvas.rows, fit_window)
+    });
     let collection_left = collection_rect.map_or(0, |rect| rect.x);
     let bottom = collection_rect.map_or(canvas.rows, |rect| rect.y + rect.height);
     let collection_right = collection_rect.map_or(canvas.cols, |rect| rect.x + rect.width);
@@ -1111,7 +1163,7 @@ fn render_collection_children(
             continue;
         }
         let Some(bounds) = child.bounds else {
-            render_spatial_node(child, root, canvas, false, fit_window, None, positioned);
+            render_spatial_node(child, context, canvas, false, fit_window, None, positioned);
             continue;
         };
         if collection_source_right.is_some_and(|right| i64::from(bounds.x) >= right)
@@ -1121,7 +1173,8 @@ fn render_collection_children(
         {
             continue;
         }
-        let Some(mut rect) = project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window)
+        let Some(mut rect) =
+            project_clipped_bounds(bounds, clip, root, canvas.cols, canvas.rows, fit_window)
         else {
             continue;
         };
@@ -1196,9 +1249,14 @@ fn render_collection_children(
                 let Some(cell_bounds) = grandchild.bounds else {
                     continue;
                 };
-                let Some(mut cell_rect) =
-                    project_bounds(cell_bounds, root, canvas.cols, canvas.rows, fit_window)
-                else {
+                let Some(mut cell_rect) = project_clipped_bounds(
+                    cell_bounds,
+                    clip,
+                    root,
+                    canvas.cols,
+                    canvas.rows,
+                    fit_window,
+                ) else {
                     continue;
                 };
                 if cell_rect.x >= collection_right {
@@ -1210,7 +1268,14 @@ fn render_collection_children(
                     .filter_map(|sibling| sibling.bounds)
                     .filter(|sibling| sibling.x > cell_bounds.x)
                     .filter_map(|sibling| {
-                        project_bounds(sibling, root, canvas.cols, canvas.rows, fit_window)
+                        project_clipped_bounds(
+                            sibling,
+                            clip,
+                            root,
+                            canvas.cols,
+                            canvas.rows,
+                            fit_window,
+                        )
                     })
                     .map(|sibling| sibling.x)
                     .min()
@@ -1246,7 +1311,7 @@ fn render_collection_children(
         }
         for grandchild in &child.children {
             render_spatial_node(
-                grandchild, root, canvas, false, fit_window, None, positioned,
+                grandchild, context, canvas, false, fit_window, None, positioned,
             );
         }
     }
@@ -1274,26 +1339,33 @@ fn infer_grid_columns(collection: &SnapshotNode) -> Vec<i32> {
 
 fn render_table_children(
     table: &SnapshotNode,
-    root: Rect,
+    context: SpatialContext,
     canvas: &mut Canvas,
     fit_window: bool,
     positioned: &mut usize,
 ) {
+    let SpatialContext { root, clip } = context;
     let columns = infer_grid_columns(table);
     if columns.len() < 2 && table.role != Role::Table {
-        render_collection_children(table, root, canvas, fit_window, positioned);
+        render_collection_children(table, context, canvas, fit_window, positioned);
         return;
     }
     let Some(table_bounds) = table.bounds else {
-        render_collection_children(table, root, canvas, fit_window, positioned);
+        render_collection_children(table, context, canvas, fit_window, positioned);
         return;
     };
-    let Some(table_rect) = project_bounds(table_bounds, root, canvas.cols, canvas.rows, fit_window)
-    else {
+    let Some(table_rect) = project_clipped_bounds(
+        table_bounds,
+        clip,
+        root,
+        canvas.cols,
+        canvas.rows,
+        fit_window,
+    ) else {
         return;
     };
     if columns.is_empty() {
-        render_collection_children(table, root, canvas, fit_window, positioned);
+        render_collection_children(table, context, canvas, fit_window, positioned);
         return;
     }
 
@@ -1359,7 +1431,8 @@ fn render_table_children(
         let column = columns
             .partition_point(|start| *start <= bounds.x)
             .saturating_sub(1);
-        let projected = project_bounds(bounds, root, canvas.cols, canvas.rows, fit_window);
+        let projected =
+            project_clipped_bounds(bounds, clip, root, canvas.cols, canvas.rows, fit_window);
         let desired_row = projected.map_or(table_rect.y, |rect| rect.y);
         let row = if source_row == Some(bounds.y) {
             output_row.unwrap_or(desired_row)
@@ -1400,7 +1473,7 @@ fn render_table_children(
         }
         for grandchild in &cell.children {
             render_spatial_node(
-                grandchild, root, canvas, false, fit_window, None, positioned,
+                grandchild, context, canvas, false, fit_window, None, positioned,
             );
         }
     }
@@ -1472,6 +1545,35 @@ fn is_window_chrome(node: &SnapshotNode) -> bool {
         })
 }
 
+fn intersect_rect(left_rect: Rect, right_rect: Rect) -> Option<Rect> {
+    let left = i64::from(left_rect.x).max(i64::from(right_rect.x));
+    let top = i64::from(left_rect.y).max(i64::from(right_rect.y));
+    let right = (i64::from(left_rect.x) + i64::from(left_rect.width))
+        .min(i64::from(right_rect.x) + i64::from(right_rect.width));
+    let bottom = (i64::from(left_rect.y) + i64::from(left_rect.height))
+        .min(i64::from(right_rect.y) + i64::from(right_rect.height));
+    if left >= right || top >= bottom {
+        return None;
+    }
+    Some(Rect {
+        x: i32::try_from(left).ok()?,
+        y: i32::try_from(top).ok()?,
+        width: u32::try_from(right - left).ok()?,
+        height: u32::try_from(bottom - top).ok()?,
+    })
+}
+
+fn project_clipped_bounds(
+    bounds: Rect,
+    clip: Rect,
+    root: Rect,
+    cols: usize,
+    rows: usize,
+    fit_window: bool,
+) -> Option<CellRect> {
+    project_bounds(intersect_rect(bounds, clip)?, root, cols, rows, fit_window)
+}
+
 fn project_bounds(
     bounds: Rect,
     root: Rect,
@@ -1536,6 +1638,43 @@ fn project_bounds(
         width: right_cell.saturating_sub(x).max(1),
         height: bottom_cell.saturating_sub(y).max(1),
     })
+}
+
+fn is_composite_button(node: &SnapshotNode) -> bool {
+    if node.role != Role::Button
+        || node.bounds.is_none_or(|bounds| bounds.height < 64)
+        || node.children.is_empty()
+    {
+        return false;
+    }
+
+    fn has_another_text_row(node: &SnapshotNode, first_row: &mut Option<i32>) -> bool {
+        if !node.states.visible {
+            return false;
+        }
+        if matches!(
+            node.role,
+            Role::StaticText | Role::TextField | Role::TextArea
+        ) && nonempty(&node.value)
+            .or_else(|| nonempty(&node.name))
+            .or_else(|| nonempty(&node.description))
+            .is_some()
+            && let Some(bounds) = node.bounds
+        {
+            if first_row.is_some_and(|row| row != bounds.y) {
+                return true;
+            }
+            *first_row = Some(bounds.y);
+        }
+        node.children
+            .iter()
+            .any(|child| has_another_text_row(child, first_row))
+    }
+
+    let mut first_row = None;
+    node.children
+        .iter()
+        .any(|child| has_another_text_row(child, &mut first_row))
 }
 
 fn owns_descendant_text(node: &SnapshotNode) -> bool {
@@ -1742,6 +1881,24 @@ fn inline_flow_text(node: &SnapshotNode) -> Option<String> {
     {
         return None;
     }
+    let positioned = node
+        .children
+        .iter()
+        .filter_map(|child| child.bounds)
+        .collect::<Vec<_>>();
+    if positioned.len() >= 2
+        && positioned
+            .iter()
+            .all(|bounds| bounds.x.abs_diff(positioned[0].x) <= 2)
+        && positioned.windows(2).all(|pair| {
+            i64::from(pair[1].y) + 2 >= i64::from(pair[0].y) + i64::from(pair[0].height)
+        })
+    {
+        // Equal-column, vertically stacked descendants are separate rows, not
+        // HTML-style inline fragments. Concatenating them makes adjacent labels
+        // wrap through one another in narrow sidebars and live regions.
+        return None;
+    }
     let mut text = String::new();
     for child in &node.children {
         if !collect_inline_text(child, &mut text) {
@@ -1889,10 +2046,12 @@ fn draw_spatial_control(
             }
         }
         Role::Button => {
-            // Qt and other providers frequently use anonymous Button nodes as
-            // layout wrappers around whole panes. Drawing those as controls
-            // creates synthetic borders through their descendants.
-            if label.is_empty() {
+            // Providers sometimes expose a large, focusable content viewport
+            // as one Button whose aggregate name duplicates many richer,
+            // positioned descendants. Treat that child shape as a composite
+            // control; drawing the parent would collapse the viewport into one
+            // bordered label and suppress all of its content.
+            if label.is_empty() || is_composite_button(node) {
                 false
             } else {
                 if rect.width <= 3 && name.as_deref() == Some("Open") {
@@ -2163,8 +2322,21 @@ fn draw_spatial_control(
             );
             true
         }
-        Role::StaticText
-        | Role::Heading
+        Role::StaticText => {
+            if label.is_empty() {
+                false
+            } else {
+                canvas.flow_text_bounded(
+                    rect.x,
+                    line,
+                    rect.x.saturating_add(rect.width),
+                    label,
+                    style,
+                );
+                true
+            }
+        }
+        Role::Heading
         | Role::Menu
         | Role::MenuBar
         | Role::TabGroup
@@ -2188,7 +2360,13 @@ fn draw_flow_text(canvas: &mut Canvas, rect: CellRect, value: &str, style: Style
         .into_iter()
         .enumerate()
     {
-        canvas.text(rect.x, rect.y + offset, rect.width, &line, style);
+        canvas.flow_text_bounded(
+            rect.x,
+            rect.y + offset,
+            rect.x.saturating_add(rect.width),
+            &line,
+            style,
+        );
     }
 }
 
@@ -4016,6 +4194,50 @@ mod tests {
         assert!(name < size && size < modified && modified < crc);
         assert!(!rendered.contains("1-iw4sp.pdb"));
         assert!(!rendered.contains("2-iw4mp.exe"));
+    }
+
+    #[test]
+    fn steam_chat_fixture_expands_composite_button_message_viewport() {
+        let fixture: LayoutFixture = serde_json::from_str(include_str!(
+            "../tests/fixtures/accessibility/steam-chat/tree.json"
+        ))
+        .expect("parse Steam chat fixture");
+        let rendered = plain_frame(&render_snapshot(
+            &fixture.snapshot,
+            fixture.cols,
+            fixture.rows,
+            40,
+        ));
+        let lines = rendered.lines().collect::<Vec<_>>();
+
+        let mut previous = 0;
+        for message in [
+            "maar geen tijd om te spelen",
+            "alleen x64dbg gefixt lol",
+            "shit hahha",
+            "werken en x64dbg na je werk dus",
+            "ja daar werk ik niet aan op werk",
+            "hele dag aan het 'werk'",
+            "sommige moeten werken",
+            "En keihard aan je hobbyproject werken",
+            "gpt doet het meeste",
+        ] {
+            let row = lines
+                .iter()
+                .position(|line| line.contains(message))
+                .unwrap_or_else(|| panic!("missing positioned chat message: {message}"));
+            assert!(row > previous, "chat message out of order: {message}");
+            previous = row;
+        }
+
+        let clipped_top = lines
+            .iter()
+            .find(|line| line.contains("LOADING OLDER MESSAGES..."))
+            .expect("composite viewport top row");
+        assert!(clipped_top.contains("hoe vind je em?"));
+        assert!(!clipped_top.contains('│'));
+        assert!(!rendered.contains("Duncan:Redolant:"));
+        assert_eq!(rendered.matches("shit hahha").count(), 1);
     }
 
     #[test]

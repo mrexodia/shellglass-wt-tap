@@ -3245,6 +3245,7 @@ dependencies = [
 [[package]]
 name = "shellglass"
 version = "0.0.0-dev"
+source = "git+https://github.com/iksteen/shellglass.git?branch=master#d9b3403a7f619a929c5164277625b8efbb947b42"
 dependencies = [
  "anyhow",
  "arc-swap",

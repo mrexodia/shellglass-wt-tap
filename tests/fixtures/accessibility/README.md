@@ -46,6 +46,8 @@ Committed fixtures:
   rather than `TextArea`.
 - `ida-pseudocode` — fixed-width editor lines padded with trailing spaces that
   must not wrap into visually blank rows.
+- `steam-chat` — a Chromium chat history exposed as one large `Button` with an
+  aggregate name plus richer, viewport-shifted positioned message descendants.
 - `vscode-screen-reader` — a Monaco editor whose complete multiline value is
   exposed on a current-line `TextField` with much smaller bounds than its host.
 - `zed-experimental-a11y` — Zed 1.12.0 with `ZED_EXPERIMENTAL_A11Y=1`, exposing
