@@ -133,7 +133,32 @@ service to be available.
 Press Ctrl-C to restore the terminal. Initially the preview may reconstruct its
 own terminal because launching it gives that window focus; switch to the GUI
 window you want to inspect. The preview detects terminal resizes and regenerates
-the canvas at the full available size. Capture controls remain available:
+the canvas at the full available size.
+
+To keep previewing a window while another application has focus, first list the
+top-level accessibility windows:
+
+```console
+./target/release/shellglass-wt-tap preview --list-windows
+```
+
+The tab-separated output includes PID, active state, application name, and window
+title. Filters can narrow both the listing and the live preview. For example,
+find IDA candidates and then select one unique window:
+
+```console
+./target/release/shellglass-wt-tap preview --list-windows --app-name-prefix IDA
+./target/release/shellglass-wt-tap preview --pid 12345 --window-title-prefix "mydb.i64"
+```
+
+`--pid`, `--app-name-prefix`, and `--window-title-prefix` are case-sensitive and
+may be combined. A live selector must match exactly one top-level window; the
+preview refuses to guess when several match. Without a selector, preview continues
+to follow the foreground window. On Windows, use the `.exe` path shown above.
+Window listing and selection honor the same accessibility privacy policy as live
+capture, so denied applications are not identified or listed.
+
+Capture controls remain available:
 
 ```powershell
 cargo run --no-default-features --features accessibility -- preview `

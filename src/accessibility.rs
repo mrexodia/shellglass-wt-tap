@@ -117,6 +117,58 @@ impl AccessibilityOptions {
     }
 }
 
+/// Window discovery and selection controls available only to the standalone
+/// accessibility preview.
+#[derive(Debug, Clone, Default, Args)]
+pub struct PreviewOptions {
+    /// List accessible top-level windows and exit.
+    #[arg(long)]
+    pub list_windows: bool,
+    /// Restrict listed or streamed windows to this process ID.
+    #[arg(long)]
+    pub pid: Option<u32>,
+    /// Restrict listed or streamed windows to application names with this prefix.
+    #[arg(long)]
+    pub app_name_prefix: Option<String>,
+    /// Restrict listed or streamed windows to titles with this prefix.
+    #[arg(long)]
+    pub window_title_prefix: Option<String>,
+}
+
+impl PreviewOptions {
+    fn validate(&self) -> Result<()> {
+        if self.app_name_prefix.as_deref().is_some_and(str::is_empty) {
+            bail!("--app-name-prefix must not be empty");
+        }
+        if self
+            .window_title_prefix
+            .as_deref()
+            .is_some_and(str::is_empty)
+        {
+            bail!("--window-title-prefix must not be empty");
+        }
+        Ok(())
+    }
+
+    fn targets_window(&self) -> bool {
+        self.pid.is_some() || self.app_name_prefix.is_some() || self.window_title_prefix.is_some()
+    }
+
+    fn matches_app(&self, name: &str, pid: Option<u32>) -> bool {
+        self.pid.is_none_or(|expected| pid == Some(expected))
+            && self
+                .app_name_prefix
+                .as_deref()
+                .is_none_or(|prefix| name.starts_with(prefix))
+    }
+
+    fn matches_window(&self, title: Option<&str>) -> bool {
+        self.window_title_prefix
+            .as_deref()
+            .is_none_or(|prefix| title.is_some_and(|title| title.starts_with(prefix)))
+    }
+}
+
 #[derive(Debug, Default, Deserialize)]
 #[serde(default, deny_unknown_fields)]
 struct AccessibilityConfigFile {
@@ -196,6 +248,27 @@ fn privacy_config_path(
         .try_exists()
         .with_context(|| format!("checking for {}", default_path.display()))?
         .then_some(default_path))
+}
+
+const MAX_WINDOW_CANDIDATES: usize = 512;
+
+#[derive(Clone, Default)]
+enum CaptureTarget {
+    #[default]
+    Foreground,
+    Selected(PreviewOptions),
+}
+
+struct WindowCandidate {
+    app_name: String,
+    pid: Option<u32>,
+    window: Element,
+}
+
+impl WindowCandidate {
+    fn title(&self) -> Option<&str> {
+        self.window.name.as_deref()
+    }
 }
 
 enum CaptureOutcome {
@@ -356,11 +429,19 @@ where
     B: Fn(u64) + Send + Sync + 'static,
 {
     let dimensions = (options.cols, options.rows);
-    spawn_with_dimensions(options, wanted, move || dimensions, publish, blocked)
+    spawn_with_dimensions(
+        options,
+        CaptureTarget::Foreground,
+        wanted,
+        move || dimensions,
+        publish,
+        blocked,
+    )
 }
 
 fn spawn_with_dimensions<W, D, P, B>(
     options: AccessibilityOptions,
+    target: CaptureTarget,
     wanted: W,
     dimensions: D,
     publish: P,
@@ -376,7 +457,11 @@ where
     let policy = PrivacyPolicy::load(&options)?;
     std::thread::Builder::new()
         .name("shellglass-accessibility".into())
-        .spawn(move || capture_loop(options, policy, wanted, dimensions, publish, blocked))
+        .spawn(move || {
+            capture_loop(
+                options, policy, target, wanted, dimensions, publish, blocked,
+            )
+        })
         .context("starting accessibility capture worker")?;
     Ok(())
 }
@@ -384,6 +469,7 @@ where
 fn capture_loop<W, D, P, B>(
     options: AccessibilityOptions,
     policy: PrivacyPolicy,
+    target: CaptureTarget,
     wanted: W,
     dimensions: D,
     publish: P,
@@ -400,7 +486,7 @@ fn capture_loop<W, D, P, B>(
         let tick = Instant::now();
         if let Some(ticket) = wanted() {
             let (cols, rows) = dimensions();
-            match capture(&options, &policy) {
+            match capture(&options, &policy, &target) {
                 Ok(CaptureOutcome::Visible(identity, snapshot)) => {
                     if geometry.should_publish(&identity) {
                         publish(
@@ -462,47 +548,49 @@ fn publish_source(
     }
 }
 
-fn capture(options: &AccessibilityOptions, policy: &PrivacyPolicy) -> Result<CaptureOutcome> {
+fn capture(
+    options: &AccessibilityOptions,
+    policy: &PrivacyPolicy,
+    target: &CaptureTarget,
+) -> Result<CaptureOutcome> {
     let started = Instant::now();
-    let app = App::foreground(Duration::ZERO).context("resolving the foreground application")?;
-    if policy.blocks(&app)? {
-        return Ok(CaptureOutcome::Blocked);
-    }
-    let window = active_window(&app)?;
-    let identity = source_identity(&window);
+    let source = match resolve_window(target, policy)? {
+        ResolvedWindow::Visible(source) => source,
+        ResolvedWindow::Blocked => return Ok(CaptureOutcome::Blocked),
+    };
+    let identity = source_identity(&source.window);
 
     let mut node_count = 0;
     let mut truncated = false;
     let root = capture_node(
-        &window,
+        &source.window,
         0,
         options.max_depth,
         options.max_nodes,
         &mut node_count,
         &mut truncated,
     )?
-    .context("the active window disappeared before it could be captured")?;
+    .context("the selected window disappeared before it could be captured")?;
 
     // Providers expose snapshot values one element at a time. If the window
     // moves during traversal, root and descendant bounds can therefore refer
-    // to different moments. Re-resolve the foreground window and reject that
+    // to different moments. Re-resolve the selected window and reject that
     // mixed snapshot instead of letting controls jump around while dragging.
-    let latest_app = App::foreground(Duration::ZERO)
-        .context("rechecking the foreground application after capture")?;
-    if latest_app.pid != app.pid {
-        return Ok(CaptureOutcome::Unstable);
-    }
-    let latest_window = active_window(&latest_app)?;
-    if source_identity(&latest_window) != identity {
+    let latest = match resolve_window(target, policy)? {
+        ResolvedWindow::Visible(source) => source,
+        ResolvedWindow::Blocked => return Ok(CaptureOutcome::Blocked),
+    };
+    if latest.pid != source.pid || source_identity(&latest.window) != identity {
         return Ok(CaptureOutcome::Unstable);
     }
 
     Ok(CaptureOutcome::Visible(
         identity,
         Box::new(Snapshot {
-            app_name: bounded(&app.name),
-            pid: window.pid,
-            window_name: window
+            app_name: bounded(&source.app_name),
+            pid: source.pid,
+            window_name: source
+                .window
                 .name
                 .as_deref()
                 .map(bounded)
@@ -513,6 +601,88 @@ fn capture(options: &AccessibilityOptions, policy: &PrivacyPolicy) -> Result<Cap
             capture_time: started.elapsed(),
         }),
     ))
+}
+
+enum ResolvedWindow {
+    Visible(Box<WindowCandidate>),
+    Blocked,
+}
+
+fn resolve_window(target: &CaptureTarget, policy: &PrivacyPolicy) -> Result<ResolvedWindow> {
+    match target {
+        CaptureTarget::Foreground => {
+            let app =
+                App::foreground(Duration::ZERO).context("resolving the foreground application")?;
+            if policy.blocks(&app)? {
+                return Ok(ResolvedWindow::Blocked);
+            }
+            let window = active_window(&app)?;
+            Ok(ResolvedWindow::Visible(Box::new(WindowCandidate {
+                app_name: app.name,
+                pid: app.pid.or(window.pid),
+                window,
+            })))
+        }
+        CaptureTarget::Selected(selection) => Ok(ResolvedWindow::Visible(Box::new(
+            selected_window(selection, policy)?,
+        ))),
+    }
+}
+
+fn selected_window(selection: &PreviewOptions, policy: &PrivacyPolicy) -> Result<WindowCandidate> {
+    let mut candidates = window_candidates(selection, policy)?;
+    match candidates.len() {
+        1 => Ok(candidates.pop().expect("one candidate was checked")),
+        0 => bail!("no accessible window matched the preview selector; run preview --list-windows"),
+        count => bail!(
+            "{count} windows matched the preview selector; add --pid or a longer title prefix"
+        ),
+    }
+}
+
+fn window_candidates(
+    selection: &PreviewOptions,
+    policy: &PrivacyPolicy,
+) -> Result<Vec<WindowCandidate>> {
+    let apps = App::list().context("listing accessibility applications")?;
+    let mut candidates = Vec::new();
+    for app in apps {
+        if !selection.matches_app(&app.name, app.pid) {
+            continue;
+        }
+        if policy.blocks(&app)? {
+            continue;
+        }
+        for window in top_level_windows(&app)? {
+            if !selection.matches_window(window.name.as_deref()) {
+                continue;
+            }
+            if candidates.len() == MAX_WINDOW_CANDIDATES {
+                bail!(
+                    "more than {MAX_WINDOW_CANDIDATES} windows matched; narrow the preview selector"
+                );
+            }
+            candidates.push(WindowCandidate {
+                app_name: app.name.clone(),
+                pid: app.pid.or(window.pid),
+                window,
+            });
+        }
+    }
+    Ok(candidates)
+}
+
+fn top_level_windows(app: &App) -> Result<Vec<Element>> {
+    let root = app.as_element();
+    if matches!(root.role, Role::Window | Role::Dialog) {
+        return Ok(vec![root]);
+    }
+    Ok(app
+        .children()
+        .context("enumerating an application's top-level elements")?
+        .into_iter()
+        .filter(|element| matches!(element.role, Role::Window | Role::Dialog))
+        .collect())
 }
 
 fn source_identity(window: &Element) -> SourceIdentity {
@@ -3152,7 +3322,7 @@ pub fn capture_layout_fixture(
     }
 
     for _ in 0..10 {
-        match capture(&options, &policy)? {
+        match capture(&options, &policy, &CaptureTarget::Foreground)? {
             CaptureOutcome::Visible(identity, snapshot) => {
                 let bounds = snapshot
                     .root
@@ -3258,10 +3428,59 @@ fn plain_frame(frame: &Frame) -> String {
     output
 }
 
+fn list_windows(options: &AccessibilityOptions, selection: &PreviewOptions) -> Result<()> {
+    let policy = PrivacyPolicy::load(options)?;
+    let mut candidates = window_candidates(selection, &policy)?;
+    candidates.sort_by(|left, right| {
+        left.app_name
+            .cmp(&right.app_name)
+            .then_with(|| left.title().cmp(&right.title()))
+            .then_with(|| left.pid.cmp(&right.pid))
+    });
+    if candidates.is_empty() {
+        bail!("no accessible windows matched the preview selector");
+    }
+
+    let stdout = std::io::stdout();
+    let mut output = std::io::BufWriter::new(stdout.lock());
+    writeln!(output, "PID\tACTIVE\tAPP\tTITLE")?;
+    for candidate in candidates {
+        writeln!(
+            output,
+            "{}\t{}\t{}\t{}",
+            candidate
+                .pid
+                .map_or_else(|| "-".into(), |pid| pid.to_string()),
+            if candidate.window.states.active {
+                "yes"
+            } else {
+                "no"
+            },
+            clean(&candidate.app_name),
+            candidate.title().map(clean).unwrap_or_default(),
+        )?;
+    }
+    Ok(())
+}
+
 /// Render the exact accessibility `Frame` producer into a local alternate
-/// screen. This is a test/debug viewer, not a second capture implementation.
-pub async fn preview(options: AccessibilityOptions) -> Result<()> {
+/// screen, or list selectable top-level windows without entering it. This is a
+/// test/debug viewer, not a second capture implementation.
+pub async fn preview(options: AccessibilityOptions, preview: PreviewOptions) -> Result<()> {
     options.validate()?;
+    preview.validate()?;
+    if preview.list_windows {
+        return list_windows(&options, &preview);
+    }
+    let target = if preview.targets_window() {
+        CaptureTarget::Selected(preview)
+    } else {
+        CaptureTarget::Foreground
+    };
+    let waiting_message = match target {
+        CaptureTarget::Foreground => "Waiting for a foreground accessibility window…",
+        CaptureTarget::Selected(_) => "Waiting for the selected accessibility window…",
+    };
     let mut terminal = TerminalPreview::enter()?;
     let (initial_cols, initial_rows) = terminal.size()?;
     let dimensions = Arc::new((AtomicU16::new(initial_cols), AtomicU16::new(initial_rows)));
@@ -3269,13 +3488,14 @@ pub async fn preview(options: AccessibilityOptions) -> Result<()> {
         initial_cols,
         initial_rows,
         "shellglass accessibility",
-        "Waiting for a foreground accessibility window…",
+        waiting_message,
         CYAN,
     ));
     let current_identity = Arc::new(Mutex::new(None::<String>));
     let worker_dimensions = Arc::clone(&dimensions);
     spawn_with_dimensions(
         options,
+        target,
         || Some(0),
         move || {
             (
@@ -3434,6 +3654,38 @@ fn terminal_color(color: Color) -> Option<TerminalColor> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn preview_window_filters_are_combined_and_case_sensitive() {
+        let selection = PreviewOptions {
+            pid: Some(42),
+            app_name_prefix: Some("IDA".into()),
+            window_title_prefix: Some("database".into()),
+            ..PreviewOptions::default()
+        };
+
+        assert!(selection.targets_window());
+        assert!(selection.matches_app("IDA Professional", Some(42)));
+        assert!(!selection.matches_app("ida professional", Some(42)));
+        assert!(!selection.matches_app("IDA Professional", Some(7)));
+        assert!(selection.matches_window(Some("database.i64 - IDA")));
+        assert!(!selection.matches_window(Some("Database.i64 - IDA")));
+        assert!(!selection.matches_window(None));
+    }
+
+    #[test]
+    fn preview_window_filters_reject_empty_prefixes() {
+        let app = PreviewOptions {
+            app_name_prefix: Some(String::new()),
+            ..PreviewOptions::default()
+        };
+        assert!(app.validate().is_err());
+
+        let title = PreviewOptions {
+            window_title_prefix: Some(String::new()),
+            ..PreviewOptions::default()
+        };
+        assert!(title.validate().is_err());
+    }
 
     #[test]
     fn controls_are_rendered_as_spaces() {

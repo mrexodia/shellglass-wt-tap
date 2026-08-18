@@ -5,7 +5,7 @@ use anyhow::Result;
 use anyhow::bail;
 use clap::{Parser, Subcommand};
 #[cfg(feature = "accessibility")]
-use shellglass_wt_tap::accessibility::AccessibilityOptions;
+use shellglass_wt_tap::accessibility::{AccessibilityOptions, PreviewOptions};
 #[cfg(any(feature = "accessibility", feature = "serve", feature = "push"))]
 use std::path::PathBuf;
 
@@ -83,11 +83,13 @@ enum Command {
         #[command(subcommand)]
         command: StreamCommand,
     },
-    /// Reconstruct the active accessibility window in this terminal.
+    /// Preview or list accessibility windows.
     #[cfg(feature = "accessibility")]
     Preview {
         #[command(flatten)]
         accessibility: AccessibilityOptions,
+        #[command(flatten)]
+        preview: PreviewOptions,
     },
     /// Capture a screenshot/tree/TUI fixture for renderer development.
     #[cfg(feature = "accessibility")]
@@ -212,9 +214,10 @@ async fn main() -> Result<()> {
         #[cfg(feature = "push")]
         Command::Stream { command } => run_stream(command).await,
         #[cfg(feature = "accessibility")]
-        Command::Preview { accessibility } => {
-            shellglass_wt_tap::accessibility::preview(accessibility).await
-        }
+        Command::Preview {
+            accessibility,
+            preview,
+        } => shellglass_wt_tap::accessibility::preview(accessibility, preview).await,
         #[cfg(feature = "accessibility")]
         Command::CaptureLayoutFixture {
             output,
@@ -363,4 +366,33 @@ async fn stream_control(command: &str) -> Result<()> {
 #[cfg(all(feature = "push", not(windows)))]
 async fn run_stream(_command: StreamCommand) -> Result<()> {
     bail!("Windows Terminal capture is available only on Windows")
+}
+
+#[cfg(all(test, feature = "accessibility"))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn preview_cli_accepts_window_listing_and_selection_filters() {
+        let cli = Cli::try_parse_from([
+            "shellglass-wt-tap",
+            "preview",
+            "--list-windows",
+            "--pid",
+            "42",
+            "--app-name-prefix",
+            "IDA",
+            "--window-title-prefix",
+            "database",
+        ])
+        .unwrap();
+
+        let Command::Preview { preview, .. } = cli.command else {
+            panic!("preview command was not parsed");
+        };
+        assert!(preview.list_windows);
+        assert_eq!(preview.pid, Some(42));
+        assert_eq!(preview.app_name_prefix.as_deref(), Some("IDA"));
+        assert_eq!(preview.window_title_prefix.as_deref(), Some("database"));
+    }
 }
