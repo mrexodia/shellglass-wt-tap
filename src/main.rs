@@ -1,7 +1,7 @@
 #[cfg(all(feature = "push", windows))]
 use anyhow::Context;
 use anyhow::Result;
-#[cfg(any(feature = "push", not(windows)))]
+#[cfg(any(feature = "push", all(feature = "serve", not(windows))))]
 use anyhow::bail;
 use clap::{Parser, Subcommand};
 #[cfg(feature = "accessibility")]

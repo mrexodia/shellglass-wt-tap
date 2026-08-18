@@ -106,6 +106,30 @@ cargo run --no-default-features --features accessibility -- preview
 ```
 
 This build contains the terminal preview without shellglass serve/push transport.
+
+Build only the standalone accessibility viewer, without the shellglass serve or
+push transports:
+
+```console
+cargo build --release --no-default-features --features accessibility
+```
+
+Run the resulting native executable on macOS or Linux:
+
+```console
+./target/release/shellglass-wt-tap preview
+```
+
+On Windows:
+
+```powershell
+target\release\shellglass-wt-tap.exe preview
+```
+
+Build separately on each target operating system; these executables are not
+portable across platforms. macOS must grant Accessibility permission to the
+executable or launching terminal. Linux requires its desktop accessibility
+service to be available.
 Press Ctrl-C to restore the terminal. Initially the preview may reconstruct its
 own terminal because launching it gives that window focus; switch to the GUI
 window you want to inspect. The preview detects terminal resizes and regenerates

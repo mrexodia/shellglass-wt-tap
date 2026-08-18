@@ -4460,7 +4460,9 @@ checksum = "acf4d1bc32aa46eec18caa634ec3cf4c05bfa151f12b93b510b15190f69a1ca8"
 
 [[package]]
 name = "xa11y"
-version = "0.12.0"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f97c7d11e9df771be16d6404e17760980e6fb10cdacefedd10f1d01fe008cd45"
 dependencies = [
  "serde_json",
  "xa11y-core",
@@ -4471,7 +4473,9 @@ dependencies = [
 
 [[package]]
 name = "xa11y-core"
-version = "0.12.0"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4ce880e39a300b76b46609d38be751da6a2fad3ccf69823fd2d59e8dc2a5da56"
 dependencies = [
  "png",
  "serde",
@@ -4482,7 +4486,9 @@ dependencies = [
 
 [[package]]
 name = "xa11y-linux"
-version = "0.12.0"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "52a2ec07b3e1a62fdefb2d7a984de0a772b6655cd788bfc99a0118949821de5b"
 dependencies = [
  "evdev",
  "png",
@@ -4498,7 +4504,9 @@ dependencies = [
 
 [[package]]
 name = "xa11y-macos"
-version = "0.12.0"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b907546aab1db4258c5c7601f938b1c51d10faaf6985c03c6a3afe3c745a6b86"
 dependencies = [
  "cc",
  "core-foundation",
@@ -4509,7 +4517,9 @@ dependencies = [
 
 [[package]]
 name = "xa11y-windows"
-version = "0.12.0"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "954312a828aeb5c9146d08dfcc4a1e78813b52b4dfe70b066da35b343ba06016"
 dependencies = [
  "serde_json",
  "windows",
